@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nextlink Agent Network | Commission Program</title>
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #6366F1;
+            --primary-dark: #4F46E5;
+            --accent: #EC4899;
+            --success: #10B981;
+            --warning: #F59E0B;
+            --bg-dark: #0F172A;
+            --bg-card: #1E293B;
+            --bg-hover: #334155;
+            --text-main: #F1F5F9;
+            --text-muted: #94A3B8;
+            --border: #334155;
+            --gradient-1: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+            --gradient-2: linear-gradient(135deg, #F093FB 0%, #F5576C 100%);
+            --gradient-3: linear-gradient(135deg, #4FACFE 0%, #00F2FE 100%);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        
+        body {
+            background: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        button { cursor: pointer; border: none; background: none; }
+        ul { list-style: none; }
+
+        /* --- Animations --- */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.8); }
+        }
+
+        /* --- Header --- */
+        .header {
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 20px 40px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 40px;
+        }
+
+        .nav-menu a {
+            font-weight: 500;
+            color: var(--text-muted);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a:hover {
+            color: var(--text-main);
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-1);
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .join-btn {
+            background: var(--gradient-1);
+            color: white;
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .join-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.5);
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            padding: 160px 40px 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: var(--gradient-2);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 500px;
+            height: 500px;
+            background: var(--gradient-3);
+            border-radius: 50%;
+            opacity: 0.1;
+            animation: float 8s ease-in-out infinite reverse;
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 56px;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(135deg, #F1F5F9 0%, #94A3B8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .stat-box {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            flex: 1;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 8px;
+        }
+
+        .hero-visual {
+            position: relative;
+        }
+
+        .commission-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 40px;
+            border: 1px solid var(--border);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .commission-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-1);
+        }
+
+        .commission-title {
+            font-size: 18px;
+            color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+
+        .commission-value {
+            font-size: 64px;
+            font-weight: 900;
+            background: var(--gradient-2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 16px;
+        }
+
+        .commission-desc {
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .commission-features {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .feature-item i {
+            color: var(--success);
+            font-size: 20px;
+        }
+
+        /* --- Tiers Section --- */
+        .tiers-section {
+            padding: 80px 40px;
+            background: var(--bg-card);
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 80px;
+        }
+
+        .section-header h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-header p {
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        .tiers-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .tier-card {
+            background: var(--bg-dark);
+            border-radius: 20px;
+            padding: 40px 30px;
+            border: 1px solid var(--border);
+            position: relative;
+            transition: all 0.3s;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(99, 102, 241, 0.2);
+        }
+
+        .tier-card.featured {
+            border-color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        .tier-badge {
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-2);
+            color: white;
+            padding: 8px 24px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .tier-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 20px;
+            font-size: 36px;
+        }
+
+        .tier-icon.bronze { background: linear-gradient(135deg, #CD7F32, #B87333); }
+        .tier-icon.gold { background: linear-gradient(135deg, #FFD700, #FFA500); }
+        .tier-icon.platinum { background: linear-gradient(135deg, #E5E4E2, #BCC6CC); }
+
+        .tier-name {
+            font-size: 24px;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+
+        .tier-commission {
+            font-size: 48px;
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .tier-commission span {
+            font-size: 20px;
+            color: var(--text-muted);
+        }
+
+        .tier-description {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .tier-features {
+            list-style: none;
+            margin-bottom: 32px;
+            flex-grow: 1;
+        }
+
+        .tier-features li {
+            padding: 12px 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--text-muted);
+        }
+
+        .tier-features i {
+            color: var(--success);
+            font-size: 16px;
+        }
+
+        .tier-btn {
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            font-weight: 700;
+            font-size: 16px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .tier-btn.bronze {
+            background: var(--bg-hover);
+            color: var(--text-main);
+        }
+
+        .tier-btn.gold {
+            background: var(--gradient-2);
+            color: white;
+        }
+
+        .tier-btn.platinum {
+            background: var(--gradient-3);
+            color: var(--bg-dark);
+        }
+
+        .tier-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+
+        /* --- Process Section --- */
+        .process-section {
+            padding: 100px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .process-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 40px;
+            right: -20px;
+            width: 40px;
+            height: 2px;
+            background: var(--border);
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: var(--bg-card);
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-weight: 800;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .step-desc {
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        /* --- CTA Section --- */
+        .cta-section {
+            padding: 100px 40px;
+            background: var(--bg-card);
+            text-align: center;
+        }
+
+        .cta-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-content h2 {
+            font-size: 48px;
+            font-weight: 900;
+            margin-bottom: 24px;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cta-content p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+        }
+
+        .form-container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: var(--bg-dark);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid var(--border);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .form-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-input {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 14px 18px;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 18px;
+            background: var(--gradient-1);
+            color: white;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 700;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+        }
+
+        /* --- Mobile Responsive --- */
+        @media (max-width: 1024px) {
+            .hero-content { grid-template-columns: 1fr; gap: 40px; }
+            .tiers-container { grid-template-columns: 1fr; }
+            .tier-card.featured { transform: scale(1); }
+            .process-grid { grid-template-columns: repeat(2, 1fr); }
+            .process-step:not(:last-child)::after { display: none; }
+        }
+
+        @media (max-width: 768px) {
+            .header { padding: 15px 20px; }
+            .nav-menu { display: none; }
+            .hero-text h1 { font-size: 36px; }
+            .hero-stats { flex-direction: column; }
+            .section-header h2 { font-size: 32px; }
+            .form-row { grid-template-columns: 1fr; }
+            .form-group.full-width { grid-column: span 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fa-solid fa-link"></i>
+                Nextlink
+            </div>
+            <nav class="nav-menu">
+                <a href="#tiers">Commission</a>
+                <a href="#process">How It Works</a>
+                <a href="#benefits">Benefits</a>
+                <a href="#join">Join Now</a>
+            </nav>
+            <button class="join-btn" onclick="document.getElementById('join').scrollIntoView({behavior: 'smooth'})">
+                Become Agent
+            </button>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1>Join the Elite Sales Network</h1>
+                <p>Transform your network into income. Earn premium commissions selling Nextlink's cutting-edge products.</p>
+                
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <div class="stat-value">30%</div>
+                        <div class="stat-label">Max Commission</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">$2.5M+</div>
+                        <div class="stat-label">Paid Out</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value">5K+</div>
+                        <div class="stat-label">Active Agents</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="commission-card">
+                    <div class="commission-title">START EARNING TODAY</div>
+                    <div class="commission-value">30%</div>
+                    <div class="commission-desc">Maximum commission rate for top performers</div>
+                    <div class="commission-features">
+                        <div class="feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Instant commission tracking</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Weekly payouts</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>No inventory required</span>
+                        </div>
+                        <div class="feature-item">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Full marketing support</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tiers Section -->
+    <section class="tiers-section" id="tiers">
+        <div class="section-header">
+            <h2>Commission Tiers</h2>
+            <p>Your success is our success. Grow your earnings as you advance through our tier system.</p>
+        </div>
+        
+        <div class="tiers-container">
+            <div class="tier-card">
+                <div class="tier-icon bronze">
+                    <i class="fa-solid fa-medal"></i>
+                </div>
+                <h3 class="tier-name">Bronze Agent</h3>
+                <div class="tier-commission">10%<span>commission</span></div>
+                <p class="tier-description">Perfect for newcomers starting their sales journey</p>
+                <ul class="tier-features">
+                    <li><i class="fa-solid fa-check"></i> Starter marketing kit</li>
+                    <li><i class="fa-solid fa-check"></i> Basic analytics dashboard</li>
+                    <li><i class="fa-solid fa-check"></i> Email support</li>
+                    <li><i class="fa-solid fa-check"></i> Monthly commission payouts</li>
+                </ul>
+                <button class="tier-btn bronze">Get Started</button>
+            </div>
+            
+            <div class="tier-card featured">
+                <div class="tier-badge">Most Popular</div>
+                <div class="tier-icon gold">
+                    <i class="fa-solid fa-trophy"></i>
+                </div>
+                <h3 class="tier-name">Gold Agent</h3>
+                <div class="tier-commission">20%<span>commission</span></div>
+                <p class="tier-description">For consistent performers driving regular sales</p>
+                <ul class="tier-features">
+                    <li><i class="fa-solid fa-check"></i> Advanced marketing tools</li>
+                    <li><i class="fa-solid fa-check"></i> Real-time analytics</li>
+                    <li><i class="fa-solid fa-check"></i> Priority support</li>
+                    <li><i class="fa-solid fa-check"></i> Weekly commission payouts</li>
+                    <li><i class="fa-solid fa-check"></i> Custom discount codes</li>
+                </ul>
+                <button class="tier-btn gold">Aim for Gold</button>
+            </div>
+            
+            <div class="tier-card">
+                <div class="tier-icon platinum">
+                    <i class="fa-solid fa-crown"></i>
+                </div>
+                <h3 class="tier-name">Platinum Agent</h3>
+                <div class="tier-commission">30%<span>commission</span></div>
+                <p class="tier-description">Elite status for top-tier sales professionals</p>
+                <ul class="tier-features">
+                    <li><i class="fa-solid fa-check"></i> Premium marketing suite</li>
+                    <li><i class="fa-solid fa-check"></i> API access</li>
+                    <li><i class="fa-solid fa-check"></i> Dedicated account manager</li>
+                    <li><i class="fa-solid fa-check"></i> Daily commission payouts</li>
+                    <li><i class="fa-solid fa-check"></i> White-label store options</li>
+                    <li><i class="fa-solid fa-check"></i> Profit sharing bonuses</li>
+                </ul>
+                <button class="tier-btn platinum">Reach Platinum</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process-section" id="process">
+        <div class="section-header">
+            <h2>How It Works</h2>
+            <p>Start earning in four simple steps</p>
+        </div>
+        
+        <div class="process-grid">
+            <div class="process-step">
+                <div class="step-number">1</div>
+                <h3 class="step-title">Sign Up</h3>
+                <p class="step-desc">Create your free agent account in minutes</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">2</div>
+                <h3 class="step-title">Get Tools</h3>
+                <p class="step-desc">Access marketing materials and tracking links</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">3</div>
+                <h3 class="step-title">Sell Products</h3>
+                <p class="step-desc">Promote Nextlink products to your network</p>
+            </div>
+            <div class="process-step">
+                <div class="step-number">4</div>
+                <h3 class="step-title">Earn Commission</h3>
+                <p class="step-desc">Receive payouts for every successful sale</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" id="join">
+        <div class="cta-content">
+            <h2>Ready to Start Earning?</h2>
+            <p>Join thousands of agents already making money with Nextlink. No setup fees, no inventory - just pure commission.</p>
+            
+            <div class="form-container">
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">First Name</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Phone</label>
+                            <input type="tel" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Country</label>
+                        <input type="text" class="form-input" required>
+                    </div>
+                    <div class="form-group full-width">
+                        <label class="form-label">Tell us about your sales experience</label>
+                        <textarea class="form-input" rows="4" style="resize: vertical;"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">Join Agent Network</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Form submission
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const form = event.target;
+            const submitBtn = form.querySelector('.submit-btn');
+            const originalText = submitBtn.textContent;
+            
+            submitBtn.textContent = 'Processing Application...';
+            submitBtn.disabled = true;
+            
+            setTimeout(() => {
+                submitBtn.textContent = '✓ Welcome to Nextlink!';
+                submitBtn.style.background = 'var(--success)';
+                
+                setTimeout(() => {
+                    form.reset();
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                    
+                    showNotification('Application submitted! Check your email for next steps.');
+                }, 2000);
+            }, 1500);
+        }
+
+        // Notification system
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                bottom: 30px;
+                right: 30px;
+                background: var(--success);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                z-index: 10000;
+                animation: slideIn 0.3s ease;
+                display: flex;
+                align-items: center;
+                gap: 12px;
+                font-weight: 600;
+            `;
+            notification.innerHTML = `
+                <i class="fa-solid fa-check-circle"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 4000);
+        }
+
+        // Add animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tier-card, .process-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Parallax effect on scroll
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero::before');
+            if (parallax) {
+                const speed = 0.5;
+                parallax.style.transform = `translateY(${scrolled * speed}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
