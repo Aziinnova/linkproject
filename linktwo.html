@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airbnb Style Clone - Super Advanced</title>
+    
+    <!-- External Dependencies -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/themes/light.css">
+
+    <style>
+        /* --- CSS Reset & Variables --- */
+        :root {
+            --primary: #1e67f0;
+            --text-dark: #222222;
+            --text-light: #717171;
+            --border: #dddddd;
+            --bg-hover: #f7f7f7;
+            --shadow-sm: 0 1px 2px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.05);
+            --shadow-md: 0 6px 16px rgba(0,0,0,0.12);
+            --shadow-lg: 0 8px 24px rgba(0,0,0,0.15);
+            --radius-btn: 40px;
+            --radius-card: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Nunito', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: var(--text-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+            padding-top: 80px; /* Space for sticky header */
+        }
+
+        /* --- Utilities --- */
+        .hidden { display: none !important; }
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Header --- */
+        .header {
+            border-bottom: 1px solid #ebebeb;
+            padding: 10px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 1000;
+            height: 80px;
+        }
+
+        .logo {
+            color: var(--primary);
+            font-size: 24px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            letter-spacing: -0.5px;
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-btn);
+            box-shadow: var(--shadow-sm);
+            transition: box-shadow 0.2s ease;
+            cursor: pointer;
+            min-width: 350px;
+            padding: 8px 8px 8px 24px;
+            justify-content: space-between;
+        }
+
+        .search-bar:hover {
+            box-shadow: var(--shadow-md);
+        }
+
+        .search-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .search-info span:first-child {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .search-info span:last-child {
+            font-size: 12px;
+            color: var(--text-light);
+            font-weight: 400;
+        }
+
+        .search-divider {
+            height: 24px;
+            width: 1px;
+            background: var(--border);
+            margin: 0 16px;
+        }
+
+        .search-icon-btn {
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            transition: transform 0.2s;
+        }
+
+        .search-bar:hover .search-icon-btn {
+            transform: scale(1.05);
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .host-link {
+            padding: 10px 14px;
+            border-radius: 22px;
+            transition: background 0.2s ease;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        .host-link:hover { background: var(--bg-hover); }
+
+        .profile-btn {
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            padding: 5px 5px 5px 12px;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            transition: box-shadow 0.2s ease;
+            gap: 12px;
+        }
+
+        .profile-btn:hover { box-shadow: var(--shadow-sm); }
+        
+        /* --- Category Bar --- */
+        .category-bar {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            background: white;
+            z-index: 900;
+            padding: 15px 40px 0;
+            display: flex;
+            overflow-x: auto;
+            gap: 32px;
+            border-bottom: 1px solid transparent; /* Placeholder for scroll */
+            box-shadow: 0 4px 6px -4px rgba(0,0,0,0.05);
+        }
+
+        .category-bar::-webkit-scrollbar { display: none; }
+        .category-bar { -ms-overflow-style: none; scrollbar-width: none; }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            padding-bottom: 12px;
+            opacity: 0.6;
+            border-bottom: 2px solid transparent;
+            min-width: 64px;
+            transition: all 0.2s;
+        }
+
+        .category-item:hover { opacity: 1; border-bottom-color: #dddddd; }
+        .category-item.active { opacity: 1; border-bottom-color: var(--text-dark); }
+
+        .category-icon { font-size: 24px; margin-bottom: 8px; }
+        .category-text { font-size: 12px; font-weight: 600; white-space: nowrap; }
+
+        /* --- Main Content --- */
+        .main-content {
+            padding: 24px 40px;
+            padding-top: 110px; /* Offset for categories */
+            min-height: 100vh;
+        }
+
+        /* --- Map View Styles --- */
+        .map-view {
+            position: fixed;
+            top: 80px;
+            left: 0;
+            width: 100%;
+            height: calc(100vh - 80px);
+            background: #f0f0f0;
+            z-index: 10;
+            display: none;
+        }
+        
+        .map-view.active { display: block; }
+        
+        .map-placeholder {
+            width: 100%;
+            height: 100%;
+            background-image: url('https://upload.wikimedia.org/wikipedia/commons/e/ec/World_map_blank_without_borders.svg');
+            background-size: cover;
+            background-position: center;
+            opacity: 0.6;
+            filter: grayscale(20%) contrast(1.1);
+        }
+
+        .map-pin {
+            position: absolute;
+            background: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            cursor: pointer;
+            transition: transform 0.2s;
+            animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+            opacity: 0;
+        }
+
+        .map-pin:hover { transform: scale(1.1); z-index: 100; color: var(--primary); }
+        
+        @keyframes popIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Toggle Button --- */
+        .map-toggle-container {
+            position: fixed;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2000;
+        }
+
+        .map-toggle-btn {
+            background-color: #222222;
+            color: white;
+            padding: 14px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: var(--shadow-lg);
+            border: none;
+            transition: transform 0.2s;
+        }
+
+        .map-toggle-btn:hover { transform: scale(1.05); }
+
+        /* --- Property Grid --- */
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px 24px;
+        }
+
+        .property-card {
+            cursor: pointer;
+            position: relative;
+            group: card;
+        }
+
+        /* --- Carousel --- */
+        .image-carousel {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            border-radius: var(--radius-card);
+            aspect-ratio: 20/19;
+            margin-bottom: 12px;
+            background: #e0e0e0;
+        }
+
+        .image-container {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none; /* Firefox */
+        }
+        .image-container::-webkit-scrollbar { display: none; }
+
+        .property-image {
+            flex-shrink: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            scroll-snap-align: start;
+        }
+
+        .carousel-nav-btn {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: white;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            cursor: pointer;
+            z-index: 20;
+            border: none;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .property-card:hover .carousel-nav-btn { opacity: 1; }
+        .carousel-nav-btn.prev { left: 10px; }
+        .carousel-nav-btn.next { right: 10px; }
+
+        .carousel-indicators {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 6px;
+        }
+
+        .indicator-dot {
+            width: 6px;
+            height: 6px;
+            background-color: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+        }
+        .indicator-dot.active { background-color: white; }
+
+        /* --- Favorite Heart --- */
+        .heart-toggle {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            font-size: 22px;
+            color: rgba(0, 0, 0, 0.5);
+            cursor: pointer;
+            z-index: 20;
+            transition: transform 0.2s;
+        }
+        .heart-toggle:hover { transform: scale(1.1); }
+        .heart-toggle.active { color: var(--primary); }
+        .heart-toggle.active i { font-weight: 900; } /* Solid heart */
+
+        /* --- Details --- */
+        .property-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .property-details h3 { font-size: 15px; font-weight: 600; margin-bottom: 2px; }
+        .property-details p { font-size: 15px; color: var(--text-light); margin-bottom: 1px; }
+        .property-price { margin-top: 6px; font-size: 15px; color: var(--text-dark); }
+        .property-price span { font-weight: 400; }
+
+        .star-rating {
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            gap: 4px;
+        }
+
+        /* --- Search Modal --- */
+        .search-modal-backdrop {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.4);
+            z-index: 2000;
+            display: none;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+
+        .search-modal-backdrop.active {
+            display: block;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .search-modal {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background-color: white;
+            border-radius: 32px;
+            padding: 0;
+            box-shadow: var(--shadow-lg);
+            width: 850px;
+            max-width: 95%;
+            transition: transform 0.3s ease;
+            overflow: hidden;
+        }
+
+        .search-modal-backdrop.active .search-modal {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        .search-modal-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ebebeb;
+        }
+
+        .search-modal-tabs button {
+            background: none;
+            border: none;
+            padding: 20px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-light);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .search-modal-tabs button:hover { color: var(--text-dark); }
+        .search-modal-tabs button.active { color: var(--text-dark); }
+        
+        .search-modal-tabs button.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: var(--text-dark);
+        }
+
+        .search-modal-content { padding: 20px 30px 30px; }
+
+        .search-modal-input-group {
+            display: flex;
+            border: 1px solid #b0b0b0;
+            border-radius: 32px;
+            overflow: hidden;
+            margin-bottom: 30px;
+        }
+
+        .search-modal-input-item {
+            flex: 1;
+            padding: 14px 24px;
+            cursor: pointer;
+            position: relative;
+            transition: background 0.2s;
+        }
+
+        .search-modal-input-item:hover { background: #ebebeb; }
+        .search-modal-input-item.active { background: #ebebeb; box-shadow: inset 0 0 0 2px #222222; }
+
+        .search-modal-input-item label {
+            display: block;
+            font-size: 12px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .search-modal-input-item input,
+        .search-modal-input-item .placeholder {
+            width: 100%;
+            border: none;
+            outline: none;
+            font-size: 14px;
+            color: var(--text-dark);
+            background: none;
+        }
+
+        .search-modal-input-item .placeholder { color: var(--text-light); }
+        .search-modal-input-item input::placeholder { color: var(--text-light); }
+
+        /* Guest Counter Popover */
+        .guest-counter-wrapper {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border: 1px solid #dddddd;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            padding: 15px;
+            width: 320px;
+            display: none;
+            z-index: 2001;
+            margin-top: 10px;
+        }
+
+        .guest-counter-wrapper.active { display: block; }
+
+        .guest-counter-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #eeeeee;
+        }
+        .guest-counter-row:last-child { border-bottom: none; padding-bottom: 0; }
+        .guest-counter-row:first-child { padding-top: 0; }
+
+        .guest-header h4 { font-size: 14px; margin-bottom: 2px; }
+        .guest-header p { font-size: 12px; color: var(--text-light); }
+
+        .guest-counter-controls { display: flex; align-items: center; gap: 12px; }
+
+        .guest-counter-btn {
+            background: none;
+            border: 1px solid #b0b0b0;
+            color: var(--text-dark);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .guest-counter-btn:hover:not(:disabled) { border-color: #222; }
+        .guest-counter-btn:disabled { border-color: #e0e0e0; color: #e0e0e0; cursor: default; }
+
+        .guest-count { font-size: 14px; width: 20px; text-align: center; }
+
+        /* Search Footer */
+        .search-modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .secondary-btn {
+            background: none;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            color: var(--text-dark);
+        }
+
+        .search-btn {
+            background-color: var(--primary);
+            color: white;
+            padding: 14px 32px;
+            border-radius: 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.1s;
+        }
+        .search-btn:active { transform: scale(0.96); }
+
+        /* Date Picker Overrides */
+        .flatpickr-calendar { 
+            z-index: 2002 !important; 
+            box-shadow: var(--shadow-md); 
+            border-radius: 12px; 
+        }
+        .flatpickr-day.selected, .flatpickr-day.startRange, .flatpickr-day.endRange, .flatpickr-day.selected.inRange, .flatpickr-day.startRange.inRange, .flatpickr-day.endRange.inRange, .flatpickr-day.selected:focus, .flatpickr-day.startRange:focus, .flatpickr-day.endRange:focus, .flatpickr-day.selected:hover, .flatpickr-day.startRange:hover, .flatpickr-day.endRange:hover, .flatpickr-day.selected.prevMonthDay, .flatpickr-day.startRange.prevMonthDay, .flatpickr-day.endRange.prevMonthDay, .flatpickr-day.selected.nextMonthDay, .flatpickr-day.startRange.nextMonthDay, .flatpickr-day.endRange.nextMonthDay {
+            background: var(--text-dark);
+            border-color: var(--text-dark);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: #222;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 3000;
+            opacity: 0;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-md);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .toast.active { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+        /* Responsive */
+        @media (max-width: 950px) {
+            .search-modal { width: 90%; }
+            .search-modal-input-group { flex-direction: column; border-radius: 12px; border: none; }
+            .search-modal-input-item { border-bottom: 1px solid #eee; padding: 15px; }
+            .search-modal-input-item.active { border: none; background: #f7f7f7; }
+            .guest-counter-wrapper { position: static; width: 100%; box-shadow: none; margin-top: 10px; display: none; }
+            .guest-counter-wrapper.active { display: block; }
+            .search-bar { min-width: auto; flex: 1; margin: 0 20px; }
+            .header { padding: 10px 20px; }
+            .logo span, .host-link { display: none; } /* Simplify header */
+            .logo i { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="logo" id="logo-home">
+            <i class="fa-brands fa-link"></i>
+            <span style="margin-left: 5px;">link Force</span>
+        </div>
+
+      
+
+        <div class="user-menu">
+            <div class="host-link"> home</div>
+              <div class="host-link"> about</div>
+            <div class="profile-btn">
+                <i class="fa-solid fa-bars"></i>
+                <i class="fa-solid fa-circle-user" style="font-size: 28px; color: #717171;"></i>
+            </div>
+        </div>
+       
+    </header>
+
+    <!-- Categories -->
+    <nav class="category-bar" id="category-bar"></nav>
+
+    <!-- Main View -->
+    <main class="main-content">
+        
+        <!-- Map View Container -->
+        <div class="map-view" id="map-view">
+            <div class="map-placeholder"></div>
+            <!-- Pins will be injected here via JS -->
+        </div>
+
+        <!-- List Grid -->
+        <div class="property-grid" id="property-grid"></div>
+    </main>
+
+  
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fa-solid fa-circle-check" style="color: #4CAF50;"></i>
+        <span id="toast-msg">Action successful</span>
+    </div>
+
+    <!-- External JS -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <script>
+        // --- Data ---
+  const categories = [
+    { name: "Electronics", icon: "fa-laptop", key: "electronics" },
+    { name: "Clothing", icon: "fa-shirt", key: "clothing" },
+    { name: "Shoes", icon: "fa-boot", key: "shoes" },
+    { name: "Watches", icon: "fa-clock", key: "watches" },
+    { name: "Jewelry", icon: "fa-gem", key: "jewelry" },
+    { name: "Home & Kitchen", icon: "fa-kitchen-set", key: "home_kitchen" },
+    { name: "Beauty", icon: "fa-spray-can-sparkles", key: "beauty" },
+    { name: "Sports", icon: "fa-volleyball", key: "sports" },
+    { name: "Toys", icon: "fa-puzzle-piece", key: "toys" },
+    { name: "Automotive", icon: "fa-car", key: "automotive" },
+    { name: "Books", icon: "fa-book", key: "books" },
+    { name: "Furniture", icon: "fa-couch", key: "furniture" },
+    { name: "Groceries", icon: "fa-basket-shopping", key: "groceries" },
+    { name: "Health", icon: "fa-heart-pulse", key: "health" },
+    { name: "Appliances", icon: "fa-blender", key: "appliances" },
+];
+
+      const listings = [
+    {
+        id: 1, 
+        city: "TechStore Pro", // Brand/Store Name
+        distance: "In Stock: 15 units", // Stock info
+        date: "Delivery: 2-3 Days", // Delivery info
+        price: "$1,299", 
+        rating: "4.92", 
+        category: "electronics",
+        description: "Latest generation high-performance laptop for creators and gamers.",
+        images: [
+            "https://images.unsplash.com/photo-1496181133206-80ce9b88a853?q=80&w=2071&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1517336712461-481ec38b25f3?q=80&w=2071&auto=format&fit=crop"
+        ]
+    },
+    {
+        id: 2, 
+        city: "Urban Wear", 
+        distance: "In Stock: 50 units", 
+        date: "Delivery: Next Day", 
+        price: "$45", 
+        rating: "4.75", 
+        category: "clothing",
+        description: "Premium cotton oversized t-shirt in midnight black.",
+        images: [
+            "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=2080&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1583743814966-8936f5b7be1a?q=80&w=2080&auto=format&fit=crop"
+        ]
+    },
+    {
+        id: 3, 
+        city: "Sole Searcher", 
+        distance: "Limited Edition", 
+        date: "Delivery: 3-5 Days", 
+        price: "$120", 
+        rating: "4.88", 
+        category: "shoes",
+        description: "Classic white leather sneakers with breathable mesh lining.",
+        images: [
+            "https://images.unsplash.com/photo-1549298916-b41d501d3772?q=80&w=2012&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=2070&auto=format&fit=crop"
+        ]
+    },
+    {
+        id: 4, 
+        city: "Timekeepers", 
+        distance: "High Demand", 
+        date: "Delivery: Free Shipping", 
+        price: "$250", 
+        rating: "4.95", 
+        category: "watches",
+        description: "Elegant silver analog watch with genuine leather strap.",
+        images: [
+            "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=2099&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1524592094714-0f0654e20314?q=80&w=2099&auto=format&fit=crop"
+        ]
+    },
+    {
+        id: 5, 
+        city: "SoundBox", 
+        distance: "In Stock: 10 units", 
+        date: "Delivery: 2 Days", 
+        price: "$199", 
+        rating: "4.80", 
+        category: "electronics",
+        description: "Noise-canceling wireless headphones with 40-hour battery life.",
+        images: [
+            "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=2070&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1484704849700-f032a568e944?q=80&w=2070&auto=format&fit=crop"
+        ]
+    },
+    {
+        id: 6, 
+        city: "Street Step", 
+        distance: "Restocked", 
+        date: "Delivery: 3 Days", 
+        price: "$85", 
+        rating: "4.60", 
+        category: "shoes",
+        description: "Lightweight running shoes for maximum comfort and speed.",
+        images: [
+            "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=1964&auto=format&fit=crop",
+            "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=1974&auto=format&fit=crop"
+        ]
+    }
+];
+        // --- State Management ---
+        const state = {
+            filterCategory: null,
+            filterLocation: "",
+            dates: null,
+            guests: { adults: 0, children: 0 },
+            isMapView: false
+        };
+
+        const DOM = {
+            grid: document.getElementById('property-grid'),
+            categories: document.getElementById('category-bar'),
+            modalBackdrop: document.getElementById('search-modal-backdrop'),
+            searchBtn: document.getElementById('search-btn'),
+            clearBtn: document.getElementById('clear-search-btn'),
+            headerSearch: document.getElementById('header-search-bar'),
+            locationInput: document.getElementById('location-input'),
+            checkInPlaceholder: document.getElementById('checkin-placeholder'),
+            checkOutPlaceholder: document.getElementById('checkout-placeholder'),
+            guestsPlaceholder: document.getElementById('guests-placeholder'),
+            guestCounter: document.getElementById('guest-counter-wrapper'),
+            headerLocation: document.getElementById('header-location'),
+            headerDates: document.getElementById('header-dates'),
+            headerGuests: document.getElementById('header-guests'),
+            mapToggleBtn: document.getElementById('map-toggle-btn'),
+            mapView: document.getElementById('map-view'),
+            toast: document.getElementById('toast'),
+            toastMsg: document.getElementById('toast-msg'),
+            logo: document.getElementById('logo-home')
+        };
+
+        let flatpickrInstance;
+
+        // --- Initialization ---
+        function init() {
+            renderCategories();
+            renderProperties();
+            setupEventListeners();
+            initDatePicker();
+        }
+
+        // --- Render Functions ---
+        function renderCategories() {
+            DOM.categories.innerHTML = categories.map(cat => `
+                <div class="category-item ${state.filterCategory === cat.key ? 'active' : ''}" data-category="${cat.key}">
+                    <i class="fa-solid ${cat.icon} category-icon"></i>
+                    <span class="category-text">${cat.name}</span>
+                </div>
+            `).join('');
+        }
+
+        function renderProperties() {
+            DOM.grid.innerHTML = '';
+
+            let filtered = listings;
+
+            // Apply Category Filter
+            if (state.filterCategory) {
+                filtered = filtered.filter(l => l.category === state.filterCategory);
+            }
+
+            // Apply Location Search (Case insensitive)
+            if (state.filterLocation) {
+                const term = state.filterLocation.toLowerCase();
+                filtered = filtered.filter(l => 
+                    l.city.toLowerCase().includes(term) || 
+                    l.description.toLowerCase().includes(term)
+                );
+            }
+
+            // Update Grid
+            if (filtered.length === 0) {
+                DOM.grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; padding: 40px;">
+                    <h3>No stays found</h3>
+                    <p>Try adjusting your search or filters.</p>
+                </div>`;
+            } else {
+                filtered.forEach((listing, index) => {
+                    const card = createCard(listing, index);
+                    DOM.grid.appendChild(card);
+                });
+            }
+            
+            // Update Map Pins if Map is active
+            if(state.isMapView) renderMapPins(filtered);
+        }
+
+        function createCard(listing, index) {
+            const card = document.createElement('div');
+            card.className = 'property-card fade-in';
+            card.style.animationDelay = `${index * 50}ms`; // Staggered animation
+
+            const imagesHtml = listing.images.map(url => `<img src="${url}" alt="${listing.city}" class="property-image">`).join('');
+
+            card.innerHTML = `
+                <div class="image-carousel">
+                    <div class="image-container" id="img-cont-${listing.id}">
+                        ${imagesHtml}
+                    </div>
+                    <div class="carousel-indicators">
+                        ${listing.images.map((_, i) => `<div class="indicator-dot ${i === 0 ? 'active' : ''}"></div>`).join('')}
+                    </div>
+                    ${listing.images.length > 1 ? `
+                    <button class="carousel-nav-btn prev" onclick="scrollCarousel(event, '${listing.id}', -1)"><i class="fa-solid fa-chevron-left"></i></button>
+                    <button class="carousel-nav-btn next" onclick="scrollCarousel(event, '${listing.id}', 1)"><i class="fa-solid fa-chevron-right"></i></button>
+                    ` : ''}
+                </div>
+
+                <div class="heart-toggle" onclick="toggleHeart(this)">
+                    <i class="fa-regular fa-heart"></i>
+                </div>
+
+                <div class="property-info">
+                    <div class="property-details">
+                        <h3>${listing.city}</h3>
+                        <p>${listing.distance}</p>
+                        <p>${listing.date}</p>
+                        <p class="property-price">${listing.price} <span>night</span></p>
+                    </div>
+                    <div class="star-rating">
+                        <i class="fa-solid fa-star"></i>
+                        <span>${listing.rating}</span>
+                    </div>
+                </div>
+            `;
+            return card;
+        }
+
+        function renderMapPins(currentListings) {
+            // Remove existing pins
+            const existingPins = document.querySelectorAll('.map-pin');
+            existingPins.forEach(p => p.remove());
+
+            // Add new pins (Randomized positions for simulation)
+            currentListings.forEach((listing, index) => {
+                const pin = document.createElement('div');
+                pin.className = 'map-pin';
+                pin.textContent = listing.price;
+                // Random top/left for visual simulation (staying within padding)
+                pin.style.top = `${15 + Math.random() * 70}%`; 
+                pin.style.left = `${10 + Math.random() * 80}%`;
+                pin.style.animationDelay = `${index * 100}ms`;
+                
+                pin.addEventListener('click', () => {
+                    showToast(`Selected: ${listing.city}`);
+                });
+
+                DOM.mapView.querySelector('.map-placeholder').appendChild(pin);
+            });
+        }
+
+        // --- Actions ---
+
+        window.scrollCarousel = (e, id, direction) => {
+            e.stopPropagation();
+            const container = document.getElementById(`img-cont-${id}`);
+            const scrollAmount = container.offsetWidth;
+            container.scrollBy({ left: scrollAmount * direction, behavior: 'smooth' });
+            
+            // Update indicators
+            setTimeout(() => {
+                const index = Math.round(container.scrollLeft / scrollAmount);
+                const dots = container.parentElement.querySelectorAll('.indicator-dot');
+                dots.forEach((d, i) => d.classList.toggle('active', i === index));
+            }, 300);
+        };
+
+        window.toggleHeart = (el) => {
+            el.classList.toggle('active');
+            const icon = el.querySelector('i');
+            if(el.classList.contains('active')) {
+                icon.classList.remove('fa-regular');
+                icon.classList.add('fa-solid');
+                showToast("Saved to favorites");
+            } else {
+                icon.classList.add('fa-regular');
+                icon.classList.remove('fa-solid');
+            }
+        };
+
+        function showToast(msg) {
+            DOM.toastMsg.textContent = msg;
+            DOM.toast.classList.add('active');
+            setTimeout(() => DOM.toast.classList.remove('active'), 3000);
+        }
+
+        // --- Logic ---
+
+        function showModal() {
+            DOM.modalBackdrop.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Set initial state styling
+            document.querySelectorAll('.search-modal-input-item').forEach(el => el.classList.remove('active'));
+            document.querySelector('[data-input-target="location"]').classList.add('active');
+            DOM.guestCounter.classList.remove('active');
+            DOM.locationInput.focus();
+        }
+
+        function hideModal() {
+            DOM.modalBackdrop.classList.remove('active');
+            document.body.style.overflow = '';
+            if (flatpickrInstance) flatpickrInstance.close();
+        }
+
+        function performSearch() {
+            // Update State
+            state.filterLocation = DOM.locationInput.value;
+            
+            // Update Header UI
+            if(state.filterLocation) {
+                DOM.headerLocation.textContent = state.filterLocation;
+            }
+            if(state.dates) {
+                DOM.headerDates.textContent = `${state.dates.start} - ${state.dates.end}`;
+            }
+            if(state.guests.adults > 0 || state.guests.children > 0) {
+                DOM.headerGuests.textContent = `${state.guests.adults + state.guests.children} guests`;
+            }
+
+            renderProperties();
+            hideModal();
+            showToast(`Found ${listings.length} stays`);
+        }
+
+        function clearFilters() {
+            state.filterLocation = "";
+            state.dates = null;
+            state.guests = { adults: 0, children: 0 };
+            
+            // Reset Inputs
+            DOM.locationInput.value = "";
+            DOM.checkInPlaceholder.textContent = "Add dates";
+            DOM.checkOutPlaceholder.textContent = "Add dates";
+            DOM.guestsPlaceholder.textContent = "Add guests";
+            
+            // Reset Counters
+            document.getElementById('adults-count').textContent = 0;
+            document.getElementById('children-count').textContent = 0;
+            document.querySelectorAll('.guest-counter-btn').forEach(b => {
+                if(b.dataset.action === 'decrement') b.disabled = true;
+            });
+
+            // Reset Header
+            DOM.headerLocation.textContent = "Anywhere";
+            DOM.headerDates.textContent = "Any week";
+            DOM.headerGuests.textContent = "Add guests";
+
+            renderProperties();
+        }
+
+        // --- Event Listeners ---
+        function setupEventListeners() {
+            // Header Search
+            DOM.headerSearch.addEventListener('click', showModal);
+
+            // Modal Backdrop Click
+            DOM.modalBackdrop.addEventListener('click', (e) => {
+                if (e.target === DOM.modalBackdrop) hideModal();
+            });
+
+            // Input Activation Styling
+            document.querySelectorAll('.search-modal-input-item').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    // Don't activate if clicking specific interactive elements inside
+                    if(e.target.closest('.guest-counter-controls') || e.target.tagName === 'BUTTON') return;
+
+                    document.querySelectorAll('.search-modal-input-item').forEach(el => el.classList.remove('active'));
+                    
+                    // If it's the dates group, activate both start and end
+                    if(this.dataset.inputTarget === 'checkin' || this.dataset.inputTarget === 'checkout') {
+                         document.getElementById('checkin-trigger').classList.add('active');
+                         document.getElementById('checkout-trigger').classList.add('active');
+                         if(flatpickrInstance) flatpickrInstance.open();
+                    } else {
+                        this.classList.add('active');
+                        DOM.guestCounter.classList.remove('active');
+                        if(flatpickrInstance) flatpickrInstance.close();
+                    }
+
+                    if (this.dataset.inputTarget === 'guests') {
+                        DOM.guestCounter.classList.add('active');
+                        if(flatpickrInstance) flatpickrInstance.close();
+                    }
+                    
+                    if (this.dataset.inputTarget === 'location') {
+                        DOM.locationInput.focus();
+                    }
+                });
+            });
+
+            // Category Filtering
+            DOM.categories.addEventListener('click', (e) => {
+                const item = e.target.closest('.category-item');
+                if (!item) return;
+                
+                const key = item.dataset.category;
+                // Toggle
+                if (state.filterCategory === key) {
+                    state.filterCategory = null;
+                    item.classList.remove('active');
+                } else {
+                    state.filterCategory = key;
+                    document.querySelectorAll('.category-item').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+                }
+                renderProperties();
+            });
+
+            // Search Buttons
+            DOM.searchBtn.addEventListener('click', performSearch);
+            DOM.clearBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                clearFilters();
+            });
+
+            // Guest Counter Logic
+            document.querySelectorAll('.guest-counter-btn').forEach(btn => {
+                btn.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const type = this.dataset.type;
+                    const action = this.dataset.action;
+                    const countSpan = document.getElementById(`${type}-count`);
+                    let val = parseInt(countSpan.textContent);
+
+                    if (action === 'increment') val++;
+                    else if (action === 'decrement' && val > 0) val--;
+
+                    state.guests[type] = val;
+                    countSpan.textContent = val;
+
+                    // Disable decrement if 0
+                    this.previousElementSibling?.classList.toggle('disabled', val === 0);
+                    if(action === 'decrement') this.disabled = val === 0;
+
+                    // Update Placeholder
+                    const total = state.guests.adults + state.guests.children;
+                    DOM.guestsPlaceholder.textContent = total > 0 ? `${total} guest${total > 1 ? 's' : ''}` : "Add guests";
+                });
+            });
+
+            // Map Toggle
+            DOM.mapToggleBtn.addEventListener('click', () => {
+                state.isMapView = !state.isMapView;
+                if (state.isMapView) {
+                    DOM.mapView.classList.add('active');
+                    DOM.mapToggleBtn.querySelector('span').textContent = "Show list";
+                    DOM.grid.style.display = 'none';
+                    renderMapPins(listings); // Show all or filtered
+                } else {
+                    DOM.mapView.classList.remove('active');
+                    DOM.mapToggleBtn.querySelector('span').textContent = "Show map";
+                    DOM.grid.style.display = 'grid';
+                }
+            });
+
+            // Logo Click to Reset
+            DOM.logo.addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                clearFilters();
+            });
+        }
+
+        // --- Date Picker Setup ---
+        function initDatePicker() {
+            flatpickrInstance = flatpickr("#date-range-input", {
+                mode: "range",
+                minDate: "today",
+                dateFormat: "M j",
+                inline: false,
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (selectedDates.length === 2) {
+                        state.dates = {
+                            start: instance.formatDate(selectedDates[0], "M j"),
+                            end: instance.formatDate(selectedDates[1], "M j")
+                        };
+                        DOM.checkInPlaceholder.textContent = state.dates.start;
+                        DOM.checkOutPlaceholder.textContent = state.dates.end;
+                    } else if (selectedDates.length === 1) {
+                        DOM.checkInPlaceholder.textContent = instance.formatDate(selectedDates[0], "M j");
+                        DOM.checkOutPlaceholder.textContent = "Add dates";
+                    }
+                }
+            });
+        }
+
+        // Run
+        init();
+
+    </script>
+</body>
+</html>
