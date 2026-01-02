@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NexLink | Connect, Share, Earn</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #1e40af;
+            --accent: #f59e0b; /* Gold for money/commission */
+            --success: #10b981;
+            --bg-light: #f3f4f6;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --white: #ffffff;
+            --card-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+        }
+
+        /* --- Header & Nav --- */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo span { color: var(--text-dark); }
+
+        .role-switcher {
+            display: flex;
+            gap: 10px;
+            background: #e5e7eb;
+            padding: 5px;
+            border-radius: 50px;
+        }
+
+        .role-btn {
+            border: none;
+            background: transparent;
+            padding: 8px 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .role-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            box-shadow: 0 2px 5px rgba(37, 99, 235, 0.3);
+        }
+
+        /* --- NEW: Image Hook Slide (Marquee) --- */
+        .marquee-section {
+            background: #ffffff;
+            padding: 15px 0;
+            border-bottom: 1px solid #e5e7eb;
+            position: relative;
+            z-index: 999;
+            overflow: hidden;
+        }
+
+        .marquee-container {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+
+        .marquee-track {
+            display: inline-block;
+            animation: scroll 40s linear infinite;
+        }
+
+        /* Pause animation on hover so users can see the logos */
+        .marquee-container:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        .partner-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 100px;
+            height: 60px;
+            margin: 0 15px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            transition: transform 0.3s ease;
+            border: 1px solid #f0f0f0;
+        }
+
+        .partner-logo:hover {
+            transform: scale(1.1);
+            border-color: var(--primary);
+            z-index: 10;
+        }
+
+        .partner-logo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(100%); /* B&W for professional look */
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+
+        .partner-logo:hover img {
+            filter: grayscale(0%);
+            opacity: 1;
+        }
+
+        .partner-badge {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0,0,0,0.6);
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 0;
+            text-align: center;
+        }
+
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); } /* -50% because we double the content */
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            position: relative;
+            padding: 3rem 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: var(--white);
+            text-align: center;
+            overflow: hidden;
+            margin-top: -1px; /* Fix sub-pixel gap */
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            animation: fadeIn 1s ease-out;
+        }
+
+        .cta-btn {
+            background: var(--accent);
+            color: var(--text-dark);
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* --- Stats & Hook Animation --- */
+        .hook-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .hook-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255,255,255,0.2);
+            width: 200px;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .hook-card:nth-child(2) { animation-delay: 2s; }
+        .hook-card:nth-child(3) { animation-delay: 4s; }
+
+        .hook-icon { font-size: 2rem; margin-bottom: 10px; }
+        .hook-val { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+
+        /* --- Main Content Area --- */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            min-height: 60vh;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2rem;
+            color: var(--text-dark);
+        }
+
+        /* --- Filters --- */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #e5e7eb;
+            background: var(--white);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background: var(--primary);
+            color: var(--white);
+            border-color: var(--primary);
+        }
+
+        /* --- Grid Layout --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* --- Company/Product Card --- */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s ease;
+            position: relative;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            background: #eee;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .badge-cat { background: #e0f2fe; color: #0284c7; }
+        .badge-discount { background: #dcfce7; color: #16a34a; border: 1px solid #16a34a; }
+
+        .company-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .product-name {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+
+        .commission-tag {
+            color: var(--accent);
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .action-btn {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            background: var(--text-dark);
+            color: var(--white);
+            cursor: pointer;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
+
+        .action-btn:hover {
+            background: var(--primary);
+        }
+
+        /* --- Agent Dashboard Specifics --- */
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-box {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+        }
+
+        .stat-label { font-size: 0.9rem; color: var(--text-light); }
+        .stat-number { font-size: 1.8rem; font-weight: 700; color: var(--primary); }
+
+        /* --- Modal --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+
+        .modal-overlay.open {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .modal {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            transform: scale(0.9);
+            transition: transform 0.3s;
+        }
+
+        .modal-overlay.open .modal {
+            transform: scale(1);
+        }
+
+        .link-box {
+            background: var(--bg-light);
+            padding: 10px;
+            border: 1px dashed #9ca3af;
+            word-break: break-all;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        /* --- Toast Notification --- */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            background: var(--text-dark);
+            color: var(--white);
+            padding: 12px 20px;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: slideInRight 0.3s ease-out;
+            min-width: 250px;
+        }
+
+        .toast.success { border-left: 4px solid var(--success); }
+        .toast.info { border-left: 4px solid var(--primary); }
+
+        /* --- Animations --- */
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(100%); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .dashboard-stats { grid-template-columns: 1fr; }
+            .hook-container { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path></svg>
+                NexLink
+            </div>
+            <div class="role-switcher">
+                <button class="role-btn active" onclick="switchRole('agent')">Agent</button>
+                <button class="role-btn" onclick="switchRole('customer')">Customer</button>
+                <button class="role-btn" onclick="switchRole('partners')">Partners</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- NEW: Hook Image Slide (Marquee) -->
+    <section class="marquee-section">
+        <div class="marquee-container">
+            <div class="marquee-track" id="marqueeTrack">
+                <!-- Logos injected via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Dynamic Content Container -->
+    <div id="app">
+        <!-- Views will be injected here via JavaScript -->
+    </div>
+
+    <!-- Modal for Links/Registration -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <h3 id="modalTitle">Title</h3>
+            <p id="modalDesc">Description goes here.</p>
+            <div id="modalContent"></div>
+            <div style="margin-top: 1.5rem; text-align: right;">
+                <button class="cta-btn" onclick="closeModal()" style="display:inline-block; width:auto;">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // --- DATA: 20 Companies with Categories ---
+        const categories = ["Real Estate", "Supermarket", "Cement", "Bank", "Business Group", "Investment Group", "Manufacture"];
+        
+        const companies = [
+            { id: 1, name: "Skyline Builders", cat: "Real Estate", img: "https://picsum.photos/seed/re1/300/200", product: "Luxury Apartments", comm: 500, disc: 5 },
+            { id: 2, name: "Green Grocer", cat: "Supermarket", img: "https://picsum.photos/seed/sup1/300/200", product: "Organic Basket", comm: 20, disc: 10 },
+            { id: 3, name: "StrongHold Cement", cat: "Cement", img: "https://picsum.photos/seed/cem1/300/200", product: "Premium Cement Bag", comm: 50, disc: 2 },
+            { id: 4, name: "Trust Finance Bank", cat: "Bank", img: "https://picsum.photos/seed/bnk1/300/200", product: "Credit Card Signup", comm: 100, disc: "Free Fees" },
+            { id: 5, name: "Apex Holdings", cat: "Business Group", img: "https://picsum.photos/seed/bus1/300/200", product: "Consultation", comm: 300, disc: 15 },
+            { id: 6, name: "Future Wealth Inv", cat: "Investment Group", img: "https://picsum.photos/seed/inv1/300/200", product: "Starter Portfolio", comm: 200, disc: 5 },
+            { id: 7, name: "AutoParts Mfg", cat: "Manufacture", img: "https://picsum.photos/seed/man1/300/200", product: "Car Filter Set", comm: 15, disc: 12 },
+            { id: 8, name: "Urban Living", cat: "Real Estate", img: "https://picsum.photos/seed/re2/300/200", product: "Villa Rentals", comm: 150, disc: 8 },
+            { id: 9, name: "Daily Mart", cat: "Supermarket", img: "https://picsum.photos/seed/sup2/300/200", product: "Membership Card", comm: 10, disc: 20 },
+            { id: 10, name: "QuickBuild Mix", cat: "Cement", img: "https://picsum.photos/seed/cem2/300/200", product: "Concrete Mix", comm: 45, disc: 3 },
+            { id: 11, name: "Secure Bank Int", cat: "Bank", img: "https://picsum.photos/seed/bnk2/300/200", product: "Savings Account", comm: 80, disc: "Gift Card" },
+            { id: 12, name: "Omega Corp", cat: "Business Group", img: "https://picsum.photos/seed/bus2/300/200", product: "Software License", comm: 400, disc: 10 },
+            { id: 13, name: "GoldHorizon Inv", cat: "Investment Group", img: "https://picsum.photos/seed/inv2/300/200", product: "Gold Bonds", comm: 600, disc: 0 },
+            { id: 14, name: "TexMills Ind", cat: "Manufacture", img: "https://picsum.photos/seed/man2/300/200", product: "Bulk Fabric", comm: 120, disc: 7 },
+            { id: 15, name: "Prime Estates", cat: "Real Estate", img: "https://picsum.photos/seed/re3/300/200", product: "Commercial Plot", comm: 2000, disc: 4 },
+            { id: 16, name: "SaveMore", cat: "Supermarket", img: "https://picsum.photos/seed/sup3/300/200", product: "Home Electronics", comm: 60, disc: 15 },
+            { id: 17, name: "BaseRock Cons", cat: "Cement", img: "https://picsum.photos/seed/cem3/300/200", product: "Foundation Blocks", comm: 70, disc: 5 },
+            { id: 18, name: "Global Credit", cat: "Bank", img: "https://picsum.photos/seed/bnk3/300/200", product: "Personal Loan", comm: 250, disc: "Lower Rate" },
+            { id: 19, name: "Venture Groups", cat: "Business Group", img: "https://picsum.photos/seed/bus3/300/200", product: "Franchise Fee", comm: 1000, disc: 5 },
+            { id: 20, name: "EcoPower Mfg", cat: "Manufacture", img: "https://picsum.photos/seed/man3/300/200", product: "Solar Panel", comm: 150, disc: 10 }
+        ];
+
+        // --- STATE MANAGEMENT ---
+        let currentRole = 'agent';
+        let agentStats = { commission: 0, linksShared: 0, sales: 0 };
+        let selectedFilter = 'All';
+
+        // --- DOM ELEMENTS ---
+        const app = document.getElementById('app');
+        const marqueeTrack = document.getElementById('marqueeTrack');
+        const modalOverlay = document.getElementById('modalOverlay');
+        const toastContainer = document.getElementById('toastContainer');
+
+        // --- CORE FUNCTIONS ---
+
+        function init() {
+            renderMarquee(); // Render the slide
+            render(); // Render the main app
+        }
+
+        function renderMarquee() {
+            // We duplicate the list twice to create an infinite seamless loop
+            const list = [...companies, ...companies]; 
+            
+            marqueeTrack.innerHTML = list.map(company => `
+                <div class="partner-logo" title="${company.name}">
+                    <img src="${company.img}" alt="${company.name}">
+                    <span class="partner-badge">${company.cat}</span>
+                </div>
+            `).join('');
+        }
+
+        function switchRole(role) {
+            currentRole = role;
+            // Update buttons
+            document.querySelectorAll('.role-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            render();
+        }
+
+        function showToast(msg, type = 'info') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `<span>${msg}</span>`;
+            toastContainer.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        function closeModal() {
+            modalOverlay.classList.remove('open');
+        }
+
+        // --- RENDER LOGIC ---
+
+        function render() {
+            let html = '';
+
+            // 1. HERO SECTION (Common to all, but text varies slightly)
+            if (currentRole === 'agent') {
+                html += `
+                    <section class="hero">
+                        <div class="hero-content">
+                            <h1>Hook Your Network, Earn Big</h1>
+                            <p>Partner with 20+ top companies. Share products, earn commission on every sale.</p>
+                            <button class="cta-btn" onclick="showAgentDashboard()">Start Earning Now</button>
+                            
+                            <div class="hook-container">
+                                <div class="hook-card">
+                                    <div class="hook-icon">🤝</div>
+                                    <div>20+ Partners</div>
+                                </div>
+                                <div class="hook-card">
+                                    <div class="hook-icon">💰</div>
+                                    <div class="hook-val">$${agentStats.commission}</div>
+                                    <div>Total Earned</div>
+                                </div>
+                                <div class="hook-card">
+                                    <div class="hook-icon">🚀</div>
+                                    <div>${agentStats.linksShared}</div>
+                                    <div>Links Shared</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            } else if (currentRole === 'customer') {
+                html += `
+                    <section class="hero" style="background: linear-gradient(135deg, #059669, #10b981);">
+                        <div class="hero-content">
+                            <h1>Exclusive Deals & Discounts</h1>
+                            <p>Use agent links to unlock savings on Real Estate, Banking, and more.</p>
+                            <button class="cta-btn" onclick="scrollToProducts()">Browse Deals</button>
+                        </div>
+                    </section>
+                `;
+            } else {
+                // Partners
+                html += `
+                    <section class="hero" style="background: linear-gradient(135deg, #4b5563, #1f2937);">
+                        <div class="hero-content">
+                            <h1>Partner with NexLink</h1>
+                            <p>Expand your reach. Connect with our network of agents and boost your sales.</p>
+                            <div class="hook-container">
+                                <div class="hook-card">
+                                    <div class="hook-icon">📈</div>
+                                    <div>Sales Boost</div>
+                                </div>
+                                <div class="hook-card">
+                                    <div class="hook-icon">🌍</div>
+                                    <div>Wider Reach</div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `;
+            }
+
+            // 2. FILTER & PRODUCTS SECTION
+            html += `<main id="products-area">`;
+            
+            // Dashboard specific for Agent
+            if (currentRole === 'agent') {
+                html += `
+                    <div class="dashboard-stats">
+                        <div class="stat-box">
+                            <div class="stat-label">Total Commission</div>
+                            <div class="stat-number" style="color:var(--accent)">$${agentStats.commission}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Products Sold</div>
+                            <div class="stat-number">${agentStats.sales}</div>
+                        </div>
+                        <div class="stat-box">
+                            <div class="stat-label">Active Links</div>
+                            <div class="stat-number">${agentStats.linksShared}</div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Category Filter
+            html += `
+                <div class="section-title">
+                    ${currentRole === 'partners' ? 'Our Partner Network' : 'Available Opportunities'}
+                </div>
+                <div class="filter-bar">
+                    <button class="filter-btn ${selectedFilter === 'All' ? 'active' : ''}" onclick="filterProducts('All')">All</button>
+                    ${categories.map(cat => `
+                        <button class="filter-btn ${selectedFilter === cat ? 'active' : ''}" onclick="filterProducts('${cat}')">${cat}</button>
+                    `).join('')}
+                </div>
+            `;
+
+            // Grid
+            html += `<div class="grid">`;
+            
+            const filteredData = selectedFilter === 'All' 
+                ? companies 
+                : companies.filter(c => c.cat === selectedFilter);
+
+            filteredData.forEach(item => {
+                html += buildCard(item);
+            });
+
+            html += `</div>`; // End Grid
+            html += `</main>`; // End Main
+
+            app.innerHTML = html;
+        }
+
+        function buildCard(item) {
+            let badge = `<span class="badge badge-cat">${item.cat}</span>`;
+            let actionBtn = '';
+            let commTag = '';
+
+            if (currentRole === 'agent') {
+                badge += `<span class="badge badge-discount">+${item.disc}% Cust. Disc</span>`;
+                commTag = `<span class="commission-tag">Earn $${item.comm} Commission</span>`;
+                actionBtn = `<button class="action-btn" onclick="shareLink(${item.id})">Generate Referral Link</button>`;
+            } else if (currentRole === 'customer') {
+                badge += `<span class="badge badge-discount">Save ${item.disc}%</span>`;
+                commTag = `<span class="commission-tag" style="color:#059669">Get Discount via Agent</span>`;
+                // Simulate "Already applied" if from agent link logic, here just a generic buy button
+                actionBtn = `<button class="action-btn" style="background:var(--success)" onclick="buyProduct(${item.id})">Buy with Discount</button>`;
+            } else {
+                // Partners
+                commTag = `<span class="commission-tag">Pays $${item.comm} / sale</span>`;
+                actionBtn = `<button class="action-btn" disabled>Registered Partner</button>`;
+            }
+
+            return `
+                <article class="card">
+                    <img src="${item.img}" alt="${item.name}" class="card-img">
+                    ${badge}
+                    <div class="card-body">
+                        <div class="company-name">${item.name}</div>
+                        <div class="product-name">${item.product}</div>
+                        ${commTag}
+                        ${actionBtn}
+                    </div>
+                </article>
+            `;
+        }
+
+        function filterProducts(category) {
+            selectedFilter = category;
+            render();
+        }
+
+        function scrollToProducts() {
+            document.getElementById('products-area').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // --- INTERACTIONS ---
+
+        // Agent Logic
+        window.shareLink = function(id) {
+            const product = companies.find(c => c.id === id);
+            const fakeLink = `https://nexlink.com/agent/promo/${id}?ref=agent007`;
+            
+            // Update state
+            agentStats.linksShared++;
+            
+            // Show Modal
+            document.getElementById('modalTitle').innerText = "Referral Link Generated!";
+            document.getElementById('modalDesc').innerText = `Share this link for ${product.name}. You earn $${product.comm} when a customer buys.`;
+            document.getElementById('modalContent').innerHTML = `
+                <div class="link-box">${fakeLink}</div>
+                <button class="cta-btn" style="width:100%; text-align:center;" onclick="copyToClipboard('${fakeLink}')">Copy Link</button>
+            `;
+            modalOverlay.classList.add('open');
+            render(); // Re-render to update link stats
+            
+            showToast("Link generated successfully!", "success");
+        };
+
+        // Customer Logic
+        window.buyProduct = function(id) {
+            const product = companies.find(c => c.id === id);
+            
+            document.getElementById('modalTitle').innerText = "Purchase Simulation";
+            document.getElementById('modalDesc').innerText = `You are buying ${product.product} from ${product.name}.`;
+            document.getElementById('modalContent').innerHTML = `
+                <div style="background:var(--bg-light); padding:15px; border-radius:8px;">
+                    <p><strong>Price:</strong> $${(Math.random() * 100).toFixed(2)}</p>
+                    <p><strong>Discount:</strong> ${product.disc}% OFF</p>
+                    <p style="color:var(--success); font-weight:bold; margin-top:5px;">Final Savings Applied!</p>
+                </div>
+                <button class="cta-btn" style="width:100%; margin-top:15px; text-align:center;" onclick="confirmSale(${id})">Confirm Purchase</button>
+            `;
+            modalOverlay.classList.add('open');
+        };
+
+        window.confirmSale = function(id) {
+            // Simulate that this purchase was triggered by an agent (for demo purposes)
+            const product = companies.find(c => c.id === id);
+            
+            // Reward Agent
+            agentStats.commission += product.comm;
+            agentStats.sales++;
+            
+            closeModal();
+            showToast("Purchase Successful! Agent Commission Recorded.", "success");
+            
+            // If we are in agent view, we should see the update
+            if(currentRole === 'agent') {
+                setTimeout(() => render(), 500); 
+            }
+        };
+
+        window.copyToClipboard = function(text) {
+            navigator.clipboard.writeText(text).then(() => {
+                showToast("Link copied to clipboard!", "success");
+            });
+        };
+
+        window.showAgentDashboard = function() {
+            scrollToProducts();
+        };
+
+        // Initialize App
+        init();
+
+    </script>
+</body>
+</html>
