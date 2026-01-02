@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What I Can Get For You | MultiConnect Agent Services</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        
+        body {
+            width: 21cm;
+            height: 29.7cm;
+            padding: 1.5cm;
+            background: white;
+            color: #333;
+            line-height: 1.3;
+        }
+        
+        /* Header - Agent Introduction */
+        .agent-header {
+            text-align: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid #4F46E5;
+        }
+        
+        .agent-name {
+            font-size: 32px;
+            font-weight: bold;
+            color: #4F46E5;
+            margin-bottom: 5px;
+        }
+        
+        .agent-title {
+            font-size: 18px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .agent-contact {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+        
+        /* Main Hook Section */
+        .hook-section {
+            text-align: center;
+            background: linear-gradient(135deg, #4F46E5, #8B5CF6);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .hook-title {
+            font-size: 28px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .hook-subtitle {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Product Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .category-card {
+            background: #F8FAFC;
+            border-radius: 8px;
+            padding: 15px;
+            border: 2px solid #E2E8F0;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .category-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .category-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+        
+        .category-name {
+            font-size: 18px;
+            font-weight: bold;
+            color: #1E293B;
+            margin-bottom: 8px;
+        }
+        
+        .category-desc {
+            font-size: 13px;
+            color: #64748B;
+            margin-bottom: 12px;
+            min-height: 36px;
+        }
+        
+        .category-price {
+            background: #4F46E5;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+            display: inline-block;
+        }
+        
+        /* What You Get Section */
+        .benefits-section {
+            background: #F0F9FF;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border: 2px solid #BAE6FD;
+        }
+        
+        .benefits-title {
+            font-size: 22px;
+            font-weight: bold;
+            color: #0EA5E9;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+        
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .benefit-icon {
+            width: 30px;
+            height: 30px;
+            background: #10B981;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+        
+        .benefit-text {
+            font-size: 14px;
+            color: #475569;
+        }
+        
+        /* Simple Comparison */
+        .comparison {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin: 25px 0;
+            text-align: center;
+        }
+        
+        .comparison-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #1E293B;
+            text-align: center;
+            grid-column: 1 / -1;
+        }
+        
+        .through-agent, .direct-buy {
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .through-agent {
+            background: #D1FAE5;
+            border: 2px solid #10B981;
+        }
+        
+        .direct-buy {
+            background: #FEE2E2;
+            border: 2px solid #EF4444;
+        }
+        
+        .option-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .through-agent .option-title {
+            color: #10B981;
+        }
+        
+        .direct-buy .option-title {
+            color: #EF4444;
+        }
+        
+        .option-list {
+            text-align: left;
+            font-size: 13px;
+        }
+        
+        .option-list li {
+            margin-bottom: 8px;
+            padding-left: 5px;
+        }
+        
+        /* Agent's Special Offer */
+        .special-offer {
+            background: linear-gradient(135deg, #F59E0B, #EF4444);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            margin: 20px 0;
+        }
+        
+        .offer-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .offer-details {
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+        
+        .offer-code {
+            background: white;
+            color: #F59E0B;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 18px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        
+        /* Quick Action Buttons */
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .action-button {
+            background: #4F46E5;
+            color: white;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.3);
+        }
+        
+        .action-button.call {
+            background: #10B981;
+        }
+        
+        .action-button.whatsapp {
+            background: #25D366;
+        }
+        
+        .action-button.email {
+            background: #EA4335;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: #F8FAFC;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+        
+        .testimonial-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #4F46E5;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .testimonial-item {
+            background: white;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4F46E5;
+        }
+        
+        .testimonial-text {
+            font-size: 13px;
+            color: #475569;
+            font-style: italic;
+            margin-bottom: 8px;
+        }
+        
+        .testimonial-author {
+            font-size: 12px;
+            color: #666;
+            text-align: right;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .footer {
+            text-align: center;
+            font-size: 11px;
+            color: #94A3B8;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #E2E8F0;
+        }
+        
+        .qr-code {
+            width: 80px;
+            height: 80px;
+            background: #333;
+            margin: 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            text-align: center;
+            border-radius: 5px;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                width: 21cm;
+                height: 29.7cm;
+                margin: 0;
+                padding: 1.5cm;
+            }
+            
+            .action-button {
+                border: 1px solid #4F46E5;
+            }
+        }
+        
+        /* Screen Preview */
+        @media screen {
+            body {
+                margin: 20px auto;
+                box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Agent Introduction -->
+    <div class="agent-header">
+        <div class="agent-name">YOUR NAME HERE</div>
+        <div class="agent-title">Your Personal MultiConnect Agent</div>
+        <div class="agent-contact">
+            <div>📞 YOUR PHONE HERE</div>
+            <div>📧 YOUR EMAIL HERE</div>
+            <div>📍 YOUR AREA HERE</div>
+        </div>
+    </div>
+    
+    <!-- Main Hook -->
+    <div class="hook-section">
+        <div class="hook-title">Get Everything You Need - Pay Less!</div>
+        <div class="hook-subtitle">I help you buy quality products at special prices. You save money, I earn commission!</div>
+    </div>
+    
+    <!-- What I Can Get For You -->
+    <div style="text-align: center; margin: 15px 0;">
+        <div style="font-size: 24px; font-weight: bold; color: #4F46E5; margin-bottom: 5px;">
+            Here's What I Can Get For You:
+        </div>
+        <div style="font-size: 16px; color: #666;">
+            Choose any category - I'll find you the best deal
+        </div>
+    </div>
+    
+    <!-- Product Categories -->
+    <div class="categories-grid">
+        <!-- Row 1 -->
+        <div class="category-card">
+            <div class="category-icon">🏠</div>
+            <div class="category-name">Houses & Apartments</div>
+            <div class="category-desc">Buy, rent, or invest in properties. Get exclusive deals.</div>
+            <div class="category-price">Save 8-12%</div>
+        </div>
+        
+        <div class="category-card">
+            <div class="category-icon">🏦</div>
+            <div class="category-name">Bank Loans & Accounts</div>
+            <div class="category-desc">Home loans, car loans, personal loans with lower rates.</div>
+            <div class="category-price">Better Rates</div>
+        </div>
+        
+        <div class="category-card">
+            <div class="category-icon">🛒</div>
+            <div class="category-name">Groceries & Household</div>
+            <div class="category-desc">Monthly grocery packs, cleaning supplies, daily needs.</div>
+            <div class="category-price">Save 20-25%</div>
+        </div>
+        
+        <div class="category-card">
+            <div class="category-icon">📈</div>
+            <div class="category-name">Investments & Savings</div>
+            <div class="category-desc">Mutual funds, retirement plans, fixed deposits.</div>
+            <div class="category-price">Higher Returns</div>
+        </div>
+        
+        <!-- Row 2 - Additional Products -->
+        <div class="category-card">
+            <div class="category-icon">🚗</div>
+            <div class="category-name">Cars & Vehicles</div>
+            <div class="category-desc">New & used cars, bikes, insurance, maintenance.</div>
+            <div class="category-price">Save 5-10%</div>
+        </div>
+        
+        <div class="category-card">
+            <div class="category-icon">📱</div>
+            <div class="category-name">Electronics & Appliances</div>
+            <div class="category-desc">TVs, phones, AC, fridge, washing machines.</div>
+            <div class="category-price">Save 15-20%</div>
+        </div>
+        
+        <div class="category-card">
+            <div class="category-icon">✈️</div>
+            <div class="category-name">Travel & Holidays</div>
+            <div class="category-desc">Flight tickets, hotel bookings, tour packages.</div>
+            <div class="category-price">Special Deals</div>
+        </div>
+        
+        <div class="category-card">
+            <div class="category-icon">🎓</div>
+            <div class="category-name">Education & Courses</div>
+            <div class="category-desc">Online courses, certifications, skill development.</div>
+            <div class="category-price">Discounts Available</div>
+        </div>
+    </div>
+    
+    <!-- Benefits Section -->
+    <div class="benefits-section">
+        <div class="benefits-title">Why Buy Through Me?</div>
+        <div class="benefits-grid">
+            <div class="benefit-item">
+                <div class="benefit-icon">💰</div>
+                <div class="benefit-text">You pay less than retail price</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">✅</div>
+                <div class="benefit-text">Quality guaranteed products only</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🚚</div>
+                <div class="benefit-text">Free delivery to your home</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🛡️</div>
+                <div class="benefit-text">After-sales support included</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🤝</div>
+                <div class="benefit-text">One person for all your needs</div>
+            </div>
+            <div class="benefit-item">
+                <div class="benefit-icon">🎁</div>
+                <div class="benefit-text">Bonus gifts with every purchase</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Simple Comparison -->
+    <div class="comparison">
+        <div class="comparison-title">Buy Through Me vs Buy Directly</div>
+        
+        <div class="through-agent">
+            <div class="option-title">THROUGH ME</div>
+            <ul class="option-list">
+                <li>✅ Lower prices (save 10-30%)</li>
+                <li>✅ Personal assistance</li>
+                <li>✅ Free delivery</li>
+                <li>✅ Quality guarantee</li>
+                <li>✅ One contact person</li>
+                <li>✅ Bonus rewards</li>
+                <li>✅ Price match guarantee</li>
+            </ul>
+        </div>
+        
+        <div class="direct-buy">
+            <div class="option-title">DIRECT BUYING</div>
+            <ul class="option-list">
+                <li>❌ Pay retail prices</li>
+                <li>❌ Deal with multiple people</li>
+                <li>❌ Pay shipping charges</li>
+                <li>❌ Quality may vary</li>
+                <li>❌ Different contacts</li>
+                <li>❌ No extra benefits</li>
+                <li>❌ Pay full price always</li>
+            </ul>
+        </div>
+    </div>
+    
+    <!-- Special Offer -->
+    <div class="special-offer">
+        <div class="offer-title">FIRST ORDER SPECIAL!</div>
+        <div class="offer-details">Show this paper to get extra discount on your first purchase</div>
+        <div class="offer-code">AGENT-BONUS-100</div>
+        <div style="font-size: 14px;">Valid for first 50 customers only</div>
+    </div>
+    
+    <!-- Quick Action Buttons -->
+    <div style="text-align: center; margin: 20px 0;">
+        <div style="font-size: 20px; font-weight: bold; color: #4F46E5; margin-bottom: 15px;">
+            Need Something Now?
+        </div>
+        <div class="action-buttons">
+            <button class="action-button call">📞 CALL ME NOW</button>
+            <button class="action-button whatsapp">💬 WHATSAPP</button>
+            <button class="action-button email">📧 SEND EMAIL</button>
+        </div>
+    </div>
+    
+    <!-- Real Examples -->
+    <div style="background: #FEF3C7; padding: 20px; border-radius: 10px; margin: 20px 0; border: 2px solid #F59E0B;">
+        <div style="font-size: 20px; font-weight: bold; color: #D97706; margin-bottom: 15px; text-align: center;">
+            Recent Buys Through Me:
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px;">
+            <div style="background: white; padding: 12px; border-radius: 8px;">
+                <div style="font-weight: bold; color: #10B981;">Mr. Sharma</div>
+                <div style="font-size: 12px; color: #666;">Saved ₹25,000 on home loan</div>
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px;">
+                <div style="font-weight: bold; color: #10B981;">Mrs. Patel</div>
+                <div style="font-size: 12px; color: #666;">Saves ₹3,200/month on groceries</div>
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px;">
+                <div style="font-weight: bold; color: #10B981;">Mr. Kumar</div>
+                <div style="font-size: 12px; color: #666;">Got apartment ₹4L below market</div>
+            </div>
+            <div style="background: white; padding: 12px; border-radius: 8px;">
+                <div style="font-weight: bold; color: #10B981;">Ms. Gupta</div>
+                <div style="font-size: 12px; color: #666;">Saved ₹12,000 on new fridge</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Testimonials -->
+    <div class="testimonials">
+        <div class="testimonial-title">What People Say</div>
+        
+        <div class="testimonial-item">
+            <div class="testimonial-text">
+                "I saved ₹50,000 on my home loan through [Agent Name]. He handled all paperwork and got me the best rate."
+            </div>
+            <div class="testimonial-author">- Rajesh Mehta, Home Buyer</div>
+        </div>
+        
+        <div class="testimonial-item">
+            <div class="testimonial-text">
+                "My monthly grocery bill reduced from ₹8,000 to ₹6,000. The quality is same, price is lower!"
+            </div>
+            <div class="testimonial-author">- Priya Sharma, Housewife</div>
+        </div>
+    </div>
+    
+    <!-- Footer & QR Code -->
+    <div class="footer">
+        <div style="margin-bottom: 10px;">
+            <strong>MultiConnect Platform</strong> • 20+ Trusted Companies • Quality Guaranteed
+        </div>
+        <div class="qr-code">
+            SCAN TO SEE<br>
+            ALL PRODUCTS<br>
+            & PRICES
+        </div>
+        <div style="margin-top: 10px;">
+            📞 Customer Support: 1-800-123-4567<br>
+            🌐 www.multiconnect.com/agents
+        </div>
+    </div>
+    
+    <script>
+        // Fill agent details
+        const agentDetails = {
+            name: "YOUR NAME HERE",
+            phone: "YOUR PHONE HERE",
+            email: "YOUR EMAIL HERE",
+            area: "YOUR AREA HERE"
+        };
+        
+        // Update all agent details
+        document.querySelector('.agent-name').textContent = agentDetails.name;
+        document.querySelector('.agent-title').textContent = "Your Personal MultiConnect Agent";
+        
+        const contactDivs = document.querySelectorAll('.agent-contact div');
+        contactDivs[0].textContent = `📞 ${agentDetails.phone}`;
+        contactDivs[1].textContent = `📧 ${agentDetails.email}`;
+        contactDivs[2].textContent = `📍 ${agentDetails.area}`;
+        
+        // Update action buttons with agent info
+        document.querySelector('.action-button.call').textContent = `📞 CALL ${agentDetails.phone}`;
+        document.querySelector('.action-button.whatsapp').textContent = `💬 WHATSAPP ${agentDetails.phone}`;
+        document.querySelector('.action-button.email').textContent = `📧 EMAIL ${agentDetails.email}`;
+        
+        // Add click events to buttons
+        document.querySelector('.action-button.call').onclick = function() {
+            alert(`Calling ${agentDetails.phone}`);
+        };
+        
+        document.querySelector('.action-button.whatsapp').onclick = function() {
+            alert(`Opening WhatsApp chat with ${agentDetails.phone}`);
+        };
+        
+        document.querySelector('.action-button.email').onclick = function() {
+            alert(`Composing email to ${agentDetails.email}`);
+        };
+        
+        // Add testimonials with agent name
+        const testimonials = document.querySelectorAll('.testimonial-text');
+        testimonials.forEach(testimonial => {
+            testimonial.innerHTML = testimonial.innerHTML.replace('[Agent Name]', agentDetails.name);
+        });
+        
+        // Add date
+        const today = new Date();
+        const dateStr = today.toLocaleDateString('en-US', { 
+            weekday: 'long', 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+        
+        const footer = document.querySelector('.footer');
+        footer.innerHTML += `<div style="margin-top: 10px; font-size: 10px; color: #999;">Printed: ${dateStr}</div>`;
+        
+        // Print button for screen preview
+        if (window.location.protocol === 'file:') {
+            const printBtn = document.createElement('button');
+            printBtn.textContent = '🖨️ PRINT THIS PAGE';
+            printBtn.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #4F46E5;
+                color: white;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 8px;
+                font-weight: bold;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+            `;
+            printBtn.onclick = () => window.print();
+            document.body.appendChild(printBtn);
+            
+            // Instructions for agents
+            const instructions = document.createElement('div');
+            instructions.style.cssText = `
+                position: fixed;
+                top: 60px;
+                right: 20px;
+                background: white;
+                padding: 15px;
+                border-radius: 8px;
+                box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                max-width: 300px;
+                font-size: 12px;
+                z-index: 1000;
+            `;
+            instructions.innerHTML = `
+                <strong>AGENT INSTRUCTIONS:</strong><br><br>
+                1. Fill in your details above<br>
+                2. Print on A4 paper<br>
+                3. Show to potential customers<br>
+                4. Explain: "You save, I earn"<br>
+                5. Ask: "What do you need?"<br><br>
+                <strong>TIP:</strong> Print on colored paper for better visibility.
+            `;
+            document.body.appendChild(instructions);
+        }
+        
+        // Console instructions
+        console.log(`
+        ===========================================
+        AGENT QUICK GUIDE:
+        ===========================================
+        
+        1. FILL YOUR DETAILS:
+           • Name: ${agentDetails.name}
+           • Phone: ${agentDetails.phone}
+           • Email: ${agentDetails.email}
+           • Area: ${agentDetails.area}
+        
+        2. HOW TO USE THIS PAPER:
+           • Show to customers and say: "I can get you anything on this list at lower prices"
+           • Point to categories they might need
+           • Highlight savings percentages
+           • Share success examples
+           • Offer the special discount code
+        
+        3. KEY PITCH POINTS:
+           • "You pay less than retail price"
+           • "I handle everything for you"
+           • "Quality guaranteed"
+           • "Free delivery to your home"
+           • "One person for all your needs"
+        
+        4. ASK THIS QUESTION:
+           "What do you need right now that I can help you save money on?"
+        
+        ===========================================
+        `);
+    </script>
+</body>
+</html>
