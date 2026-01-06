@@ -306,6 +306,10 @@
         }
 
         /* Airbnb Style Grid */
+        
+        
+        
+        
         .airbnb-grid {
             max-width: 1400px;
             margin: 0 auto;
@@ -466,60 +470,9 @@
 
         .logo-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 60px;
-        }
-
-        .logo-card {
-            background: white;
-            border-radius: var(--radius);
-            padding: 30px;
-            text-align: center;
-            box-shadow: var(--shadow-md);
-            transition: all 0.3s;
-            border: 2px solid transparent;
-        }
-
-        .logo-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-lg);
-            border-color: var(--primary);
-        }
-
-        .logo-icon {
-            width: 80px;
-            height: 80px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            color: white;
-        }
-
-        .logo-name {
-            font-size: 18px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-main);
-        }
-
-        .logo-products {
-            font-size: 13px;
-            color: var(--text-muted);
-            margin-bottom: 15px;
-        }
-
-        .logo-commission {
-            background: var(--bg-body);
-            padding: 8px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-            color: var(--primary);
         }
 
         /* --- Enhanced Calculator --- */
@@ -881,6 +834,7 @@
             .home-image { transform: none; }
             .image-overlay { right: 20px; top: 20px; }
             .airbnb-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
+            .logo-grid { grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); }
         }
 
         @media (max-width: 768px) {
@@ -925,28 +879,1000 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #a5b4fc;
         }
+        /* --- Animated Carousel Styles --- */
+
+
+/* --- Home Section with Wide Images --- */
+.home-section {
+    padding-top: 100px;
+    background: linear-gradient(135deg, #F8FAFC 0%, #F1F5F9 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.home-container {
+    max-width: 1400px; /* Increased max-width */
+    margin: 0 auto;
+    padding: 0 40px;
+    display: grid;
+    grid-template-columns: 40% 60%; /* Text: 40%, Image: 60% */
+    gap: 60px;
+    align-items: center;
+    min-height: 700px; /* Increased height */
+}
+
+.home-content {
+    padding-right: 30px;
+}
+
+.home-content h1 {
+    font-size: 42px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    color: var(--text-main);
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.2;
+}
+
+.home-content p {
+    font-size: 16px;
+    color: var(--text-muted);
+    margin-bottom: 32px;
+    line-height: 1.6;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: 16px;
+    margin-top: 30px;
+}
+
+.btn-secondary {
+    background: white;
+    color: var(--primary);
+    padding: 14px 32px;
+    border-radius: 10px;
+    font-weight: 600;
+    border: 2px solid var(--primary);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+}
+
+.btn-secondary:hover {
+    background: var(--primary);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(79, 70, 229, 0.2);
+}
+
+/* --- Animated Carousel with Wide Layout --- */
+.carousel-container {
+    position: relative;
+    width: 100%;
+    height: 500px; /* Increased height */
+    border-radius: 20px; /* Larger radius */
+    overflow: hidden;
+    box-shadow: var(--shadow-xl);
+}
+
+.carousel-track {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.carousel-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 8s ease;
+}
+
+.carousel-slide.active .carousel-image {
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+.slide-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.3) 50%, transparent 100%);
+    color: white;
+    padding: 40px;
+    transform: translateY(20px);
+    opacity: 0;
+    transition: all 0.6s ease 0.3s;
+}
+
+.carousel-slide.active .slide-overlay {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.slide-title {
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.slide-stats {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(10px);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+/* Carousel Navigation */
+.carousel-nav {
+    position: absolute;
+    bottom: 30px;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 25px;
+    z-index: 10;
+}
+
+.carousel-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+    font-size: 18px;
+    color: var(--text-main);
+}
+
+.carousel-btn:hover {
+    background: var(--primary);
+    color: white;
+    transform: scale(1.15);
+    box-shadow: 0 6px 25px rgba(79, 70, 229, 0.4);
+}
+
+.carousel-dots {
+    display: flex;
+    gap: 12px;
+    background: rgba(0, 0, 0, 0.5);
+    padding: 12px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(5px);
+}
+
+.dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.dot.active {
+    background: white;
+    transform: scale(1.3);
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.dot:hover {
+    background: white;
+    transform: scale(1.2);
+}
+
+/* Floating Card */
+.floating-card {
+    position: absolute;
+    top: 30px;
+    right: 30px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: var(--shadow-xl);
+    width: 250px;
+    z-index: 5;
+    animation: float 4s ease-in-out infinite;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) translateX(0);
+    }
+    50% {
+        transform: translateY(-10px) translateX(5px);
+    }
+}
+
+.card-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid var(--primary-light);
+}
+
+.card-header i {
+    color: var(--primary);
+    font-size: 20px;
+}
+
+.card-header span {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 16px;
+}
+
+.earning-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.earning-item:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.earning-label {
+    color: var(--text-muted);
+    font-size: 14px;
+}
+
+.earning-value {
+    color: var(--realestate);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+    .home-container {
+        grid-template-columns: 1fr;
+        gap: 40px;
+        min-height: auto;
+        padding: 60px 40px;
+    }
+    
+    .home-content {
+        padding-right: 0;
+        text-align: center;
+    }
+    
+    .cta-buttons {
+        justify-content: center;
+    }
+    
+    .carousel-container {
+        height: 450px;
+    }
+}
+
+@media (max-width: 768px) {
+    .home-container {
+        padding: 40px 20px;
+    }
+    
+    .home-content h1 {
+        font-size: 32px;
+    }
+    
+    .carousel-container {
+        height: 350px;
+    }
+    
+    .slide-overlay {
+        padding: 25px;
+    }
+    
+    .slide-title {
+        font-size: 20px;
+    }
+    
+    .floating-card {
+        top: 20px;
+        right: 20px;
+        width: 200px;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .carousel-container {
+        height: 300px;
+    }
+    
+    .carousel-nav {
+        bottom: 20px;
+    }
+    
+    .carousel-btn {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+    
+    .floating-card {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        margin-top: 20px;
+        animation: none;
+    }
+}
+
+
+
+
+
+/* --- Banking & Finance Section with Half-Frame Images --- */
+.banking-section .logo-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(16, 185, 129, 0.1);
+    height: 100%;
+}
+
+.banking-section .logo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--finance);
+}
+
+.banking-section .logo-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    border-bottom: 3px solid var(--finance);
+}
+
+.banking-section .logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.9);
+}
+
+.banking-section .logo-card:hover .logo-image {
+    transform: scale(1.08);
+    filter: brightness(1);
+}
+
+.banking-section .image-overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(16, 185, 129, 0.9), rgba(16, 185, 129, 0.7));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.banking-section .logo-card:hover .image-overlay-text {
+    opacity: 1;
+}
+
+.banking-section .image-overlay-text i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.banking-section .image-overlay-text span {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.banking-section .logo-frame-bottom {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.banking-section .logo-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    font-family: 'Poppins', sans-serif;
+}
+
+.banking-section .logo-products {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    line-height: 1.4;
+    min-height: 40px;
+}
+
+.banking-section .logo-features {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.banking-section .feature-tag {
+    background: rgba(16, 185, 129, 0.1);
+    color: var(--finance);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(16, 185, 129, 0.2);
+}
+
+.banking-section .logo-commission-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(16, 185, 129, 0.1);
+}
+
+.banking-section .commission-info {
+    text-align: left;
+}
+
+.banking-section .commission-rate {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--finance);
+    line-height: 1;
+    margin-bottom: 2px;
+    background: linear-gradient(135deg, var(--finance), #059669);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.banking-section .commission-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.banking-section .partner-btn {
+    background: linear-gradient(135deg, var(--finance), #059669);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.2);
+}
+
+.banking-section .partner-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.3);
+    background: linear-gradient(135deg, #059669, var(--finance));
+}
+
+/* Banking-specific hover animation */
+.banking-section .logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--finance), #A7F3D0, var(--finance));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 2;
+}
+
+.banking-section .logo-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Banking category badge */
+.banking-section .category-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--finance);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* Logo Image Fallback Styling */
+.banking-section .logo-image-container img[src*="placeholder"],
+.banking-section .logo-image-container img[src*="unsplash"] {
+    object-fit: cover;
+}
+
+/* Responsive adjustments for banking section */
+@media (max-width: 768px) {
+    .banking-section .logo-image-container {
+        height: 180px;
+    }
+    
+    .banking-section .logo-name {
+        font-size: 20px;
+    }
+    
+    .banking-section .logo-commission-row {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .banking-section .partner-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .banking-section .commission-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .banking-section .logo-image-container {
+        height: 160px;
+    }
+    
+    .banking-section .logo-frame-bottom {
+        padding: 20px;
+    }
+    
+    .banking-section .feature-tag {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+}
+
+/* --- Real Estate Section with Half-Frame Images --- */
+.realestate-section .logo-card {
+    background: white;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 1px solid rgba(245, 158, 11, 0.1);
+    height: 100%;
+}
+
+.realestate-section .logo-card:hover {
+    transform: translateY(-10px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--realestate);
+}
+
+.realestate-section .logo-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+    border-bottom: 3px solid var(--realestate);
+}
+
+.realestate-section .logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+    filter: brightness(0.9);
+}
+
+.realestate-section .logo-card:hover .logo-image {
+    transform: scale(1.08);
+    filter: brightness(1);
+}
+
+.realestate-section .image-overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, rgba(245, 158, 11, 0.9), rgba(245, 158, 11, 0.7));
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.realestate-section .logo-card:hover .image-overlay-text {
+    opacity: 1;
+}
+
+.realestate-section .image-overlay-text i {
+    font-size: 40px;
+    margin-bottom: 10px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+}
+
+.realestate-section .image-overlay-text span {
+    font-size: 24px;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+.realestate-section .logo-frame-bottom {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.realestate-section .logo-name {
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--text-main);
+    font-family: 'Poppins', sans-serif;
+}
+
+.realestate-section .logo-products {
+    font-size: 14px;
+    color: var(--text-muted);
+    margin-bottom: 15px;
+    line-height: 1.4;
+    min-height: 40px;
+}
+
+.realestate-section .logo-features {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.realestate-section .feature-tag {
+    background: rgba(245, 158, 11, 0.1);
+    color: var(--realestate);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    border: 1px solid rgba(245, 158, 11, 0.2);
+}
+
+.realestate-section .logo-commission-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid rgba(245, 158, 11, 0.1);
+}
+
+.realestate-section .commission-info {
+    text-align: left;
+}
+
+.realestate-section .commission-rate {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--realestate);
+    line-height: 1;
+    margin-bottom: 2px;
+    background: linear-gradient(135deg, var(--realestate), #D97706);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.realestate-section .commission-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.realestate-section .partner-btn {
+    background: linear-gradient(135deg, var(--realestate), #D97706);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.2);
+}
+
+.realestate-section .partner-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.3);
+    background: linear-gradient(135deg, #D97706, var(--realestate));
+}
+
+/* Real Estate-specific hover animation */
+.realestate-section .logo-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--realestate), #FDE68A, var(--realestate));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+    z-index: 2;
+}
+
+.realestate-section .logo-card:hover::before {
+    transform: scaleX(1);
+}
+
+/* Real Estate category badge */
+.realestate-section .category-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: var(--realestate);
+    color: white;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    z-index: 2;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+}
+
+/* General logo frame styles for all sections */
+.logo-frame {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.logo-image-container {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+}
+
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+}
+
+.image-overlay-text {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+}
+
+.logo-frame-bottom {
+    padding: 25px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Responsive adjustments for real estate section */
+@media (max-width: 768px) {
+    .realestate-section .logo-image-container {
+        height: 180px;
+    }
+    
+    .realestate-section .logo-name {
+        font-size: 20px;
+    }
+    
+    .realestate-section .logo-commission-row {
+        flex-direction: column;
+        gap: 15px;
+        align-items: stretch;
+    }
+    
+    .realestate-section .partner-btn {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .realestate-section .commission-info {
+        text-align: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .realestate-section .logo-image-container {
+        height: 160px;
+    }
+    
+    .realestate-section .logo-frame-bottom {
+        padding: 20px;
+    }
+    
+    .realestate-section .feature-tag {
+        font-size: 10px;
+        padding: 5px 10px;
+    }
+}
+/* --- Logo with Image --- */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo-image {
+    height: 40px;
+    width: auto;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover .logo-image {
+    transform: scale(1.05);
+}
+
+/* If you want to hide the text when using image logo */
+.logo span {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--primary);
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(90deg, var(--primary), var(--investment));
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Optional: Hide text if you want only image */
+/* .logo span {
+    display: none;
+} */
+
+/* If you want the image to be clickable and act as a link */
+.logo {
+    cursor: pointer;
+}
+
+/* Responsive logo */
+@media (max-width: 768px) {
+    .logo-image {
+        height: 35px;
+    }
+    
+    .logo span {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-image {
+        height: 30px;
+    }
+    
+    .logo span {
+        font-size: 18px;
+    }
+}
     </style>
 </head>
 <body>
 
     <!-- Header -->
-    <header class="header">
-        <div class="logo">
-            <i class="fas fa-link"></i>
-            <span>Link_force</span>
-        </div>
-        <nav class="nav-links">
-            <a href="#home" class="active">Home</a>
-            <a href="#companies-page">Companies</a>
-            <a href="#logo-page">Our Partners</a>
-            <a href="#calculator-page">Earnings</a>
-            <a href="#cta">Join Now</a>
-        </nav>
-        <button class="btn-primary" onclick="scrollToCTA()">
-            <i class="fas fa-rocket"></i> Start Earning
-        </button>
-    </header>
-
+   <header class="header">
+    <div class="logo">
+        <img src="https://github.com/Aziinnova/linkproject/blob/main/link%20f.jpg?raw=true" 
+             alt="Link Force Logo" 
+             class="logo-image"
+             onerror="this.src='https://via.placeholder.com/200x50/4F46E5/ffffff?text=Link+Force'; this.onerror=null;">
+        <span>LINK FORCE TRADING PLc</span>
+    </div>
+    <nav class="nav-links">
+        <a href="#home" class="active">Home</a>
+        <a href="#companies-page">Companies</a>
+        <a href="#logo-page">Our Partners</a>
+        <a href="#calculator-page">Earnings</a>
+        <a href="#cta">Join Now</a>
+    </nav>
+    <button class="btn-primary" onclick="scrollToCTA()">
+        <i class="fas fa-rocket"></i> Start Earning
+    </button>
+</header>
+    <!-- Home Section -->
     <!-- Home Section -->
     <section class="home-section" id="home">
         <div class="home-container">
@@ -975,10 +1901,106 @@
             </div>
             
             <div class="home-visual">
-                <img src="https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="MultiConnect Dashboard" class="home-image">
-                <div class="image-overlay">
-                    <div class="overlay-title">Avg. Monthly Earnings</div>
-                    <div class="overlay-value">ETB 30,000</div>
+                <!-- Animated Image Carousel -->
+                <div class="carousel-container">
+                    <div class="carousel-track">
+                        <!-- Slide 1 -->
+                        <div class="carousel-slide active">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/link%20f.jpg?raw=true" 
+                                 alt="MultiConnect Dashboard" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Link force Trading PLC</div>
+                                <div class="slide-desc">Earn up to 4.5% on </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 2 -->
+                        <div class="carousel-slide">
+                            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQEMv7Zoo4gUBEgHsGyCw9RLEg2JhKZQn81aA&s" 
+                                 alt="Banking Opportunities" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Banking & Loans</div>
+                                <div class="slide-desc">2.8% commission on approved loans</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 3 -->
+                        <div class="carousel-slide">
+                            <img src="https://images.unsplash.com/photo-1593696140826-c58b021acf8b?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                                 alt="Supermarket Retail" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Retail </div>
+                                <div class="slide-desc">8% commission on grocery sales</div>
+                            </div>
+                        </div>
+                        
+                        <!-- Slide 4 -->
+                        <div class="carousel-slide">
+                            <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" 
+                                 alt="Investment Platforms" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Investment Services</div>
+                                <div class="slide-desc">15% commission on investments</div>
+                            </div>
+                        </div>
+                           <div class="carousel-slide">
+                            <img src="https://images.unsplash.com/photo-1533664488202-6af66d26c44a?q=80&w=1032&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                                 alt="Investment Platforms" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">telecom</div>
+                                <div class="slide-desc">15% commission on investments</div>
+                            </div>
+                        </div>
+                        <!-- Slide 5 -->
+                        <div class="carousel-slide">
+                            <img src="https://plus.unsplash.com/premium_photo-1661962751752-cbf6a170c837?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                                 alt="Manufacturing Industry" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Manufacturing</div>
+                                <div class="slide-desc">12% commission on bulk orders</div>
+                            </div>
+                        </div>
+                    </div>
+                        <div class="carousel-slide">
+                            <img src="https://images.unsplash.com/photo-1697281679290-ad7be1b10682?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" 
+                                 alt="Manufacturing Industry" 
+                                 class="carousel-image">
+                            <div class="slide-overlay">
+                                <div class="slide-title">Manufacturing</div>
+                                <div class="slide-desc">12% commission on bulk orders</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Carousel Navigation -->
+                    <div class="carousel-nav">
+                        <button class="carousel-btn prev-btn">
+                            <i class="fas fa-chevron-left"></i>
+                        </button>
+                        
+                        <div class="carousel-dots">
+                            <span class="dot active" data-slide="0"></span>
+                            <span class="dot" data-slide="1"></span>
+                            <span class="dot" data-slide="2"></span>
+                            <span class="dot" data-slide="3"></span>
+                            <span class="dot" data-slide="4"></span>
+                        </div>
+                        
+                        <button class="carousel-btn next-btn">
+                            <i class="fas fa-chevron-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Overlay Card -->
+                    <div class="image-overlay">
+                        <div class="overlay-title">Avg. Monthly Earnings</div>
+                        <div class="overlay-value">ETB 30,000</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1009,8 +2031,7 @@
                     <option>All Industries</option>
                     <option>Real Estate</option>
                     <option>Banking</option>
-                    <option>Supermarket</option>
-                    <option>Investment</option>
+                    <option>telcom</option>
                     <option>Manufacturing</option>
                 </select>
                 <button class="search-button">
@@ -1068,7 +2089,10 @@
                 <div class="favorite-button">
                     <i class="far fa-heart"></i>
                 </div>
-                <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Bank Building" class="company-image">
+               <img src="https://github.com/Aziinnova/linkproject/raw/main/me.jpg" 
+     alt="Bank Building" 
+     class="company-image"
+     onerror="this.src='https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'; this.alt='Bank Building';">
                 <div class="airbnb-content">
                     <div class="company-category">
                         <i class="fas fa-university"></i>
@@ -1105,47 +2129,49 @@
             </div>
 
             <!-- Company 3 -->
-            <div class="airbnb-card fade-in">
-                <div class="airbnb-badge" style="background: var(--retail); color: white;">🛒 POPULAR</div>
-                <div class="favorite-button">
-                    <i class="far fa-heart"></i>
-                </div>
-                <img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Supermarket Aisle" class="company-image">
-                <div class="airbnb-content">
-                    <div class="company-category">
-                        <i class="fas fa-shopping-cart"></i>
-                        <span>Supermarket • Retail</span>
-                    </div>
-                    <h3 class="company-title">FreshMart Supermarket</h3>
-                    <p class="company-description">Grocery bundles, household supplies, and monthly subscription boxes. High repeat customer rate.</p>
-                    
-                    <div class="company-features">
-                        <div class="feature">
-                            <i class="fas fa-box"></i>
-                            <span>500+ Products</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-calendar-week"></i>
-                            <span>Weekly Payout</span>
-                        </div>
-                        <div class="feature">
-                            <i class="fas fa-star"></i>
-                            <span>4.9 Rating</span>
-                        </div>
-                    </div>
-                    
-                    <div class="commission-display">
-                        <div>
-                            <div class="commission-rate">8%</div>
-                            <div class="commission-label">Commission Rate</div>
-                        </div>
-                        <button class="btn-primary" style="font-size: 13px; padding: 10px 20px;">
-                            <i class="fas fa-handshake"></i> Partner Now
-                        </button>
-                    </div>
-                </div>
+  <div class="airbnb-card fade-in">
+    <div class="airbnb-badge" style="background: var(--construction); color: white;">🏗️ MANUFACTURING</div>
+    <div class="favorite-button">
+        <i class="far fa-heart"></i>
+    </div>
+    <img src="https://github.com/Aziinnova/linkproject/raw/main/kd.jpg" 
+         alt="Keste Damena Manufacturing Factory" 
+         class="company-image"
+         onerror="this.src='https://images.unsplash.com/photo-1581094794329-c8112a89af12?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=60'; this.alt='Manufacturing Factory';">
+    <div class="airbnb-content">
+        <div class="company-category">
+            <i class="fas fa-industry"></i>
+            <span>Manufacturing • Construction</span>
+        </div>
+        <h3 class="company-title">Keste Damena Industries</h3>
+        <p class="company-description">Leading manufacturer of construction materials, industrial equipment, and building supplies. Quality certified products.</p>
+        
+        <div class="company-features">
+            <div class="feature">
+                <i class="fas fa-hard-hat"></i>
+                <span>Quality Certified</span>
             </div>
-
+            <div class="feature">
+                <i class="fas fa-truck"></i>
+                <span>Bulk Delivery</span>
+            </div>
+            <div class="feature">
+                <i class="fas fa-star"></i>
+                <span>4.7 Rating</span>
+            </div>
+        </div>
+        
+        <div class="commission-display">
+            <div>
+                <div class="commission-rate" style="color: var(--construction);">12%</div>
+                <div class="commission-label">Commission Rate</div>
+            </div>
+            <button class="btn-primary" style="font-size: 13px; padding: 10px 20px; background: linear-gradient(135deg, var(--construction), #EA580C);">
+                <i class="fas fa-handshake"></i> Partner Now
+            </button>
+        </div>
+    </div>
+</div>
             <!-- Company 4 -->
             <div class="airbnb-card fade-in">
                 <div class="airbnb-badge" style="background: var(--investment); color: white;">📈 HIGH COMMISSION</div>
@@ -1198,137 +2224,351 @@
         </div>
 
         <!-- Real Estate Section -->
-        <div class="industry-section">
+        <div class="industry-section realestate-section">
             <h2 class="industry-title">🏠 Real Estate Partners</h2>
             <div class="logo-grid">
+                <!-- Luxury Living -->
                 <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                        <i class="fas fa-building"></i>
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/ov.jpg?raw=true" 
+                                 alt="Luxury Living Properties" 
+                                 class="logo-image"
+                                 loading="lazy">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-building"></i>
+                                <span>Luxury Living</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">OVID</div>
+                            <div class="logo-products">Premium Apartments & Villas</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-star"></i> 4.8 Rating</span>
+                                <span class="feature-tag"><i class="fas fa-clock"></i> 48h Payout</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">4.5%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="logo-name">Luxury Living</div>
-                    <div class="logo-products">Premium Apartments & Villas</div>
-                    <div class="logo-commission">4.5% Commission</div>
                 </div>
                 
-               <div class="logo-card fade-in">
-    
-    <!-- Logo Image (replaces icon) -->
-    <div class="logo-icon">
-        <img src="https://github.com/Aziinnova/linkproject/blob/main/tm.png?raw=true"
-             alt="BuildRight Cement Logo"
-             style="width:64px; height:64px; object-fit:contain;"
-             onerror="this.src='https://via.placeholder.com/64?text=BR'">
-    </div>
-
-    <div class="logo-name">BuildRight Cement</div>
-    <div class="logo-products">Construction Materials</div>
-    <div class="logo-commission">10% Commission</div>
-
-</div>
-
-                
+                <!-- BuildRight Cement -->
                 <div class="logo-card fade-in">
-        <div class="logo-icon">
-        <img src="https://github.com/Aziinnova/linkproject/blob/main/tt.png?raw=true"
-             alt="BuildRight Cement Logo"
-             style="width:64px; height:64px; object-fit:contain;"
-             onerror="this.src='https://via.placeholder.com/64?text=BR'">
-    </div>
-                    <div class="logo-name">Metro Properties</div>
-                    <div class="logo-products">Commercial Spaces</div>
-                    <div class="logo-commission">5% Commission</div>
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://raw.githubusercontent.com/Aziinnova/linkproject/main/tm.png" 
+                                 alt="BuildRight Cement" 
+                                 class="logo-image"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80'">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-hard-hat"></i>
+                                <span>TEMER REALESTATE</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">TEMER REALESTATE</div>
+                            <div class="logo-products">Construction Materials</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-truck"></i> Bulk Delivery</span>
+                                <span class="feature-tag"><i class="fas fa-shield-alt"></i> Quality Certified</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">10%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
+                <!-- Metro Properties -->
                 <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                         <img src="https://github.com/Aziinnova/linkproject/blob/main/tt.png?raw=true"
-             alt="BuildRight Cement Logo"
-             style="width:64px; height:64px; object-fit:contain;"
-             onerror="this.src='https://via.placeholder.com/64?text=BR'">
-                        <i class="fas fa-hard-hat"></i>
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/gi.png?raw=true" 
+                                 alt="Metro Properties" 
+                                 class="logo-image"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80'">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-city"></i>
+                                <span>Metro Properties</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">GIFT </div>
+                            <div class="logo-products">Commercial Spaces & Offices</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-map-marker-alt"></i> Prime Locations</span>
+                                <span class="feature-tag"><i class="fas fa-chart-line"></i> High Demand</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">5%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="logo-name">BuildRight Cement</div>
-                    <div class="logo-products">Construction Materials</div>
-                    <div class="logo-commission">10% Commission</div>
+                </div>
+                 <div class="logo-card fade-in">
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/jo.jpg?raw=true" 
+                                 alt="Metro Properties" 
+                                 class="logo-image"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80'">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-city"></i>
+                                <span>Metro Properties</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">JOTUN</div>
+                            <div class="logo-products">Commercial Spaces & Offices</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-map-marker-alt"></i> Prime Locations</span>
+                                <span class="feature-tag"><i class="fas fa-chart-line"></i> High Demand</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">5%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                 <div class="logo-card fade-in">
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/noh.jpg?raw=true" 
+                                 alt="Metro Properties" 
+                                 class="logo-image"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80'">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-city"></i>
+                                <span>Metro Properties</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">NOAH Real Estate PLC</div>
+                            <div class="logo-products">Commercial Spaces & Offices</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-map-marker-alt"></i> Prime Locations</span>
+                                <span class="feature-tag"><i class="fas fa-chart-line"></i> High Demand</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">5%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Urban Developers -->
+                <div class="logo-card fade-in">
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/aya.jpg?raw=true" 
+                                 alt="Urban Developers" 
+                                 class="logo-image"
+                                 loading="lazy">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-home"></i>
+                                <span>Urban Developers</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">AYAT SHARE COMPANY</div>
+                            <div class="logo-products">Residential Projects</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-tools"></i> Modern Design</span>
+                                <span class="feature-tag"><i class="fas fa-leaf"></i> Eco-Friendly</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">6%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Banking Section -->
-        <div class="industry-section">
+        <div class="industry-section banking-section">
             <h2 class="industry-title">🏦 Banking & Finance</h2>
             <div class="logo-grid">
+                <!-- PrimeTrust Bank -->
                 <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                         <img src="https://github.com/Aziinnova/linkproject/blob/main/dg.jpg?raw=true"
-             alt="BuildRight Cement Logo"
-             style="width:64px; height:64px; object-fit:contain;"
-             onerror="this.src='https://via.placeholder.com/64?text=BR'">
-                        <i class="fas fa-university"></i>
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/blob/main/me.jpg?raw=true" 
+                                 alt="PrimeTrust Bank" 
+                                 class="logo-image"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80'">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-university"></i>
+                                <span>PrimeTrust Bank</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">MIDROC</div>
+                            <div class="logo-products">Home Loans & Investment Accounts</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-shield-alt"></i> Secure</span>
+                                <span class="feature-tag"><i class="fas fa-bolt"></i> Fast Approval</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">2.8%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="logo-name">PrimeTrust Bank</div>
-                    <div class="logo-products">Loans & Accounts</div>
-                    <div class="logo-commission">2.8% Commission</div>
                 </div>
                 
+                <!-- SaveMore Bank -->
                 <div class="logo-card fade-in">
-                     <div class="logo-icon">
-        <img src="https://github.com/Aziinnova/linkproject/blob/main/bo.jpg?raw=true"
-             alt="BuildRight Cement Logo"
-             style="width:64px; height:64px; object-fit:contain;"
-             onerror="this.src='https://via.placeholder.com/64?text=BR'">
-    </div>
-                    <div class="logo-name">SaveMore Bank</div>
-                    <div class="logo-products">Savings Accounts</div>
-                    <div class="logo-commission">3% Commission</div>
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://github.com/Aziinnova/linkproject/raw/main/bo.jpg" 
+                                 alt="SaveMore Bank" 
+                                 class="logo-image"
+                                 loading="lazy"
+                                 onerror="this.src='https://images.unsplash.com/photo-1616514197671-15d99ce7a6f8?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80'">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-piggy-bank"></i>
+                                <span>SaveMore Bank</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">SaveMore Bank</div>
+                            <div class="logo-products">Savings & Personal Accounts</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-percentage"></i> High Interest</span>
+                                <span class="feature-tag"><i class="fas fa-coins"></i> Low Fees</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">3%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 
+                <!-- CreditPlus -->
                 <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                        <i class="fas fa-credit-card"></i>
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80" 
+                                 alt="CreditPlus Banking" 
+                                 class="logo-image"
+                                 loading="lazy">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-credit-card"></i>
+                                <span>CreditPlus</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">CreditPlus</div>
+                            <div class="logo-products">Credit Cards & Personal Loans</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-star"></i> 4.6 Rating</span>
+                                <span class="feature-tag"><i class="fas fa-clock"></i> 24h Payout</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">4%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
                     </div>
-                    <div class="logo-name">CreditPlus</div>
-                    <div class="logo-products">Credit Cards</div>
-                    <div class="logo-commission">4% Commission</div>
+                </div>
+                
+                <!-- WealthGuard -->
+                <div class="logo-card fade-in">
+                    <div class="logo-frame">
+                        <div class="logo-image-container">
+                            <img src="https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?ixlib=rb-4.0.3&auto=format&fit=crop&w=400&h=200&q=80" 
+                                 alt="WealthGuard Investments" 
+                                 class="logo-image"
+                                 loading="lazy">
+                            <div class="image-overlay-text">
+                                <i class="fas fa-chart-line"></i>
+                                <span>WealthGuard</span>
+                            </div>
+                        </div>
+                        <div class="logo-frame-bottom">
+                            <div class="logo-name">WealthGuard</div>
+                            <div class="logo-products">Investment Banking Services</div>
+                            <div class="logo-features">
+                                <span class="feature-tag"><i class="fas fa-award"></i> Premium</span>
+                                <span class="feature-tag"><i class="fas fa-money-check-alt"></i> High Returns</span>
+                            </div>
+                            <div class="logo-commission-row">
+                                <div class="commission-info">
+                                    <div class="commission-rate">5%</div>
+                                    <div class="commission-label">Commission Rate</div>
+                                </div>
+                                <button class="partner-btn">
+                                    <i class="fas fa-handshake"></i> Partner
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Retail Section -->
-        <div class="industry-section">
-            <h2 class="industry-title">🛒 Retail & Supermarkets</h2>
-            <div class="logo-grid">
-                <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                        <i class="fas fa-shopping-basket"></i>
-                    </div>
-                    <div class="logo-name">FreshMart</div>
-                    <div class="logo-products">Groceries & Household</div>
-                    <div class="logo-commission">8% Commission</div>
-                </div>
-                
-                <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                        <i class="fas fa-store"></i>
-                    </div>
-                    <div class="logo-name">MegaMart</div>
-                    <div class="logo-products">Supermarket Chain</div>
-                    <div class="logo-commission">7% Commission</div>
-                </div>
-                
-                <div class="logo-card fade-in">
-                    <div class="logo-icon">
-                        <i class="fas fa-truck"></i>
-                    </div>
-                    <div class="logo-name">QuickDelivery</div>
-                    <div class="logo-products">Home Delivery</div>
-                    <div class="logo-commission">6% Commission</div>
-                </div>
-            </div>
+       
         </div>
-
-        <!-- More Industries Section -->
-        
     </section>
 
     <!-- Enhanced Calculator Page -->
@@ -1348,22 +2588,20 @@
             <div class="calculator-grid">
                 <div class="calculator-left">
                     <div class="currency-selector">
-                        <div class="currency-btn" data-currency="etb">
+                        <div class="currency-btn active" data-currency="etb">
                             <span class="currency-flag">🇪🇹</span> ETB
                         </div>
-                        <div class="currency-btn active" data-currency="usd">
+                        <div class="currency-btn" data-currency="usd">
                             <span class="currency-flag">🇺🇸</span> USD
                         </div>
-                        <div class="currency-btn" data-currency="eur">
-                            <span class="currency-flag">🇪🇺</span> EUR
-                        </div>
+                        <!-- Removed EUR option -->
                     </div>
 
                     <div class="input-group">
                         <label>Monthly Sales Target</label>
                         <input type="range" class="range-slider" id="salesSlider" min="1000" max="100000" value="25000" step="1000">
-                        <div class="input-value" id="salesValue">$25,000</div>
-                        <div class="conversion-rate" id="conversionRate">≈ 1,400,000 ETB</div>
+                        <div class="input-value" id="salesValue">ETB 25,000</div>
+                        <div class="conversion-rate" id="conversionRate">≈ $450</div>
                     </div>
 
                     <div class="input-group">
@@ -1395,8 +2633,8 @@
                 <div class="calculator-right">
                     <div class="result-display">
                         <div class="result-label">Your Estimated Monthly Commission</div>
-                        <div class="result-amount" id="commissionResult">$1,125</div>
-                        <div class="result-equivalent" id="etbResult">≈ 62,500 ETB</div>
+                        <div class="result-amount" id="commissionResult">ETB 1,125</div>
+                        <div class="result-equivalent" id="etbResult">≈ $20</div>
                     </div>
 
                     <div class="earning-examples">
@@ -1404,22 +2642,22 @@
                         
                         <div class="example-item">
                             <span>Daily Earnings:</span>
-                            <span id="dailyEarnings">$37.5</span>
+                            <span id="dailyEarnings">ETB 37.5</span>
                         </div>
                         
                         <div class="example-item">
                             <span>Weekly Earnings:</span>
-                            <span id="weeklyEarnings">$262.5</span>
+                            <span id="weeklyEarnings">ETB 262.5</span>
                         </div>
                         
                         <div class="example-item">
                             <span>Quarterly Earnings:</span>
-                            <span id="quarterlyEarnings">$3,375</span>
+                            <span id="quarterlyEarnings">ETB 3,375</span>
                         </div>
                         
                         <div class="example-item">
                             <span>Yearly Earnings:</span>
-                            <span id="yearlyEarnings">$13,500</span>
+                            <span id="yearlyEarnings">ETB 13,500</span>
                         </div>
                     </div>
 
@@ -1441,25 +2679,25 @@
                     <div style="text-align: center; padding: 20px; background: var(--bg-body); border-radius: 10px;">
                         <div style="font-size: 32px; font-weight: 700; color: var(--realestate);">4.5%</div>
                         <div style="font-weight: 600; margin: 10px 0;">Real Estate</div>
-                        <div style="font-size: 13px; color: var(--text-muted);">$22,500 per $500k sale</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">ETB 22,500 per 500k sale</div>
                     </div>
                     
                     <div style="text-align: center; padding: 20px; background: var(--bg-body); border-radius: 10px;">
                         <div style="font-size: 32px; font-weight: 700; color: var(--finance);">2.8%</div>
                         <div style="font-weight: 600; margin: 10px 0;">Banking</div>
-                        <div style="font-size: 13px; color: var(--text-muted);">$2,800 per $100k loan</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">ETB 2,800 per 100k loan</div>
                     </div>
                     
                     <div style="text-align: center; padding: 20px; background: var(--bg-body); border-radius: 10px;">
                         <div style="font-size: 32px; font-weight: 700; color: var(--retail);">8%</div>
                         <div style="font-weight: 600; margin: 10px 0;">Supermarket</div>
-                        <div style="font-size: 13px; color: var(--text-muted);">$32/month per subscription</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">ETB 32/month per subscription</div>
                     </div>
                     
                     <div style="text-align: center; padding: 20px; background: var(--bg-body); border-radius: 10px;">
                         <div style="font-size: 32px; font-weight: 700; color: var(--investment);">15%</div>
                         <div style="font-weight: 600; margin: 10px 0;">Investment</div>
-                        <div style="font-size: 13px; color: var(--text-muted);">$4,500 per $30k investment</div>
+                        <div style="font-size: 13px; color: var(--text-muted);">ETB 4,500 per 30k investment</div>
                     </div>
                 </div>
             </div>
@@ -1504,7 +2742,7 @@
                 <ul class="footer-links">
                     <li><a href="#"><i class="fas fa-building"></i> Real Estate</a></li>
                     <li><a href="#"><i class="fas fa-university"></i> Banking</a></li>
-                    <li><a href="#"><i class="fas fa-shopping-cart"></i> Supermarket</a></li>
+       
                     <li><a href="#"><i class="fas fa-chart-line"></i> Investment</a></li>
                     <li><a href="#"><i class="fas fa-industry"></i> Manufacturing</a></li>
                 </ul>
@@ -1538,15 +2776,14 @@
     </footer>
 
     <script>
-        // Currency conversion rates
+        // Currency conversion rates - ETB as default
         const exchangeRates = {
-            usd: { etb: 56, eur: 0.92, symbol: '$' },
-            etb: { usd: 0.018, eur: 0.016, symbol: 'ETB ' },
-            eur: { usd: 1.09, etb: 61, symbol: '€' }
+            etb: { usd: 0.018, symbol: 'ETB ' },
+            usd: { etb: 56, symbol: '$' }
         };
 
-        // Current currency
-        let currentCurrency = 'usd';
+        // Current currency - ETB is default
+        let currentCurrency = 'etb';
 
         // Commission Calculator with Currency Conversion
         const salesSlider = document.getElementById('salesSlider');
@@ -1577,26 +2814,27 @@
             
             // Convert based on current currency
             const symbol = exchangeRates[currentCurrency].symbol;
-            const convertedSales = sales;
-            const convertedCommission = commission;
             
-            // Update displays
-            salesValue.textContent = `${symbol}${convertedSales.toLocaleString()}`;
-            commissionResult.textContent = `${symbol}${convertedCommission.toLocaleString(undefined, {minimumFractionDigits: 0})}`;
-            
-            // Update conversion rate display
             if (currentCurrency === 'etb') {
-                const etbAmount = sales * exchangeRates.usd.etb;
-                conversionRate.textContent = `≈ ${etbAmount.toLocaleString()} ETB`;
-                etbResult.textContent = `≈ ${(commission * exchangeRates.usd.etb).toLocaleString()} ETB`;
-            } else if (currentCurrency === 'etb') {
+                // Display in ETB
+                salesValue.textContent = `${symbol}${sales.toLocaleString()}`;
+                commissionResult.textContent = `${symbol}${commission.toLocaleString(undefined, {minimumFractionDigits: 0})}`;
+                
+                // Show USD conversion
                 const usdAmount = sales * exchangeRates.etb.usd;
-                conversionRate.textContent = `≈ $${usdAmount.toLocaleString()}`;
-                etbResult.textContent = `≈ $${(commission * exchangeRates.etb.usd).toLocaleString()}`;
+                const usdCommission = commission * exchangeRates.etb.usd;
+                conversionRate.textContent = `≈ $${usdAmount.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+                etbResult.textContent = `≈ $${usdCommission.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
             } else {
-                const usdAmount = sales * exchangeRates.eur.usd;
-                conversionRate.textContent = `≈ $${usdAmount.toLocaleString()}`;
-                etbResult.textContent = `≈ $${(commission * exchangeRates.eur.usd).toLocaleString()}`;
+                // Display in USD
+                const etbAmount = sales * exchangeRates.usd.etb;
+                const etbCommission = commission * exchangeRates.usd.etb;
+                salesValue.textContent = `${symbol}${sales.toLocaleString()}`;
+                commissionResult.textContent = `${symbol}${commission.toLocaleString(undefined, {minimumFractionDigits: 0})}`;
+                
+                // Show ETB conversion
+                conversionRate.textContent = `≈ ETB ${etbAmount.toLocaleString()}`;
+                etbResult.textContent = `≈ ETB ${etbCommission.toLocaleString()}`;
             }
             
             // Update earning breakdown
@@ -1618,7 +2856,7 @@
             yearlyEarnings.textContent = `${symbol}${(monthlyCommission * 12).toLocaleString()}`;
         }
 
-        // Currency selector
+        // Currency selector - ETB is default
         document.querySelectorAll('.currency-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 document.querySelectorAll('.currency-btn').forEach(b => b.classList.remove('active'));
@@ -1719,6 +2957,28 @@
             });
         });
 
+        // Partner buttons for logo cards
+        document.querySelectorAll('.partner-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.stopPropagation(); // Prevent card click
+                const card = this.closest('.logo-card');
+                const companyName = card.querySelector('.logo-name').textContent;
+                const commissionRate = card.querySelector('.commission-rate').textContent;
+                
+                showNotification(`Partnership request sent to ${companyName} (${commissionRate} commission)! Our team will contact you within 24 hours.`, 'success');
+                
+                // Add visual feedback
+                this.innerHTML = '<i class="fas fa-check"></i> Requested';
+                this.disabled = true;
+                
+                // Revert after 5 seconds
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-handshake"></i> Partner';
+                    this.disabled = false;
+                }, 5000);
+            });
+        });
+
         // Favorite buttons
         document.querySelectorAll('.favorite-button').forEach(btn => {
             btn.addEventListener('click', function() {
@@ -1799,84 +3059,81 @@
         // Initialize calculator
         updateCalculator();
 
-        // Name change functionality (MultiConnect to other names)
-        console.log(`
-        ===========================================
-        NAME CUSTOMIZATION INSTRUCTIONS:
-        ===========================================
-        
-        To change "MultiConnect" to another name:
-        
-        1. Search and replace in HTML:
-           • "MultiConnect" → "Your New Name"
-           • "multiconnect.com" → "yourwebsite.com"
-        
-        2. Update colors in :root CSS variables
-           • --primary: #4F46E5 (purple)
-           • Change to your brand colors
-        
-        3. Update logo icon in header:
-           • <i class="fas fa-network-wired"></i>
-           • Change to your preferred icon
-        
-        4. Suggested alternative names:
-           • EarnHub
-           • CommissionConnect
-           • AgentNetwork
-           • SalesPartner
-           • IncomeStream
-        
-        ===========================================
-        `);
+        // Carousel Functionality
+        const carouselTrack = document.querySelector('.carousel-track');
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.dot');
+        const prevBtn = document.querySelector('.prev-btn');
+        const nextBtn = document.querySelector('.next-btn');
 
-        // Ethiopian Birr specific features
-        function calculateEthiopianEarnings() {
-            const averageEthiopianSalary = 5000; // ETB per month
-            const commission = parseFloat(commissionResult.textContent.replace(/[^0-9.]/g, ''));
+        let currentSlide = 0;
+        let slideInterval;
+
+        function updateCarousel() {
+            // Remove active class from all slides and dots
+            slides.forEach(slide => slide.classList.remove('active'));
+            dots.forEach(dot => dot.classList.remove('active'));
             
-            if (currentCurrency === 'usd') {
-                const etbCommission = commission * exchangeRates.usd.etb;
-                const monthsEquivalent = (etbCommission / averageEthiopianSalary).toFixed(1);
-                
-                console.log(`
-                ===========================================
-                ETHIOPIAN EARNINGS CONTEXT:
-                ===========================================
-                
-                Your monthly commission: ETB ${etbCommission.toLocaleString()}
-                Average Ethiopian salary: ETB ${averageEthiopianSalary.toLocaleString()}
-                
-                This equals: ${monthsEquivalent} months of average salary!
-                
-                ===========================================
-                `);
-                
-                // Show this in a tooltip or additional display
-                if (etbCommission > averageEthiopianSalary) {
-                    showNotification(`Your earnings equal ${monthsEquivalent} months of average Ethiopian salary!`, 'success');
-                }
-            }
+            // Add active class to current slide and dot
+            slides[currentSlide].classList.add('active');
+            dots[currentSlide].classList.add('active');
         }
 
-        // Add Ethiopian context button
-        const etbContextBtn = document.createElement('button');
-        etbContextBtn.innerHTML = '<i class="fas fa-globe-africa"></i> Ethiopian Context';
-        etbContextBtn.style.cssText = `
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            background: #F59E0B;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 10px;
-            font-weight: 600;
-            border: none;
-            cursor: pointer;
-            z-index: 1000;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        `;
-        etbContextBtn.onclick = calculateEthiopianEarnings;
-        document.body.appendChild(etbContextBtn);
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateCarousel();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateCarousel();
+        }
+
+        // Event Listeners
+        prevBtn.addEventListener('click', () => {
+            prevSlide();
+            resetInterval();
+        });
+
+        nextBtn.addEventListener('click', () => {
+            nextSlide();
+            resetInterval();
+        });
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                goToSlide(index);
+                resetInterval();
+            });
+        });
+
+        // Auto-slide functionality
+        function startInterval() {
+            slideInterval = setInterval(nextSlide, 5000); // Change slide every 5 seconds
+        }
+
+        function resetInterval() {
+            clearInterval(slideInterval);
+            startInterval();
+        }
+
+        // Initialize carousel
+        updateCarousel();
+        startInterval();
+
+        // Pause on hover
+        carouselTrack.addEventListener('mouseenter', () => {
+            clearInterval(slideInterval);
+        });
+
+        carouselTrack.addEventListener('mouseleave', () => {
+            startInterval();
+        });
     </script>
 </body>
 </html>
