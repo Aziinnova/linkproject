@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Registration - Become an Agent</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            max-width: 1200px;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            overflow: hidden;
+            background-color: white;
+            min-height: 700px;
+        }
+        
+        .welcome-section {
+            flex: 1;
+            background: linear-gradient(135deg, #3a8ffe 0%, #1e3c8c 100%);
+            color: white;
+            padding: 50px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .welcome-section h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .welcome-section p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .benefits-list {
+            list-style-type: none;
+            margin-top: 30px;
+        }
+        
+        .benefits-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .benefits-list i {
+            margin-right: 12px;
+            font-size: 1.2rem;
+            background-color: rgba(255, 255, 255, 0.2);
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .form-section {
+            flex: 1.2;
+            padding: 50px 40px;
+            overflow-y: auto;
+            max-height: 700px;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #3a8ffe;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            font-size: 2rem;
+        }
+        
+        .form-container {
+            margin-top: 30px;
+        }
+        
+        .form-header {
+            margin-bottom: 30px;
+        }
+        
+        .form-header h2 {
+            font-size: 2rem;
+            color: #1e3c8c;
+            margin-bottom: 10px;
+        }
+        
+        .form-header p {
+            color: #666;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 14px 15px;
+            border: 2px solid #e1e5ee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: #3a8ffe;
+            box-shadow: 0 0 0 3px rgba(58, 143, 254, 0.1);
+        }
+        
+        .name-fields {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .name-fields .form-group {
+            flex: 1;
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            background-color: #3a8ffe;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+        
+        .btn:hover {
+            background-color: #1e6fd9;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(30, 111, 217, 0.3);
+        }
+        
+        .btn-agent {
+            background-color: #ff7e3a;
+            margin-top: 20px;
+        }
+        
+        .btn-agent:hover {
+            background-color: #e56a27;
+            box-shadow: 0 5px 15px rgba(229, 106, 39, 0.3);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+            margin-top: 15px;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+            box-shadow: 0 5px 15px rgba(90, 98, 104, 0.3);
+        }
+        
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            color: #666;
+        }
+        
+        .login-link a {
+            color: #3a8ffe;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .login-link a:hover {
+            text-decoration: underline;
+        }
+        
+        /* Agent form specific styles */
+        .agent-form {
+            display: none;
+        }
+        
+        .agent-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .regular-form.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        .regular-form:not(.active) {
+            display: none;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-title {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .form-title i {
+            margin-right: 10px;
+            font-size: 1.8rem;
+            color: #ff7e3a;
+        }
+        
+        .agent-benefits {
+            background-color: #fff9f5;
+            border-left: 4px solid #ff7e3a;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .agent-benefits h4 {
+            color: #e56a27;
+            margin-bottom: 8px;
+        }
+        
+        .agent-benefits ul {
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .agent-benefits li {
+            margin-bottom: 5px;
+        }
+        
+        .form-footer {
+            font-size: 0.9rem;
+            color: #666;
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        /* Responsive design */
+        @media (max-width: 900px) {
+            .container {
+                flex-direction: column;
+                max-width: 600px;
+            }
+            
+            .welcome-section {
+                padding: 30px;
+            }
+            
+            .welcome-section h1 {
+                font-size: 2rem;
+            }
+            
+            .form-section {
+                padding: 30px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .name-fields {
+                flex-direction: column;
+                gap: 0;
+            }
+            
+            .welcome-section, .form-section {
+                padding: 25px;
+            }
+            
+            .welcome-section h1 {
+                font-size: 1.8rem;
+            }
+            
+            .form-header h2 {
+                font-size: 1.6rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="welcome-section">
+            <div class="logo"><i class="fas fa-user-shield"></i> AgentHub</div>
+            <h1>Join Our Community of Professional Agents</h1>
+            <p>Create an account to access exclusive features and opportunities. Whether you're looking for a regular account or want to become a certified agent, we have the right plan for you.</p>
+            
+            <ul class="benefits-list">
+                <li><i class="fas fa-check"></i> Secure and encrypted data protection</li>
+                <li><i class="fas fa-check"></i> Access to exclusive resources</li>
+                <li><i class="fas fa-check"></i> 24/7 customer support</li>
+                <li><i class="fas fa-check"></i> Regular updates on new features</li>
+                <li><i class="fas fa-check"></i> Community of professionals</li>
+            </ul>
+            
+            <div style="margin-top: auto; font-style: italic; opacity: 0.8;">
+                "Join over 10,000 satisfied users and agents who trust our platform for their professional needs."
+            </div>
+        </div>
+        
+        <div class="form-section">
+            <div class="form-header">
+                <h2>Create Your Account</h2>
+                <p>Fill in your details to get started. Choose the type of account that fits your needs.</p>
+            </div>
+            
+            <!-- Regular Registration Form -->
+            <div class="form-container regular-form active" id="regularForm">
+                <form id="standardRegistration">
+                    <div class="name-fields">
+                        <div class="form-group">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="Enter your email address" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" class="form-control" placeholder="Create a strong password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" class="form-control" placeholder="Re-enter your password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" class="form-control" placeholder="Enter your phone number">
+                    </div>
+                    
+                    <button type="submit" class="btn">Create Account</button>
+                    <button type="button" class="btn btn-agent" id="becomeAgentBtn">
+                        <i class="fas fa-id-badge"></i> Become an Agent
+                    </button>
+                </form>
+                
+                <div class="login-link">
+                    Already have an account? <a href="#">Sign In</a>
+                </div>
+            </div>
+            
+            <!-- Agent Registration Form -->
+            <div class="form-container agent-form" id="agentForm">
+                <div class="form-title">
+                    <i class="fas fa-id-card"></i>
+                    <h2>Agent Registration</h2>
+                </div>
+                
+                <div class="agent-benefits">
+                    <h4>Agent Benefits:</h4>
+                    <ul>
+                        <li>Higher commission rates</li>
+                        <li>Access to premium listings</li>
+                        <li>Priority customer support</li>
+                        <li>Advanced analytics dashboard</li>
+                        <li>Marketing tools and resources</li>
+                    </ul>
+                </div>
+                
+                <form id="agentRegistration">
+                    <div class="name-fields">
+                        <div class="form-group">
+                            <label for="agentFirstName">First Name</label>
+                            <input type="text" id="agentFirstName" class="form-control" placeholder="Enter your first name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="agentLastName">Last Name</label>
+                            <input type="text" id="agentLastName" class="form-control" placeholder="Enter your last name" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agentEmail">Email Address</label>
+                        <input type="email" id="agentEmail" class="form-control" placeholder="Enter your professional email" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agentPassword">Password</label>
+                        <input type="password" id="agentPassword" class="form-control" placeholder="Create a strong password" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agentLicense">Professional License Number</label>
+                        <input type="text" id="agentLicense" class="form-control" placeholder="Enter your license number" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="experience">Years of Experience</label>
+                        <select id="experience" class="form-control" required>
+                            <option value="" disabled selected>Select your experience level</option>
+                            <option value="0-2">0-2 years</option>
+                            <option value="3-5">3-5 years</option>
+                            <option value="6-10">6-10 years</option>
+                            <option value="10+">10+ years</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="specialization">Specialization</label>
+                        <select id="specialization" class="form-control" required>
+                            <option value="" disabled selected>Select your specialization</option>
+                            <option value="residential">Residential</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="industrial">Industrial</option>
+                            <option value="land">Land</option>
+                            <option value="multi">Multiple Specializations</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="agentBio">Professional Bio</label>
+                        <textarea id="agentBio" class="form-control" rows="3" placeholder="Tell us about your professional background"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-agent">Apply as Agent</button>
+                    <button type="button" class="btn btn-secondary" id="backToRegularBtn">
+                        <i class="fas fa-arrow-left"></i> Back to Regular Registration
+                    </button>
+                </form>
+                
+                <div class="form-footer">
+                    By applying as an agent, you agree to our terms of service and professional conduct policy. Verification may take 2-3 business days.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get DOM elements
+        const becomeAgentBtn = document.getElementById('becomeAgentBtn');
+        const backToRegularBtn = document.getElementById('backToRegularBtn');
+        const regularForm = document.getElementById('regularForm');
+        const agentForm = document.getElementById('agentForm');
+        const standardRegistrationForm = document.getElementById('standardRegistration');
+        const agentRegistrationForm = document.getElementById('agentRegistration');
+        
+        // Switch to agent form when "Become an Agent" button is clicked
+        becomeAgentBtn.addEventListener('click', function() {
+            regularForm.classList.remove('active');
+            agentForm.classList.add('active');
+            
+            // Scroll to top of form section
+            document.querySelector('.form-section').scrollTop = 0;
+        });
+        
+        // Switch back to regular form
+        backToRegularBtn.addEventListener('click', function() {
+            agentForm.classList.remove('active');
+            regularForm.classList.add('active');
+            
+            // Scroll to top of form section
+            document.querySelector('.form-section').scrollTop = 0;
+        });
+        
+        // Handle standard registration form submission
+        standardRegistrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // In a real app, you would send the data to a server here
+            alert('Standard account created successfully! You can now log in.');
+            standardRegistrationForm.reset();
+        });
+        
+        // Handle agent registration form submission
+        agentRegistrationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Basic validation
+            const password = document.getElementById('agentPassword').value;
+            const license = document.getElementById('agentLicense').value;
+            
+            if (license.length < 5) {
+                alert('Please enter a valid professional license number');
+                return;
+            }
+            
+            // In a real app, you would send the data to a server here
+            alert('Agent application submitted successfully! Our team will review your application within 2-3 business days.');
+            agentRegistrationForm.reset();
+        });
+        
+        // Pre-fill forms with sample data for demo purposes
+        window.addEventListener('DOMContentLoaded', function() {
+            // For demo purposes only - prefill some fields
+            document.getElementById('firstName').value = 'John';
+            document.getElementById('lastName').value = 'Doe';
+            document.getElementById('email').value = 'john.doe@example.com';
+            document.getElementById('phone').value = '+1 (555) 123-4567';
+            
+            // Prefill agent form for demo
+            document.getElementById('agentFirstName').value = 'Jane';
+            document.getElementById('agentLastName').value = 'Smith';
+            document.getElementById('agentEmail').value = 'jane.smith@realestate.com';
+            document.getElementById('agentLicense').value = 'RE-12345';
+        });
+    </script>
+</body>
+</html>
