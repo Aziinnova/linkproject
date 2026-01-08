@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Panel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Chart.js Library for statistical charts -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.2/dist/chart.umd.min.js"></script>
+
+  <link rel="stylesheet" href="css.css">
+</head>
+<body>
+  <!-- Sidebar Overlay for Mobile -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-img">HM</div>
+        <div class="sidebar-logo-text">AZI admin</div>
+      </div>
+    </div>
+
+    <nav class="sidebar-nav">
+      <div class="nav-section">
+        <div class="nav-section-title">Main</div>
+        <div class="nav-item active" onclick="showSection('statistics')">
+          <div class="nav-icon"><i class="fas fa-home"></i></div>
+          <div class="nav-text">Dashboard</div>
+        </div>
+        
+        <div class="nav-item" onclick="showSection('all')">
+          <div class="nav-icon"><i class="fas fa-newspaper"></i></div>
+          <div class="nav-text">Aagent list
+        </div>
+      </div>
+
+      <div class="nav-section">
+        <div class="nav-section-title">Content</div>
+        <div class="nav-item" onclick="showSection('alert')">
+          <div class="nav-icon"><i class="fas fa-bell"></i></div>
+          <div class="nav-text">Alerts</div>
+        </div>
+
+        <!-- SETTINGS ITEM -->
+        <div class="nav-item" onclick="showSection('settings')">
+          <div class="nav-icon"><i class="fas fa-tools"></i></div>
+          <div class="nav-text">Settings</div>
+        </div>
+
+        <div class="nav-item" onclick="showSection('add tit')">
+          <div class="nav-icon"><i class="fas fa-heading"></i></div>
+          <div class="nav-text">Titles</div>
+        </div>
+        <div class="nav-item" onclick="showSection('video')">
+          <div class="nav-icon"><i class="fas fa-video"></i></div>
+          <div class="nav-text">Videos</div>
+        </div>
+        <div class="nav-item" onclick="showSection('home page')">
+          <div class="nav-icon"><i class="fas fa-play-circle"></i></div>
+          <div class="nav-text">Home Videos</div>
+        </div>
+      </div>
+
+  
+
+      <div class="nav-section">
+        <div class="nav-section-title">Advertising</div>
+        <div class="nav-item" onclick="showSection('ads img')">
+          <div class="nav-icon"><i class="fas fa-ad"></i></div>
+          <div class="nav-text">Ad Images</div>
+        </div>
+      </div>
+    </nav>
+    <!-- Add this nav-section to your sidebar-nav -->
+<div class="nav-section">
+    <div class="nav-section-title">Product Management</div>
+    <div class="nav-item" onclick="showSection('productInsertion')">
+        <div class="nav-icon"><i class="fas fa-box-open"></i></div>
+        <div class="nav-text">Add Product</div>
+    </div>
+    <div class="nav-item" onclick="showSection('productList')">
+        <div class="nav-icon"><i class="fas fa-boxes"></i></div>
+        <div class="nav-text">All Probacts</div>
+    </div>
+    <div class="nav-section-title">User Registered</div>
+    <div class="nav-item" onclick="showSection('user reg')">
+        <div class="nav-icon"><i class="fas fa-box-open"></i></div>
+        <div class="nav-text">Add users</div>
+    </div>
+
+</div>
+    <div class="sidebar-footer">
+      <!-- Logout now uses custom modal -->
+      <button class="logout-btn" onclick="logout()">
+        <div class="logout-icon"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="logout-text">Logout</div>
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="admin-header">
+      <div class="header-left">
+        <button class="sidebar-toggle" id="sidebarToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="header-title">Admin Dashboard</div>
+      </div>
+
+      <!-- New: Real-Time Clock Display -->
+      <div class="current-time">
+          <span class="time-large" id="currentTime"></span>
+          <span id="currentDate"></span>
+      </div>
+
+      <div class="header-right">
+        <div class="header-icon">
+          <i class="fas fa-bell"></i>
+        </div>
+        <div class="header-icon" onclick="showSection('settings')">
+          <i class="fas fa-cog"></i>
+        </div>
+        <div class="user-profile">
+          <div class="user-avatar">A</div>
+          <div class="user-info">
+            <div class="user-name">Admin User</div>
+            <div class="user-role">Administrator</div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Content Header (always visible) -->
+    <div class="content-header">
+      <h1 id="contentTitle">Dashboard</h1>
+      <div class="breadcrumb" id="contentBreadcrumb">
+        <a href="#">Home</a>
+        <span class="divider">/</span>
+        <span>Dashboard</span>
+      </div>
+    </div>
+
+    <!-- Dashboard/Statistics Section (initially visible) -->
+    <div id="statistics">
+      <!-- Stats Grid -->
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-icon blue">
+            <i class="fas fa-newspaper"></i>
+          </div>
+          <div class="stat-value" id="totalArticles">0</div>
+          <div class="stat-label">Total Articles</div>
+          <div class="stat-trend trend-up">
+            <i class="fas fa-arrow-up"></i>
+            <span>12% from last month</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon green">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="stat-value" id="totalUsersStat">0</div>
+          <div class="stat-label">Total Users</div>
+          <div class="stat-trend trend-up">
+            <i class="fas fa-arrow-up"></i>
+            <span>5% from last month</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon red">
+            <i class="fas fa-eye"></i>
+          </div>
+          <div class="stat-value" id="activeToday">0</div>
+          <div class="stat-label">Active Today</div>
+          <div class="stat-trend trend-down">
+            <i class="fas fa-arrow-down"></i>
+            <span>2% from yesterday</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-icon purple">
+            <i class="fas fa-chart-line"></i>
+          </div>
+          <div class="stat-value" id="newThisWeek">0</div>
+          <div class="stat-label">New This Week</div>
+          <div class="stat-trend trend-up">
+            <i class="fas fa-arrow-up"></i>
+            <span>8% from last week</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW: Chart Grid (3 different types) -->
+      <div class="chart-grid-2x">
+        <!-- Full-width Line Chart -->
+        <div class="card" style="grid-column: 1 / -1;">
+            <div class="card-header"><h2 class="card-title">Monthly Site Visits (Line Chart)</h2></div>
+            <div class="card-body">
+                <canvas id="monthlyVisitorsChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Bar Chart -->
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">Articles by Category (Bar Chart)</h2></div>
+            <div class="card-body">
+                <canvas id="articlesByCategoryChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Doughnut Chart -->
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">User Role Distribution (Doughnut Chart)</h2></div>
+            <div class="card-body">
+                <canvas id="userRoleDistributionChart"></canvas>
+            </div>
+        </div>
+      </div>
+
+      <!-- Dashboard Content -->
+      <div class="card">
+        <div class="card-header">
+          <h2 class="card-title">Recent Activity</h2>
+          <button class="btn btn-outline">View All</button>
+        </div>
+        <div class="card-body">
+          <div id="activityLog">
+            <p class="text-secondary">Loading activity log...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  <!-- Section: Add News -->
+    <div id="addNews" style="display: none;">
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">Add New Article</h2></div>
+        <div class="card-body"><p class="text-secondary">Content for Add News form.</p></div>
+      </div>
+      <div class="mb-4">
+            <label for="alertMessageInput" class="form-label">Title</label>
+            <input type="text" class="form-control" id="add1" placeholder="Enter titles text (e.g., Site maintenance at 2 AM)">
+          </div>
+     <div class="mb-4">
+            <label for="alertMessageInput" class="form-label">News Message</label>
+            <input type="text" class="form-control" id="add2" placeholder="Enter news text (e.g., Site maintenance at 2 AM)">
+          </div>
+       <button class="btn btn-primary" onclick="publishAlert()">Publish</button>
+    </div>
+
+
+
+    <div id="user reg" style="display: none;">
+            <div class="content-wrapper">
+            <section class="form-section">
+                <h2 class="section-title mimiz-text"><i class="fas fa-user-edit"></i> User Information Form</h2>
+
+                <button type="button" class="generate-id-btn" id="generateIdBtn">
+                    <i class="fas fa-id-card"></i> Generate New User ID
+                </button>
+
+                <form id="userForm">
+                    <div class="upload-group">
+                        <div class="upload-group-title">
+                            <i class="fas fa-user-image"></i> Profile Picture
+                        </div>
+                        <div class="upload-area" id="profileUploadArea">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <p>Click to upload profile picture (JPEG, PNG, max 5MB)</p>
+                            <input type="file" id="profileImage" accept="image/*" style="display: none;">
+                        </div>
+                        <div class="image-preview-container" id="profilePreviewContainer"></div>
+                    </div>
+
+                    <div class="upload-group">
+                        <div class="upload-group-title">
+                            <i class="fas fa-file-image"></i> Document Images (3 Required)
+                        </div>
+                        <div class="document-upload-grid">
+                            <div class="upload-group">
+                                <div class="upload-group-title">
+                                    <i class="fas fa-id-card"></i> ID Document (Passport/Driver's License)
+                                </div>
+                                <div class="upload-area small" id="idDocumentArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Upload ID Document</p>
+                                    <input type="file" class="document-input" data-type="id" accept="image/*" style="display: none;">
+                                </div>
+                                <div class="image-preview-container" id="idDocumentPreview"></div>
+                            </div>
+
+                            <div class="upload-group">
+                                <div class="upload-group-title">
+                                    <i class="fas fa-home"></i> Proof of Address
+                                </div>
+                                <div class="upload-area small" id="addressDocumentArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Upload Address Proof</p>
+                                    <input type="file" class="document-input" data-type="address" accept="image/*" style="display: none;">
+                                </div>
+                                <div class="image-preview-container" id="addressDocumentPreview"></div>
+                            </div>
+
+                            <div class="upload-group">
+                                <div class="upload-group-title">
+                                    <i class="fas fa-file-medical"></i> Additional Document
+                                </div>
+                                <div class="upload-area small" id="additionalDocumentArea">
+                                    <i class="fas fa-cloud-upload-alt"></i>
+                                    <p>Upload Additional Document</p>
+                                    <input type="file" class="document-input" data-type="additional" accept="image/*" style="display: none;">
+                                </div>
+                                <div class="image-preview-container" id="additionalDocumentPreview"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="half-width">
+                        <div class="form-group">
+                            <label for="firstName" class="required">First Name</label>
+                            <input type="text" id="firstName" placeholder="Enter first name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="lastName" class="required">Last Name</label>
+                            <input type="text" id="lastName" placeholder="Enter last name" required>
+                        </div>
+                    </div>
+
+                    <div class="half-width">
+                        <div class="form-group">
+                            <label for="age" class="required">Age</label>
+                            <input type="number" id="age" min="1" max="120" placeholder="Enter age" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="gender" class="required">Gender</label>
+                            <select id="gender" required>
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="required">Email Address</label>
+                            <input type="email" id="email" placeholder="Enter email address" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="required">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Enter phone number" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="country" class="required">Country</label>
+                        <select id="country" required>
+                            <option value="">Select Country</option>
+                            <option value="US">United States</option>
+                            <option value="UK">United Kingdom</option>
+                            <option value="CA">Canada</option>
+                            <option value="AU">Australia</option>
+                            <option value="IN">India</option>
+                            <option value="DE">Germany</option>
+                            <option value="FR">France</option>
+                            <option value="JP">Japan</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="occupation">Occupation</label>
+                        <input type="text" id="occupation" placeholder="Enter occupation">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="address">Address</label>
+                        <textarea id="address" rows="3" placeholder="Enter full address"></textarea>
+                    </div>
+
+                    
+
+                    <div class="button-group">
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-save"></i> Save User Profile
+                        </button>
+                        <button type="button" class="reset-btn" id="resetBtn">
+                            <i class="fas fa-redo"></i> Reset Form
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="preview-section">
+                <h2 class="section-title mimiz-text"><i class="fas fa-eye"></i> Profile Preview</h2>
+
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <img src="https://via.placeholder.com/100/3498db/ffffff?text=No+Image" alt="Profile" class="preview-profile-image" id="previewProfileImage">
+                        <div>
+                            <div class="preview-name" id="previewName">Full Name</div>
+                            <div class="preview-id" id="previewId">USR-0000</div>
+                        </div>
+                    </div>
+
+                    <div class="preview-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Age</div>
+                            <div class="detail-value" id="previewAge">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Gender</div>
+                            <div class="detail-value" id="previewGender">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Email</div>
+                            <div class="detail-value" id="previewEmail">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Phone</div>
+                            <div class="detail-value" id="previewPhone">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Country</div>
+                            <div class="detail-value" id="previewCountry">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Occupation</div>
+                            <div class="detail-value" id="previewOccupation">-</div>
+                        </div>
+                    </div>
+
+                    <div class="document-preview">
+                        <div class="document-preview-title">
+                            <i class="fas fa-file-images"></i> Document Images
+                        </div>
+                        <div class="document-images" id="previewDocuments">
+                            <img src="https://via.placeholder.com/80/e0e0e0/7f8c8d?text=ID" alt="ID Document" class="document-image">
+                            <img src="https://via.placeholder.com/80/e0e0e0/7f8c8d?text=Address" alt="Address Proof" class="document-image">
+                            <img src="https://via.placeholder.com/80/e0e0e0/7f8c8d?text=Additional" alt="Additional Document" class="document-image">
+                        </div>
+                    </div>
+
+                   
+                </div>
+            </section>
+        </div>
+
+        <section class="users-table-section">
+            <h2 class="section-title mimiz-text"><i class="fas fa-users"></i> Registered Users</h2>
+
+            <div class="filter-controls">
+                <input type="text" id="userSearchInput" placeholder="Search by Name, ID, or Email..." oninput="filterUsersTable()">
+                <select id="genderFilterSelect" onchange="filterUsersTable()">
+                    <option value="All">All Genders</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div id="usersTableContainer">
+                <table id="usersTable">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Profile</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Gender</th>
+                            <th>Email</th>
+                            <th>Documents</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTableBody">
+                        <tr id="emptyTableRow">
+                            <td colspan="8">
+                                <div class="empty-state">
+                                    <i class="fas fa-user-slash"></i>
+                                    <h3>No Users Yet</h3>
+                                    <p>Add your first user using the form above</p>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="imageModal" class="modal">
+            <span class="close-modal">&times;</span>
+            <img class="modal-content" id="modalImage">
+        </div>
+    </div>
+
+    <!-- Product Insertion Section -->
+<div id="productInsertion" style="display: none;">
+    <div class="container">
+        <header>
+            <h1 class="mimiz-text"><i class="fas fa-box-open"></i> Product Management Dashboard</h1>
+            <p class="subtitle">Enter, preview, and manage product inventory details</p>
+            <div class="product-id-display">
+                Current Product ID: <span id="currentProductId">PRD-0000</span>
+            </div>
+        </header>
+
+        <div class="content-wrapper">
+            <section class="form-section">
+                <h2 class="section-title mimiz-text"><i class="fas fa-plus-circle"></i> Product Insertion Form</h2>
+
+                <button type="button" class="generate-id-btn" id="generateIdBtn">
+                    <i class="fas fa-barcode"></i> Generate New Product ID
+                </button>
+
+                <form id="productForm">
+                    <div class="upload-group">
+                        <label for="productImage" class="required">Product Image</label>
+                        <div class="upload-area" id="productUploadArea">
+                            <i class="fas fa-image"></i>
+                            <p>Click to upload product image (JPEG, PNG, max 5MB)</p>
+                            <input type="file" id="productImage" accept="image/*" style="display: none;" required>
+                        </div>
+                        <div class="image-preview-container" id="productPreviewContainer"></div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="company" class="required">Company / Manufacturer</label>
+                        <input type="text" id="company" placeholder="e.g., Apple, Samsung, Nike" required>
+                    </div>
+
+                    <div class="half-width">
+                        <div class="form-group">
+                            <label for="productName" class="required">Product Name</label>
+                            <input type="text" id="productName" placeholder="Enter product name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="price" class="required">Price ($)</label>
+                            <input type="number" id="price" min="0.01" step="0.01" placeholder="Enter price" required>
+                        </div>
+                    </div>
+
+                    <div class="half-width">
+                        <div class="form-group">
+                            <label for="category">Category (Optional)</label>
+                            <select id="category">
+                                <option value="">Select Category</option>
+                                <option value="Electronics">Electronics</option>
+                                <option value="Apparel">Apparel</option>
+                                <option value="Home">Home Goods</option>
+                                <option value="Food">Food & Beverage</option>
+                                <option value="Automotive">Automotive</option>
+                                <option value="Software">Software</option>
+                                <option value="Health">Health & Wellness</option>
+                                <option value="Industrial">Industrial</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="stock">Stock Quantity (Optional)</label>
+                            <input type="number" id="stock" min="0" placeholder="Enter stock quantity">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="launchDate" class="required">Launch Date</label>
+                        <input type="date" id="launchDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location" class="required">Location / City</label>
+                        <select id="location" required>
+                            <option value="">-- Select Location --</option>
+                            <option value="Addis Ababa">Addis Ababa</option>
+                            <option value="Diredawa">Diredawa</option>
+                            <option value="Awasa">Awasa</option>
+                            <option value="Other">Other (Specify in Description)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description" class="required">Description</label>
+                        <textarea id="description" rows="4" placeholder="Enter product description..." required></textarea>
+                    </div>
+
+                    <div class="button-group">
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-save"></i> Save Product
+                        </button>
+                        <button type="button" class="reset-btn" id="resetBtn">
+                            <i class="fas fa-redo"></i> Reset Form
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <section class="preview-section">
+                <h2 class="section-title mimiz-text"><i class="fas fa-eye"></i> Product Preview</h2>
+
+                <div class="preview-card">
+                    <div class="preview-header">
+                        <img src="https://via.placeholder.com/80/95a5a6/ffffff?text=Product" alt="Product Image" class="preview-product-image" id="previewProductImage">
+                        <div>
+                            <div class="preview-name" id="previewName">Product Name</div>
+                            <div class="preview-id" id="previewId">PRD-0000</div>
+                        </div>
+                    </div>
+
+                    <div class="preview-details">
+                        <div class="detail-item">
+                            <div class="detail-label">Company</div>
+                            <div class="detail-value" id="previewCompany">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Price</div>
+                            <div class="detail-value detail-value-price" id="previewPrice">$0.00</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Launch Date</div>
+                            <div class="detail-value" id="previewLaunchDate">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Location (City)</div>
+                            <div class="detail-value" id="previewLocation">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Category</div>
+                            <div class="detail-value" id="previewCategory">-</div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-label">Stock</div>
+                            <div class="detail-value" id="previewStock">-</div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="margin-top: 20px;">
+                        <label class="detail-label">Description</label>
+                        <div id="previewDescription" style="white-space: pre-wrap; font-size: 0.9em; color: var(--text-color);">-</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+</div>
+
+<!-- Product List Section -->
+<div id="productList" style="display: none;">
+    <div class="products-table-section">
+        <h2 class="section-title mimiz-text"><i class="fas fa-boxes"></i> Registered Products</h2>
+
+        <div class="filter-controls">
+            <input type="text" id="productSearchInput" placeholder="Search by Name, ID, Company, Category, or Location...">
+        </div>
+
+        <div id="productsTableContainer">
+            <table id="productsTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Image</th>
+                        <th>Name</th>
+                        <th>Company</th>
+                        <th>Location</th>
+                        <th>Price</th>
+                        <th>Category</th>
+                        <th>Stock</th>
+                        <th>Launch Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsTableBody">
+                    <tr id="emptyTableRow">
+                        <td colspan="10">
+                            <div class="empty-state">
+                                <i class="fas fa-box"></i>
+                                <h3>No Products Yet</h3>
+                                <p>Add your first product using the form above</p>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="image-modal">
+    <span class="close-modal">&times;</span>
+    <img class="modal-content" id="modalImage">
+</div>
+    <!-- Section: All News -->
+    <div id="allNews" style="display: none;">
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">All News Articles</h2></div>
+        <div class="card-body"><p class="text-secondary">Content for All News list/table.</p></div>
+      </div>
+    </div>
+
+    <!-- Section: Alerts -->
+    <div id="alert" style="display: none;">
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">Manage Site Alerts</h2></div>
+        <div class="card-body">
+          <div class="mb-4">
+            <label for="alertMessageInput" class="form-label">Alert Message</label>
+            <input type="text" class="form-control" id="alertMessageInput" placeholder="Enter alert text (e.g., Site maintenance at 2 AM)">
+          </div>
+          <button class="btn btn-primary" onclick="publishAlert()">Publish Alert</button>
+
+          <h3 class="mt-5 card-title">Published Alerts Log</h3>
+          <div id="alertsLog" class="mt-3">
+            <p class="text-secondary">No alerts published yet.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Settings (User Management) -->
+    <div id="settings" style="display: none;">
+      <div class="card">
+        <div class="card-header"><h2 class="card-title">User Preferences and System Settings</h2></div>
+        <div class="card-body">
+          <div class="mb-4">
+            <h4 class="card-title mb-3">Appearance</h4>
+            <div class="form-check form-switch mt-2">
+              <input class="form-check-input" type="checkbox" role="switch" id="darkModeSwitch">
+              <label class="form-check-label" for="darkModeSwitch">Enable Dark Mode</label>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="card-title mb-3">Account</h4>
+            <p class="text-secondary">Manage your password and profile information here.</p>
+            <button class="btn btn-outline">Change Password</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- NEW: User Management Card -->
+      <div class="card mt-4">
+        <div class="card-header"><h2 class="card-title">User Management</h2></div>
+        <div class="card-body">
+
+          <!-- User Creation Form -->
+          <h4 class="card-title mb-3">Create New User</h4>
+          <form id="newUserForm" class="row g-3 mb-5">
+            <div class="col-md-6">
+              <label for="userName" class="form-label">Name</label>
+              <input type="text" class="form-control" id="userName" required>
+            </div>
+            <div class="col-md-6">
+              <label for="userEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="userEmail" required>
+            </div>
+            <div class="col-md-6">
+              <label for="userRole" class="form-label">Role</label>
+              <select class="form-control form-select" id="userRole" required>
+                <option value="Admin">Admin</option>
+                <option value="Editor">Editor</option>
+                <option value="Reporter">Reporter</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <label for="userPassword" class="form-label">Password</label>
+              <input type="password" class="form-control" id="userPassword" required>
+            </div>
+            <div class="col-12 mt-4">
+              <button type="submit" class="btn btn-primary">Add User</button>
+            </div>
+          </form>
+
+          <!-- User Listing Table -->
+          <h4 class="card-title mb-3 pt-4 border-top">Existing Users</h4>
+          <div class="table-responsive">
+            <table class="table table-hover align-middle" id="userListTable">
+              <thead>
+                <tr>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- User list will be rendered here by JS -->
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Section: Titles/Headlines -->
+    <div id="add tit" style="display: none;">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">Manage Titles/Headlines</h2></div>
+            <div class="card-body">
+                <p class="text-secondary">Use this section to manage main page titles, banners, or section headings across the site.</p>
+                <!-- Add form/table content here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: Videos (Updated for YouTube Links) -->
+    <div id="video" style="display: none;">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">Manage YouTube Videos</h2></div>
+            <div class="card-body">
+                <h4 class="card-title mb-3">Add New YouTube Link</h4>
+                <form id="addVideoForm" class="row g-3 mb-5">
+                    <div class="col-md-6">
+                        <label for="videoTitle" class="form-label">Video Title</label>
+                        <input type="text" class="form-control" id="videoTitle" required placeholder="Enter a descriptive title">
+                    </div>
+                    <div class="col-md-6">
+                        <label for="videoLink" class="form-label">YouTube Link (URL)</label>
+                        <input type="url" class="form-control" id="videoLink" required placeholder="Paste the YouTube video URL here">
+                    </div>
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-primary">Add Video</button>
+                    </div>
+                </form>
+
+                <h4 class="card-title mb-3 pt-4 border-top">Current Video List</h4>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle" id="videoListTable">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 30%;">Title</th>
+                                <th scope="col" style="width: 55%;">Link</th>
+                                <th scope="col" style="width: 15%;">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Video list will be rendered here by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: Home Page Videos -->
+    <div id="home page" style="display: none;">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">Manage Home Page Videos</h2></div>
+            <div class="card-body">
+                <p class="text-secondary">Control which videos are prominently featured on the main landing page.</p>
+                <!-- Add home page video content here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: Add Amharic News -->
+    <div id="amharic news" style="display: none;">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">Add New Amharic Article</h2></div>
+            <div class="card-body">
+                <p class="text-secondary">Form and tools for creating new articles in the Amharic language.</p>
+                <!-- Add Amharic news form content here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: All Amharic News -->
+    <div id="allNews am" style="display: none;">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">All Amharic Articles</h2></div>
+            <div class="card-body">
+                <p class="text-secondary">List and edit existing Amharic articles.</p>
+                <!-- Add Amharic news list content here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Section: Ad Images -->
+    <div id="ads img" style="display: none;">
+        <div class="card">
+            <div class="card-header"><h2 class="card-title">Manage Advertising Images</h2></div>
+            <div class="card-body">
+                <p class="text-secondary">Upload and configure placement for banner ads and other promotional images.</p>
+                <!-- Add ad image management content here -->
+            </div>
+        </div>
+    </div>
+
+  </div>
+
+  <!-- Custom Modal/Message Box (for Logout and Confirmation) -->
+  <div id="customModal" class="modal-overlay">
+    <div class="modal-content">
+      <h3 id="modalTitle" class="modal-title">Confirm Action</h3>
+      <p id="modalMessage" class="modal-body-text">Are you sure you want to perform this action?</p>
+      <div class="modal-actions">
+        <button id="modalConfirmBtn" class="btn btn-primary">Confirm</button>
+        <button id="modalCancelBtn" class="btn btn-outline">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dark Mode Toggle -->
+  <button class="dark-mode-toggle" id="darkModeToggle">
+    <i class="fas fa-moon"></i>
+  </button>
+
+  <script>
+    // --- Simulated Data Storage ---
+    let users = [
+      { id: 1, name: 'Admin User', email: 'admin@azi.com', role: 'Admin' },
+      { id: 2, name: 'Reporter John', email: 'john@azi.com', role: 'Reporter' },
+      { id: 3, name: 'Editor Jane', email: 'jane@azi.com', role: 'Editor' },
+    ];
+
+    // NEW: Simulated Video List Storage
+    let videoList = [
+        { id: 101, title: 'Introduction to Admin Panel', link: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' },
+        { id: 102, title: 'How to Manage News', link: 'https://www.youtube.com/watch?v=qXU8E0d0Wss' },
+    ];
+
+    // --- Chart Variables ---
+    let lineChart, barChart, doughnutChart;
+
+
+    // --- Custom Modal Logic (Replacing alert/confirm) ---
+    let modalCallback = null;
+
+    /** Shows the custom modal for confirmation or alerts. */
+    function showModal(title, message, callback, isError = false) {
+      document.getElementById('modalTitle').textContent = title;
+      document.getElementById('modalMessage').textContent = message;
+
+      const confirmBtn = document.getElementById('modalConfirmBtn');
+      const cancelBtn = document.getElementById('modalCancelBtn');
+
+      if (isError) {
+        // If it's an error/info message, only show a "Close" button
+        confirmBtn.textContent = 'Close';
+        cancelBtn.style.display = 'none';
+        confirmBtn.onclick = () => { hideModal(); if(callback) callback(); };
+      } else {
+        // If it's a confirmation action
+        confirmBtn.textContent = 'Confirm';
+        cancelBtn.style.display = 'inline-block';
+        confirmBtn.onclick = null; // Clear inline handler
+        modalCallback = callback;
+      }
+
+      document.getElementById('customModal').classList.add('show-modal');
+    }
+
+    /** Hides the custom modal. */
+    function hideModal() {
+      document.getElementById('customModal').classList.remove('show-modal');
+      modalCallback = null;
+    }
+
+    // Event Listeners for Custom Modal buttons (for confirmation flow)
+    document.getElementById('modalConfirmBtn').addEventListener('click', () => {
+      // If it's an error modal, the handler is already set inline in showModal
+      if (document.getElementById('modalCancelBtn').style.display !== 'none' && modalCallback) {
+        modalCallback();
+        hideModal();
+      }
+    });
+
+    document.getElementById('modalCancelBtn').addEventListener('click', hideModal);
+
+    // --- Sidebar & Dark Mode Toggles ---
+
+    const sidebar = document.getElementById('sidebar');
+    const sidebarToggle = document.getElementById('sidebarToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+    const darkModeToggle = document.getElementById('darkModeToggle');
+
+    sidebarToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('collapsed');
+      if (window.innerWidth < 992) {
+        sidebar.classList.toggle('show');
+        sidebarOverlay.classList.toggle('show');
+      }
+    });
+
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('show');
+      sidebarOverlay.classList.remove('show');
+    });
+
+    /** Determines the primary colors used for chart rendering based on dark mode status. */
+    function getChartColors() {
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        const rootStyles = getComputedStyle(document.documentElement);
+
+        return {
+            primary: rootStyles.getPropertyValue('--primary-color'),
+            secondary: rootStyles.getPropertyValue('--secondary-color'),
+            accent: rootStyles.getPropertyValue('--accent-color'),
+            text: rootStyles.getPropertyValue('--text-color'),
+            // Use different grid/background color for contrast in dark mode
+            grid: isDarkMode ? 'rgba(255, 255, 255, 0.15)' : 'rgba(0, 0, 0, 0.1)',
+            background: isDarkMode ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)',
+        };
+    }
+
+    /** Updates charts colors on dark mode toggle. */
+    function updateChartColors() {
+        if (!lineChart || !barChart || !doughnutChart) return;
+
+        const colors = getChartColors();
+        const primaryColor = colors.primary;
+        const secondaryColor = colors.secondary;
+        const accentColor = colors.accent;
+        const successColor = '#4cc9f0';
+        const warningColor = '#f72585'; // Using CSS variables for these is better, but defined here for chart specificity
+
+        // 1. Line Chart Update
+        lineChart.data.datasets[0].borderColor = primaryColor;
+        lineChart.data.datasets[0].backgroundColor = primaryColor + '33';
+        lineChart.options.scales.x.ticks.color = colors.text;
+        lineChart.options.scales.y.ticks.color = colors.text;
+        lineChart.options.scales.x.grid.color = colors.grid;
+        lineChart.options.scales.y.grid.color = colors.grid;
+
+        // 2. Bar Chart Update
+        barChart.data.datasets[0].backgroundColor = [
+            primaryColor,
+            secondaryColor,
+            accentColor,
+            successColor,
+            warningColor
+        ];
+        barChart.options.scales.x.ticks.color = colors.text;
+        barChart.options.scales.y.ticks.color = colors.text;
+        barChart.options.scales.y.grid.color = colors.grid;
+
+        // 3. Doughnut Chart Update
+        doughnutChart.data.datasets[0].backgroundColor = [
+            primaryColor,
+            secondaryColor,
+            accentColor,
+            colors.grid // Use grid color for a subtle "Other/Viewers" section
+        ];
+        doughnutChart.options.plugins.legend.labels.color = colors.text;
+
+        // Re-render all charts
+        lineChart.update();
+        barChart.update();
+        doughnutChart.update();
+    }
+
+    // Toggle dark mode function
+    function toggleDarkMode() {
+        document.body.classList.toggle('dark-mode');
+        const isDarkMode = document.body.classList.contains('dark-mode');
+        const icon = darkModeToggle.querySelector('i');
+        const switchElement = document.getElementById('darkModeSwitch');
+
+        if (isDarkMode) {
+            icon.className = 'fas fa-sun';
+            localStorage.setItem('darkMode', 'enabled');
+            if (switchElement) switchElement.checked = true;
+        } else {
+            icon.className = 'fas fa-moon';
+            localStorage.setItem('darkMode', 'disabled');
+            if (switchElement) switchElement.checked = false;
+        }
+
+        // IMPORTANT: Update chart colors immediately after switching mode
+        updateChartColors();
+    }
+
+    darkModeToggle.addEventListener('click', toggleDarkMode);
+
+    // --- Core Navigation & Functionality ---
+
+    /** Shows the selected content section and updates the active menu item. */
+    function showSection(sectionId) {
+      // Hide all content sections in main-content
+      const contentSections = document.querySelectorAll('.main-content > div:not(.content-header)');
+      contentSections.forEach(section => {
+        section.style.display = 'none';
+      });
+
+      // Show selected section
+      const section = document.getElementById(sectionId);
+      if (section) {
+        section.style.display = 'block';
+      } else if (sectionId === 'statistics') {
+        // Handle the dashboard/statistics section
+        document.getElementById('statistics').style.display = 'block';
+      }
+
+      // Update active nav item
+      const navItems = document.querySelectorAll('.nav-item');
+      navItems.forEach(item => {
+        item.classList.remove('active');
+      });
+
+      const activeNav = document.querySelector(`.nav-item[onclick="showSection('${sectionId}')"]`);
+      if (activeNav) {
+        activeNav.classList.add('active');
+
+        // Update Content Header Title and Breadcrumb dynamically
+        const titleText = activeNav.querySelector('.nav-text').textContent;
+        document.getElementById('contentTitle').textContent = titleText;
+        document.getElementById('contentBreadcrumb').lastElementChild.textContent = titleText;
+      }
+
+      // Close sidebar on mobile after selection
+      if (window.innerWidth < 992) {
+        sidebar.classList.remove('show');
+        sidebarOverlay.classList.remove('show');
+      }
+    }
+
+    /** Logout function using custom modal. */
+    function logout() {
+      showModal(
+        'Confirm Logout',
+        'Are you sure you want to log out of the admin panel?',
+        () => {
+          // Perform simulated logout actions here
+          console.log('User logged out.');
+          // window.location.href = '/login.html'; // Uncomment this line if you have a login page
+        }
+      );
+    }
+
+    /** Publish Alert function (UPDATED to include Date and Time). */
+    function publishAlert() {
+      const input = document.getElementById('alertMessageInput');
+      const message = input.value.trim();
+      const alertsLog = document.getElementById('alertsLog');
+
+      if (message) {
+        const now = new Date();
+        // Format date and time
+        const dateOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const dateStr = now.toLocaleDateString(undefined, dateOptions);
+        const timeStr = now.toLocaleTimeString(undefined, timeOptions);
+
+        // Create the new alert entry
+        const newAlert = document.createElement('div');
+        newAlert.className = 'p-3 rounded-lg mb-3';
+        newAlert.style.border = '1px solid var(--border-color)';
+        newAlert.style.backgroundColor = 'var(--hover-color)';
+        newAlert.innerHTML = `
+          <p class="font-bold text-sm" style="color: var(--primary-color); font-weight: 600;">PUBLISHED</p>
+          <p class="text-md mb-1" style="color: var(--text-color); font-weight: 500;">${message}</p>
+          <small style="color: var(--text-light); font-size: 0.8rem;"><i class="fas fa-clock"></i> ${dateStr} at ${timeStr}</small>
+        `;
+
+        // Remove placeholder if it exists
+        if (alertsLog.querySelector('.text-secondary')) {
+          alertsLog.innerHTML = '';
+        }
+
+        // Add new alert to the top of the log
+        alertsLog.prepend(newAlert);
+
+        // Clear input
+        input.value = '';
+
+        showModal('Alert Published', `Successfully published alert: "${message}"`, null, true);
+
+      } else {
+        showModal('Error', 'Please enter a message before publishing the alert.', null, true);
+      }
+    }
+
+    // --- User Management Logic ---
+
+    /** Renders the user list table from the global 'users' array. */
+    function renderUserList() {
+      const tableBody = document.querySelector('#userListTable tbody');
+      if (!tableBody) return;
+      tableBody.innerHTML = ''; // Clear existing rows
+
+      // Update the Dashboard stat
+      document.getElementById('totalUsersStat').textContent = users.length;
+
+      users.forEach(user => {
+        const row = tableBody.insertRow();
+        row.innerHTML = `
+          <td>${user.name}</td>
+          <td>${user.email}</td>
+          <td><span class="badge" style="background-color: ${getRoleColor(user.role)}; color: white;">${user.role}</span></td>
+          <td class="table-actions">
+            <button class="edit-btn" onclick="editUser(${user.id})" title="Edit User"><i class="fas fa-edit"></i></button>
+            <button class="delete-btn" onclick="confirmDeleteUser(${user.id}, '${user.name}')" title="Delete User"><i class="fas fa-trash"></i></button>
+          </td>
+        `;
+      });
+    }
+
+    /** Helper to get a color for the user role badge. */
+    function getRoleColor(role) {
+      switch (role) {
+        case 'Admin': return 'var(--primary-color)';
+        case 'Editor': return 'var(--success-color)';
+        case 'Reporter': return 'var(--warning-color)';
+        default: return 'var(--text-light)';
+      }
+    }
+
+    /** Handles the form submission for adding a new user. */
+    function addNewUser(event) {
+      event.preventDefault();
+
+      const name = document.getElementById('userName').value.trim();
+      const email = document.getElementById('userEmail').value.trim();
+      const role = document.getElementById('userRole').value;
+      const password = document.getElementById('userPassword').value.trim();
+
+      if (!name || !email || !password) {
+        showModal('Error', 'Please fill in all user creation fields.', null, true);
+        return;
+      }
+
+      // Simulated new user object
+      const newUser = {
+        id: users.length ? Math.max(...users.map(u => u.id)) + 1 : 1,
+        name: name,
+        email: email,
+        role: role
+        // Note: Password is not stored in this client-side example
+      };
+
+      users.push(newUser);
+      renderUserList();
+
+      // Clear the form and notify user
+      document.getElementById('newUserForm').reset();
+      showModal('Success', `${name} (${role}) has been successfully added.`, null, true);
+    }
+
+    /** Simulated edit function */
+    function editUser(userId) {
+        const user = users.find(u => u.id === userId);
+        if (user) {
+             showModal('Edit User', `Simulating edit for user: ${user.name}. In a real app, a form would pop up here.`, null, true);
+        }
+    }
+
+    /** Confirmation for deleting a user */
+    function confirmDeleteUser(userId, userName) {
+      showModal(
+        'Confirm Deletion',
+        `Are you sure you want to delete user: ${userName}? This action cannot be undone.`,
+        () => {
+          deleteUser(userId, userName);
+        }
+      );
+    }
+
+    /** Deletes the user from the simulated array. */
+    function deleteUser(userId, userName) {
+      users = users.filter(user => user.id !== userId);
+      renderUserList();
+      showModal('Deleted', `User ${userName} has been removed.`, null, true);
+    }
+
+    // --- Video Management Logic ---
+
+    /** Handles adding a new YouTube video. */
+    function addYouTubeVideo(event) {
+        event.preventDefault();
+
+        const titleInput = document.getElementById('videoTitle');
+        const linkInput = document.getElementById('videoLink');
+
+        const title = titleInput.value.trim();
+        const link = linkInput.value.trim();
+
+        // Simple validation to check for a non-empty YouTube link
+        if (!title || !link || !link.includes('youtube.com') && !link.includes('youtu.be')) {
+            showModal('Validation Error', 'Please enter a title and a valid YouTube link (must contain "youtube.com" or "youtu.be").', null, true);
+            return;
+        }
+
+        const newVideo = {
+            id: videoList.length ? Math.max(...videoList.map(v => v.id)) + 1 : 101,
+            title: title,
+            link: link
+        };
+
+        videoList.push(newVideo);
+        renderVideoList();
+
+        // Clear the form and notify user
+        titleInput.value = '';
+        linkInput.value = '';
+        showModal('Video Added', `"${title}" has been added to the video list.`, null, true);
+    }
+
+    /** Renders the video list table. */
+    function renderVideoList() {
+        const tableBody = document.querySelector('#videoListTable tbody');
+        if (!tableBody) return;
+        tableBody.innerHTML = ''; // Clear existing rows
+
+        if (videoList.length === 0) {
+            const row = tableBody.insertRow();
+            row.innerHTML = `<td colspan="3" class="text-center py-4 text-secondary">No videos added yet.</td>`;
+            return;
+        }
+
+        videoList.forEach(video => {
+            const row = tableBody.insertRow();
+            row.innerHTML = `
+              <td>${video.title}</td>
+              <td><a href="${video.link}" target="_blank" style="color: var(--primary-color); text-decoration: underline; font-size: 0.85rem; word-break: break-all;">${video.link}</a></td>
+              <td class="table-actions">
+                <button class="delete-btn" onclick="confirmDeleteVideo(${video.id}, '${video.title}')" title="Delete Video">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </td>
+            `;
+        });
+    }
+
+    /** Confirmation for deleting a video */
+    function confirmDeleteVideo(videoId, videoTitle) {
+        showModal(
+            'Confirm Deletion',
+            `Are you sure you want to remove the video: "${videoTitle}"?`,
+            () => {
+                deleteVideo(videoId, videoTitle);
+            }
+        );
+    }
+
+    /** Deletes the video from the simulated array. */
+    function deleteVideo(videoId, videoTitle) {
+        videoList = videoList.filter(video => video.id !== videoId);
+        renderVideoList();
+        showModal('Deleted', `Video "${videoTitle}" has been removed.`, null, true);
+    }
+
+    // --- Chart Initialization Logic ---
+
+    /** Initializes all three charts using Chart.js. */
+    function initializeCharts() {
+        // Destroy existing charts to prevent memory leaks/redraw issues
+        if (lineChart) lineChart.destroy();
+        if (barChart) barChart.destroy();
+        if (doughnutChart) doughnutChart.destroy();
+
+        const colors = getChartColors();
+
+        // 1. Line Chart: Monthly Visitors
+        const ctxLine = document.getElementById('monthlyVisitorsChart').getContext('2d');
+        lineChart = new Chart(ctxLine, {
+            type: 'line',
+            data: {
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+                datasets: [{
+                    label: 'Unique Visitors',
+                    data: [1500, 1800, 2200, 2000, 2500, 3000, 2800, 3500],
+                    borderColor: colors.primary,
+                    backgroundColor: colors.primary + '33', // 20% opacity
+                    borderWidth: 2,
+                    tension: 0.4,
+                    fill: true,
+                    pointRadius: 4,
+                    pointHoverRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: colors.text },
+                        grid: { color: colors.grid }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: colors.text },
+                        grid: { color: colors.grid }
+                    }
+                }
+            }
+        });
+
+        // 2. Bar Chart: Articles by Category
+        const ctxBar = document.getElementById('articlesByCategoryChart').getContext('2d');
+        barChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['Politics', 'Sports', 'Tech', 'Health', 'Culture'],
+                datasets: [{
+                    label: 'Articles',
+                    data: [45, 30, 20, 15, 10],
+                    backgroundColor: [
+                        colors.primary,
+                        colors.secondary,
+                        colors.accent,
+                        '#4cc9f0', // Success
+                        '#f72585'  // Warning
+                    ],
+                    borderRadius: 6,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: { display: false },
+                    title: { display: false }
+                },
+                scales: {
+                    x: {
+                        ticks: { color: colors.text },
+                        grid: { display: false }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: { color: colors.text },
+                        grid: { color: colors.grid }
+                    }
+                }
+            }
+        });
+
+        // 3. Doughnut Chart: User Role Distribution
+        const ctxDoughnut = document.getElementById('userRoleDistributionChart').getContext('2d');
+        doughnutChart = new Chart(ctxDoughnut, {
+            type: 'doughnut',
+            data: {
+                labels: ['Admins', 'Editors', 'Reporters', 'Viewers'],
+                datasets: [{
+                    label: 'Users',
+                    data: [3, 10, 15, 72],
+                    backgroundColor: [
+                        colors.primary,
+                        colors.secondary,
+                        colors.accent,
+                        colors.grid
+                    ],
+                    hoverOffset: 4,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        position: 'bottom',
+                        labels: { color: colors.text }
+                    },
+                    title: { display: false }
+                }
+            }
+        });
+    }
+
+    // --- Time and Date Clock Logic ---
+
+    function updateClock() {
+        const now = new Date();
+
+        // Time formatting (e.g., 07:53:20 PM)
+        const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true };
+        const timeStr = now.toLocaleTimeString('en-US', timeOptions);
+
+        // Date formatting (e.g., Tuesday, October 28, 2025)
+        const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        const dateStr = now.toLocaleDateString('en-US', dateOptions);
+
+        document.getElementById('currentTime').textContent = timeStr;
+        document.getElementById('currentDate').textContent = dateStr;
+    }
+
+
+    // Initialize dashboard stats and state
+    document.addEventListener('DOMContentLoaded', function() {
+      // 1. Check for saved dark mode preference and apply
+      if (localStorage.getItem('darkMode') === 'enabled') {
+        toggleDarkMode();
+      } else {
+        // Ensure initial icon state is correct if not dark mode
+        darkModeToggle.querySelector('i').className = 'fas fa-moon';
+      }
+
+      // 2. Start the clock
+      updateClock();
+      setInterval(updateClock, 1000); // Update every second
+
+      // 3. Set initial active section (Dashboard)
+      showSection('statistics');
+
+      // 4. Attach event listeners
+      document.getElementById('newUserForm')?.addEventListener('submit', addNewUser);
+      document.getElementById('addVideoForm')?.addEventListener('submit', addYouTubeVideo);
+
+      // 5. Render the initial data lists
+      renderUserList();
+      renderVideoList();
+
+      // 6. Initialize Charts
+      initializeCharts();
+
+      // 7. Simulate loading stats data (initialization)
+      setTimeout(() => {
+        document.getElementById('totalArticles').textContent = '125';
+        document.getElementById('activeToday').textContent = '243';
+        document.getElementById('newThisWeek').textContent = '38';
+
+        document.getElementById('activityLog').innerHTML = `
+          <div class="activity-list">
+            <div class="activity-item">
+              <div class="activity-icon" style="background-color: rgba(67, 97, 238, 0.1); color: var(--primary-color);">
+                <i class="fas fa-plus"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">New article published</div>
+                <div class="activity-time">2 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background-color: rgba(76, 201, 240, 0.1); color: var(--success-color);">
+                <i class="fas fa-user"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">New user registered</div>
+                <div class="activity-time">15 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-icon" style="background-color: rgba(58, 12, 163, 0.1); color: var(--secondary-color);">
+                <i class="fas fa-video"></i>
+              </div>
+              <div class="activity-content">
+                <div class="activity-title">Video uploaded</div>
+                <div class="activity-time">1 hour ago</div>
+              </div>
+            </div>
+          </div>
+        `;
+      }, 1000);
+    });
+
+    // Dark Mode Switch Listener (for Settings page)
+    document.getElementById('darkModeSwitch')?.addEventListener('change', toggleDarkMode);
+            // --- Global Variables and ID Generation ---
+        let productIdCounter = localStorage.getItem('productIdCounter') ? parseInt(localStorage.getItem('productIdCounter')) : 0;
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+        let productImageData = null; // Stores the base64 product image
+
+        // Remove any old 'location' text input event listener before adding the new select one
+        // (This is primarily for robustness if running in an iterative environment)
+        const oldLocationInput = document.getElementById('location');
+        if (oldLocationInput && oldLocationInput.tagName === 'INPUT') {
+            oldLocationInput.removeEventListener('input', updatePreview);
+        }
+
+        function generateProductId() {
+            productIdCounter++;
+            localStorage.setItem('productIdCounter', productIdCounter.toString());
+            const timestamp = Date.now().toString().slice(-4);
+            const random = Math.floor(Math.random() * 1000).toString().padStart(3, '0');
+            return `PRD-${productIdCounter.toString().padStart(4, '0')}-${timestamp}${random}`;
+        }
+
+        function updateProductIdDisplay() {
+            const newProductId = generateProductId();
+            document.getElementById('currentProductId').textContent = newProductId;
+            document.getElementById('previewId').textContent = newProductId;
+            return newProductId;
+        }
+
+        // Initialize with a product ID
+        let currentProductId = updateProductIdDisplay();
+
+        // --- Image Upload Logic (Unchanged) ---
+        const uploadArea = document.getElementById('productUploadArea');
+        const input = document.getElementById('productImage');
+        const previewContainer = document.getElementById('productPreviewContainer');
+        const defaultImage = 'https://via.placeholder.com/80/95a5a6/ffffff?text=Product';
+
+        uploadArea.addEventListener('click', () => input.click());
+
+        input.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size must be less than 5MB');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    productImageData = e.target.result;
+
+                    previewContainer.innerHTML = '';
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'preview-image-wrapper';
+                    wrapper.innerHTML = `
+                        <img src="${e.target.result}" class="preview-image" alt="product preview">
+                        <button type="button" class="remove-image" onclick="removeImage()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    previewContainer.appendChild(wrapper);
+
+                    document.getElementById('previewProductImage').src = e.target.result;
+                    document.getElementById('previewProductImage').style.width = '100px';
+                    document.getElementById('previewProductImage').style.height = '100px';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+
+        function removeImage() {
+            productImageData = null;
+            document.getElementById('productImage').value = '';
+            previewContainer.innerHTML = '';
+            document.getElementById('previewProductImage').src = defaultImage;
+            document.getElementById('previewProductImage').style.width = '80px';
+            document.getElementById('previewProductImage').style.height = '80px';
+        }
+
+        // --- Real-time Preview Update (Location Select Handled) ---
+        const formInputs = document.querySelectorAll('#productForm input, #productForm select, #productForm textarea');
+        formInputs.forEach(input => {
+            input.addEventListener('input', updatePreview);
+            input.addEventListener('change', updatePreview);
+        });
+
+        function updatePreview() {
+            document.getElementById('previewCompany').textContent = document.getElementById('company').value || '-';
+            document.getElementById('previewName').textContent = document.getElementById('productName').value || 'Product Name';
+
+            const price = parseFloat(document.getElementById('price').value);
+            document.getElementById('previewPrice').textContent = price ? `$${price.toFixed(2)}` : '$0.00';
+
+            const categorySelect = document.getElementById('category');
+            document.getElementById('previewCategory').textContent = categorySelect.options[categorySelect.selectedIndex].text || '-';
+
+            document.getElementById('previewStock').textContent = document.getElementById('stock').value || '-';
+
+            // Handle Location Select Preview
+            const locationSelect = document.getElementById('location');
+            document.getElementById('previewLocation').textContent = locationSelect.value ? locationSelect.options[locationSelect.selectedIndex].text : '-';
+
+            const launchDate = document.getElementById('launchDate').value;
+            document.getElementById('previewLaunchDate').textContent = launchDate ? new Date(launchDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) : '-';
+
+            document.getElementById('previewDescription').textContent = document.getElementById('description').value || '-';
+        }
+
+        // --- Form Submission (Location Select Handled) ---
+        document.getElementById('productForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Basic form validation for required fields
+            if (!productImageData) {
+                alert('Please upload a product image.');
+                return;
+            }
+            if (!document.getElementById('location').value) {
+                alert('Please select a product location.');
+                return;
+            }
+
+            const product = {
+                id: currentProductId,
+                image: productImageData,
+                name: document.getElementById('productName').value,
+                company: document.getElementById('company').value,
+                price: parseFloat(document.getElementById('price').value).toFixed(2),
+                category: document.getElementById('category').value,
+                stock: document.getElementById('stock').value || 0,
+                location: document.getElementById('location').value, // Get selected value
+                launchDate: document.getElementById('launchDate').value,
+                description: document.getElementById('description').value,
+                createdAt: new Date().toISOString()
+            };
+
+            products.unshift(product);
+            localStorage.setItem('products', JSON.stringify(products));
+
+            updateProductsTable();
+
+            alert(`Product '${product.name}' from ${product.company} added successfully with ID: ${product.id}`);
+
+            resetForm();
+            currentProductId = updateProductIdDisplay();
+            updatePreview();
+        });
+
+        // --- Form Reset ---
+        function resetForm() {
+            document.getElementById('productForm').reset();
+            removeImage();
+            currentProductId = updateProductIdDisplay();
+            updatePreview();
+        }
+        document.getElementById('resetBtn').addEventListener('click', resetForm);
+        document.getElementById('generateIdBtn').addEventListener('click', () => {
+            currentProductId = updateProductIdDisplay();
+            alert(`New Product ID Generated: ${currentProductId}`);
+        });
+
+        // --- Table Management (Unchanged) ---
+        function updateProductsTable(filteredProducts = products) {
+            const tableBody = document.getElementById('productsTableBody');
+            tableBody.innerHTML = '';
+
+            if (filteredProducts.length === 0) {
+                const newRow = document.createElement('tr');
+                newRow.id = 'emptyTableRow';
+                newRow.innerHTML = `
+                    <td colspan="10">
+                        <div class="empty-state">
+                            <i class="fas fa-box"></i>
+                            <h3>No Products Found</h3>
+                            <p>Try broadening your search or filter</p>
+                        </div>
+                    </td>
+                `;
+                tableBody.appendChild(newRow);
+                return;
+            }
+
+            filteredProducts.forEach((product) => {
+                const row = document.createElement('tr');
+                const originalIndex = products.findIndex(p => p.id === product.id);
+
+                const formattedDate = product.launchDate ? new Date(product.launchDate).toLocaleDateString() : '-';
+
+                row.innerHTML = `
+                    <td>${product.id}</td>
+                    <td><img src="${product.image}" alt="${product.name}" class="product-thumb" onclick="viewImageInModal('${product.image}')"></td>
+                    <td>${product.name}</td>
+                    <td>${product.company}</td>
+                    <td>${product.location}</td>
+                    <td>$${product.price}</td>
+                    <td>${product.category || 'N/A'}</td>
+                    <td>${product.stock}</td>
+                    <td>${formattedDate}</td>
+                    <td>
+                        <button class="table-action-btn view-btn" title="View/Edit" onclick="viewProduct(${originalIndex})">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <button class="table-action-btn delete-btn" title="Delete Product" onclick="deleteProduct(${originalIndex})">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                `;
+
+                tableBody.appendChild(row);
+            });
+        }
+
+        function filterProductsTable() {
+            const searchTerm = document.getElementById('productSearchInput').value.toLowerCase();
+
+            const filtered = products.filter(product => {
+                return product.id.toLowerCase().includes(searchTerm) ||
+                       product.name.toLowerCase().includes(searchTerm) ||
+                       product.company.toLowerCase().includes(searchTerm) ||
+                       product.location.toLowerCase().includes(searchTerm) ||
+                       product.category.toLowerCase().includes(searchTerm);
+            });
+
+            updateProductsTable(filtered);
+        }
+
+        // --- Action Functions (Location Select Handled) ---
+        function viewProduct(index) {
+            const product = products[index];
+
+            // Fill form
+            document.getElementById('productName').value = product.name;
+            document.getElementById('company').value = product.company;
+            document.getElementById('price').value = product.price;
+            document.getElementById('category').value = product.category;
+            document.getElementById('stock').value = product.stock;
+            document.getElementById('location').value = product.location; // Set selected value
+            document.getElementById('launchDate').value = product.launchDate;
+            document.getElementById('description').value = product.description;
+
+            // Handle Image Preview
+            productImageData = product.image;
+            previewContainer.innerHTML = `
+                <div class="preview-image-wrapper">
+                    <img src="${product.image}" class="preview-image" alt="product preview">
+                    <button type="button" class="remove-image" onclick="removeImage()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            `;
+            document.getElementById('previewProductImage').src = product.image;
+            document.getElementById('previewProductImage').style.width = '100px';
+            document.getElementById('previewProductImage').style.height = '100px';
+
+
+            // Update current ID to viewed product's ID
+            currentProductId = product.id;
+            document.getElementById('currentProductId').textContent = product.id;
+            document.getElementById('previewId').textContent = product.id;
+
+            updatePreview();
+
+            document.querySelector('.form-section').scrollIntoView({ behavior: 'smooth' });
+
+            alert(`Now viewing '${product.name}' from ${product.company}. You can edit and save as a new product.`);
+        }
+
+        function deleteProduct(index) {
+            if (confirm(`Are you sure you want to delete product '${products[index].name}'?`)) {
+                products.splice(index, 1);
+                localStorage.setItem('products', JSON.stringify(products));
+                updateProductsTable();
+                alert('Product deleted successfully');
+            }
+        }
+
+        // --- Modal Functionality (Unchanged) ---
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        function viewImageInModal(src) {
+            modal.style.display = 'flex';
+            modalImg.src = src;
+        }
+
+        document.addEventListener('click', (e) => {
+            if (e.target.classList.contains('product-thumb') || e.target.classList.contains('preview-product-image')) {
+                viewImageInModal(e.target.src);
+            }
+        });
+
+        // --- Initialization ---
+        updateProductsTable();
+        updatePreview();
+
+  </script>
+</body>
+</html>
