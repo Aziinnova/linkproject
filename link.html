@@ -8,7 +8,7 @@
     <!-- Icons & Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://github.com/Aziinnova/linkproject/blob/main/land.css">
+    <link rel="stylesheet" href="land.css">
    <script src="scripS.js"></script>
 
 </head>
@@ -1215,13 +1215,22 @@
             });
         });
 
-        // Partner buttons
-        document.querySelectorAll('.airbnb-card .btn-primary').forEach(button => {
-            button.addEventListener('click', function() {
-                const companyName = this.closest('.airbnb-card').querySelector('.company-title').textContent;
-                showNotification(`Partnership request sent to ${companyName}! You'll get access within 24 hours.`, 'success');
-            });
-        });
+      // Partner buttons - Redirect to Registration
+document.querySelectorAll('.airbnb-card .btn-primary').forEach(button => {
+    button.addEventListener('click', function(e) {
+        e.preventDefault(); // Prevent default link behavior
+        
+        const companyName = this.closest('.airbnb-card').querySelector('.company-title').textContent;
+        
+        // Option 1: Quick notification then redirect
+        showNotification(`Redirecting to apply for ${companyName}...`, 'success');
+        
+        setTimeout(() => {
+            // Change "regstar.html" to your actual filename (e.g., register.html)
+            window.location.href = "regstar.html"; 
+        }, 800);
+    });
+});
 
         // Partner buttons for logo cards
         document.querySelectorAll('.partner-btn').forEach(btn => {
