@@ -41,6 +41,12 @@
         </div>
       </div>
 
+      <div class="nav-item" onclick="showSection('company list')">
+          <div class="nav-icon"><i class="fas fa-newspaper"></i></div>
+          <div class="nav-text">companies list
+        </div>
+      </div>
+
       <div class="nav-section">
         <div class="nav-section-title">Content</div>
         <div class="nav-item" onclick="showSection('alert')">
@@ -249,442 +255,9 @@
 
 
 
-    <div id="user reg" style="display: none;">
-            <div class="content-wrapper">
-            <section class="form-section">
-                <h2 class="section-title mimiz-text"><i class="fas fa-user-edit"></i> User Information Form</h2>
+  
 
-                <button type="button" class="generate-id-btn" id="generateIdBtn">
-                    <i class="fas fa-id-card"></i> Generate New User ID
-                </button>
 
-                <form id="userForm">
-                    <div class="upload-group">
-                        <div class="upload-group-title">
-                            <i class="fas fa-user-image"></i> Profile Picture
-                        </div>
-                        <div class="upload-area" id="profileUploadArea">
-                            <i class="fas fa-cloud-upload-alt"></i>
-                            <p>Click to upload profile picture (JPEG, PNG, max 5MB)</p>
-                            <input type="file" id="profileImage" accept="image/*" style="display: none;">
-                        </div>
-                        <div class="image-preview-container" id="profilePreviewContainer"></div>
-                    </div>
-
-                    <div class="upload-group">
-                        <div class="upload-group-title">
-                            <i class="fas fa-file-image"></i> Document Images (3 Required)
-                        </div>
-                        <div class="document-upload-grid">
-                            <div class="upload-group">
-                                <div class="upload-group-title">
-                                    <i class="fas fa-id-card"></i> ID Document (Passport/Driver's License)
-                                </div>
-                                <div class="upload-area small" id="idDocumentArea">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Upload ID Document</p>
-                                    <input type="file" class="document-input" data-type="id" accept="image/*" style="display: none;">
-                                </div>
-                                <div class="image-preview-container" id="idDocumentPreview"></div>
-                            </div>
-
-                            <div class="upload-group">
-                                <div class="upload-group-title">
-                                    <i class="fas fa-home"></i> Proof of Address
-                                </div>
-                                <div class="upload-area small" id="addressDocumentArea">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Upload Address Proof</p>
-                                    <input type="file" class="document-input" data-type="address" accept="image/*" style="display: none;">
-                                </div>
-                                <div class="image-preview-container" id="addressDocumentPreview"></div>
-                            </div>
-
-                            <div class="upload-group">
-                                <div class="upload-group-title">
-                                    <i class="fas fa-file-medical"></i> Additional Document
-                                </div>
-                                <div class="upload-area small" id="additionalDocumentArea">
-                                    <i class="fas fa-cloud-upload-alt"></i>
-                                    <p>Upload Additional Document</p>
-                                    <input type="file" class="document-input" data-type="additional" accept="image/*" style="display: none;">
-                                </div>
-                                <div class="image-preview-container" id="additionalDocumentPreview"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="half-width">
-                        <div class="form-group">
-                            <label for="firstName" class="required">First Name</label>
-                            <input type="text" id="firstName" placeholder="Enter first name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="lastName" class="required">Last Name</label>
-                            <input type="text" id="lastName" placeholder="Enter last name" required>
-                        </div>
-                    </div>
-
-                    <div class="half-width">
-                        <div class="form-group">
-                            <label for="age" class="required">Age</label>
-                            <input type="number" id="age" min="1" max="120" placeholder="Enter age" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="gender" class="required">Gender</label>
-                            <select id="gender" required>
-                                <option value="">Select Gender</option>
-                                <option value="Male">Male</option>
-                                <option value="Female">Female</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email" class="required">Email Address</label>
-                            <input type="email" id="email" placeholder="Enter email address" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="phone" class="required">Phone Number</label>
-                        <input type="tel" id="phone" placeholder="Enter phone number" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="country" class="required">Country</label>
-                        <select id="country" required>
-                            <option value="">Select Country</option>
-                            <option value="US">United States</option>
-                            <option value="UK">United Kingdom</option>
-                            <option value="CA">Canada</option>
-                            <option value="AU">Australia</option>
-                            <option value="IN">India</option>
-                            <option value="DE">Germany</option>
-                            <option value="FR">France</option>
-                            <option value="JP">Japan</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="occupation">Occupation</label>
-                        <input type="text" id="occupation" placeholder="Enter occupation">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <textarea id="address" rows="3" placeholder="Enter full address"></textarea>
-                    </div>
-
-                    
-
-                    <div class="button-group">
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-save"></i> Save User Profile
-                        </button>
-                        <button type="button" class="reset-btn" id="resetBtn">
-                            <i class="fas fa-redo"></i> Reset Form
-                        </button>
-                    </div>
-                </form>
-            </section>
-
-            <section class="preview-section">
-                <h2 class="section-title mimiz-text"><i class="fas fa-eye"></i> Profile Preview</h2>
-
-                <div class="preview-card">
-                    <div class="preview-header">
-                        <img src="https://via.placeholder.com/100/3498db/ffffff?text=No+Image" alt="Profile" class="preview-profile-image" id="previewProfileImage">
-                        <div>
-                            <div class="preview-name" id="previewName">Full Name</div>
-                            <div class="preview-id" id="previewId">USR-0000</div>
-                        </div>
-                    </div>
-
-                    <div class="preview-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Age</div>
-                            <div class="detail-value" id="previewAge">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Gender</div>
-                            <div class="detail-value" id="previewGender">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Email</div>
-                            <div class="detail-value" id="previewEmail">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Phone</div>
-                            <div class="detail-value" id="previewPhone">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Country</div>
-                            <div class="detail-value" id="previewCountry">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Occupation</div>
-                            <div class="detail-value" id="previewOccupation">-</div>
-                        </div>
-                    </div>
-
-                    <div class="document-preview">
-                        <div class="document-preview-title">
-                            <i class="fas fa-file-images"></i> Document Images
-                        </div>
-                        <div class="document-images" id="previewDocuments">
-                            <img src="https://via.placeholder.com/80/e0e0e0/7f8c8d?text=ID" alt="ID Document" class="document-image">
-                            <img src="https://via.placeholder.com/80/e0e0e0/7f8c8d?text=Address" alt="Address Proof" class="document-image">
-                            <img src="https://via.placeholder.com/80/e0e0e0/7f8c8d?text=Additional" alt="Additional Document" class="document-image">
-                        </div>
-                    </div>
-
-                   
-                </div>
-            </section>
-        </div>
-
-        <section class="users-table-section">
-            <h2 class="section-title mimiz-text"><i class="fas fa-users"></i> Registered Users</h2>
-
-            <div class="filter-controls">
-                <input type="text" id="userSearchInput" placeholder="Search by Name, ID, or Email..." oninput="filterUsersTable()">
-                <select id="genderFilterSelect" onchange="filterUsersTable()">
-                    <option value="All">All Genders</option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-
-            <div id="usersTableContainer">
-                <table id="usersTable">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Profile</th>
-                            <th>Name</th>
-                            <th>Age</th>
-                            <th>Gender</th>
-                            <th>Email</th>
-                            <th>Documents</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="usersTableBody">
-                        <tr id="emptyTableRow">
-                            <td colspan="8">
-                                <div class="empty-state">
-                                    <i class="fas fa-user-slash"></i>
-                                    <h3>No Users Yet</h3>
-                                    <p>Add your first user using the form above</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
-
-        <div id="imageModal" class="modal">
-            <span class="close-modal">&times;</span>
-            <img class="modal-content" id="modalImage">
-        </div>
-    </div>
-
-    <!-- Product Insertion Section -->
-<div id="productInsertion" style="display: none;">
-    <div class="container">
-        <header>
-            <h1 class="mimiz-text"><i class="fas fa-box-open"></i> Product Management Dashboard</h1>
-            <p class="subtitle">Enter, preview, and manage product inventory details</p>
-            <div class="product-id-display">
-                Current Product ID: <span id="currentProductId">PRD-0000</span>
-            </div>
-        </header>
-
-        <div class="content-wrapper">
-            <section class="form-section">
-                <h2 class="section-title mimiz-text"><i class="fas fa-plus-circle"></i> Product Insertion Form</h2>
-
-                <button type="button" class="generate-id-btn" id="generateIdBtn">
-                    <i class="fas fa-barcode"></i> Generate New Product ID
-                </button>
-
-                <form id="productForm">
-                    <div class="upload-group">
-                        <label for="productImage" class="required">Product Image</label>
-                        <div class="upload-area" id="productUploadArea">
-                            <i class="fas fa-image"></i>
-                            <p>Click to upload product image (JPEG, PNG, max 5MB)</p>
-                            <input type="file" id="productImage" accept="image/*" style="display: none;" required>
-                        </div>
-                        <div class="image-preview-container" id="productPreviewContainer"></div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="company" class="required">Company / Manufacturer</label>
-                        <input type="text" id="company" placeholder="e.g., Apple, Samsung, Nike" required>
-                    </div>
-
-                    <div class="half-width">
-                        <div class="form-group">
-                            <label for="productName" class="required">Product Name</label>
-                            <input type="text" id="productName" placeholder="Enter product name" required>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="price" class="required">Price ($)</label>
-                            <input type="number" id="price" min="0.01" step="0.01" placeholder="Enter price" required>
-                        </div>
-                    </div>
-
-                    <div class="half-width">
-                        <div class="form-group">
-                            <label for="category">Category (Optional)</label>
-                            <select id="category">
-                                <option value="">Select Category</option>
-                                <option value="Electronics">Electronics</option>
-                                <option value="Apparel">Apparel</option>
-                                <option value="Home">Home Goods</option>
-                                <option value="Food">Food & Beverage</option>
-                                <option value="Automotive">Automotive</option>
-                                <option value="Software">Software</option>
-                                <option value="Health">Health & Wellness</option>
-                                <option value="Industrial">Industrial</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="stock">Stock Quantity (Optional)</label>
-                            <input type="number" id="stock" min="0" placeholder="Enter stock quantity">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="launchDate" class="required">Launch Date</label>
-                        <input type="date" id="launchDate" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="location" class="required">Location / City</label>
-                        <select id="location" required>
-                            <option value="">-- Select Location --</option>
-                            <option value="Addis Ababa">Addis Ababa</option>
-                            <option value="Diredawa">Diredawa</option>
-                            <option value="Awasa">Awasa</option>
-                            <option value="Other">Other (Specify in Description)</option>
-                        </select>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="description" class="required">Description</label>
-                        <textarea id="description" rows="4" placeholder="Enter product description..." required></textarea>
-                    </div>
-
-                    <div class="button-group">
-                        <button type="submit" class="submit-btn">
-                            <i class="fas fa-save"></i> Save Product
-                        </button>
-                        <button type="button" class="reset-btn" id="resetBtn">
-                            <i class="fas fa-redo"></i> Reset Form
-                        </button>
-                    </div>
-                </form>
-            </section>
-
-            <section class="preview-section">
-                <h2 class="section-title mimiz-text"><i class="fas fa-eye"></i> Product Preview</h2>
-
-                <div class="preview-card">
-                    <div class="preview-header">
-                        <img src="https://via.placeholder.com/80/95a5a6/ffffff?text=Product" alt="Product Image" class="preview-product-image" id="previewProductImage">
-                        <div>
-                            <div class="preview-name" id="previewName">Product Name</div>
-                            <div class="preview-id" id="previewId">PRD-0000</div>
-                        </div>
-                    </div>
-
-                    <div class="preview-details">
-                        <div class="detail-item">
-                            <div class="detail-label">Company</div>
-                            <div class="detail-value" id="previewCompany">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Price</div>
-                            <div class="detail-value detail-value-price" id="previewPrice">$0.00</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Launch Date</div>
-                            <div class="detail-value" id="previewLaunchDate">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Location (City)</div>
-                            <div class="detail-value" id="previewLocation">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Category</div>
-                            <div class="detail-value" id="previewCategory">-</div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-label">Stock</div>
-                            <div class="detail-value" id="previewStock">-</div>
-                        </div>
-                    </div>
-
-                    <div class="form-group" style="margin-top: 20px;">
-                        <label class="detail-label">Description</label>
-                        <div id="previewDescription" style="white-space: pre-wrap; font-size: 0.9em; color: var(--text-color);">-</div>
-                    </div>
-                </div>
-            </section>
-        </div>
-    </div>
-</div>
-
-<!-- Product List Section -->
-<div id="productList" style="display: none;">
-    <div class="products-table-section">
-        <h2 class="section-title mimiz-text"><i class="fas fa-boxes"></i> Registered Products</h2>
-
-        <div class="filter-controls">
-            <input type="text" id="productSearchInput" placeholder="Search by Name, ID, Company, Category, or Location...">
-        </div>
-
-        <div id="productsTableContainer">
-            <table id="productsTable">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Image</th>
-                        <th>Name</th>
-                        <th>Company</th>
-                        <th>Location</th>
-                        <th>Price</th>
-                        <th>Category</th>
-                        <th>Stock</th>
-                        <th>Launch Date</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody id="productsTableBody">
-                    <tr id="emptyTableRow">
-                        <td colspan="10">
-                            <div class="empty-state">
-                                <i class="fas fa-box"></i>
-                                <h3>No Products Yet</h3>
-                                <p>Add your first product using the form above</p>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 <!-- Image Modal -->
 <div id="imageModal" class="image-modal">
@@ -695,7 +268,7 @@
     <div id="agent list" style="display: none;">
       <div class="dashboard-grid">
         <div class="admin-panel">
-            <h3><i class="fas fa-image"></i> Image & Company Control</h3>
+            <h3><i class="fas fa-image"></i> agent registration </h3>
             <form id="agentRegistrationForm">
     <label for="agentName">Full Name</label>
     <input type="text" id="agentName" name="agentName" placeholder="Enter your full name" required>
@@ -752,7 +325,67 @@
         </div>
     </div>
     </div>
+ <div id="company list" style="display: none;">
+      <div class="dashboard-grid">
+        <div class="admin-panel">
+            <h3><i class="fas fa-image"></i> companies-hero </h3>
+            <form id="agentRegistrationForm">
+    <label for="agentName">name company/label>
+    <input type="text" id="agentName" name="agentName" placeholder="Enter your full name" required>
 
+    <label for="agentEmail">Email Address</label>
+    <input type="email" id="agentEmail" name="agentEmail" placeholder="example@mail.com" required>
+     <label for="agentEmail">discrption company</label>
+    <input type="text" id="agentEmail" name="agentEmail" placeholder="" required>
+
+
+    <label for="agentCategory">Industry Category</label>
+    <select id="agentCategory" name="agentCategory" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="Real Estate">Real Estate</option>
+        <option value="Banking">Banking</option>
+        <option value="Technology">Technology</option>
+    </select>
+
+    <label for="profilePhoto"> Photo (Passport size)</label>
+    <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*" required>
+
+   
+    <label for="compRate">Expected Commission Rate %</label>
+    <input type="number" id="compRate" name="compRate" placeholder="4.5" step="0.1">
+
+    <button type="submit" class="btn btn-approve" style="width: 100%; margin-top: 15px;">Submit Request</button>
+           
+</form>
+           
+        </div>
+
+        <div class="admin-panel">
+            <h3><i class="fas fa-user-check"></i>  Approval company</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>company Name</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestTable">
+                    <tr>
+                        <td>OVID</td>
+                        <td>+251 911...<br><small>abebe@email.com</small></td>
+                        <td><span class="status-badge pending">PENDING</span></td>
+                        <td>
+                            <button class="btn btn-approve" onclick="approveAgent(this, 'Abebe')">Approve</button>
+                            <button class="btn btn-reject" onclick="rejectAgent(this)">Reject</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    </div>
     <!-- Section: Alerts -->
     <div id="alert" style="display: none;">
       <div class="card">
