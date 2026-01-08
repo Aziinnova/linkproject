@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LinkForce Admin | Approval & Image Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #6366f1; --success: #10b981; --danger: #ef4444; --bg: #0f172a; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; padding: 20px; }
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 20px; max-width: 1400px; margin: auto; }
+        .admin-panel { background: #1e293b; padding: 25px; border-radius: 16px; border: 1px solid #334155; }
+        
+        /* Table Styling for Approvals */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; padding: 12px; border-bottom: 2px solid #334155; color: #94a3b8; }
+        td { padding: 12px; border-bottom: 1px solid #334155; font-size: 14px; }
+        
+        .status-badge { padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .pending { background: #f59e0b22; color: #f59e0b; }
+        
+        .btn { padding: 8px 12px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-approve { background: var(--success); color: white; margin-right: 5px; }
+        .btn-reject { background: var(--danger); color: white; }
+        
+        .img-preview { width: 100px; height: 60px; object-fit: cover; border-radius: 4px; display: block; margin-top: 10px; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-grid">
+        <div class="admin-panel">
+            <h3><i class="fas fa-image"></i> Image & Company Control</h3>
+            <form id="agentRegistrationForm">
+    <label for="agentName">Full Name</label>
+    <input type="text" id="agentName" name="agentName" placeholder="Enter your full name" required>
+
+    <label for="agentEmail">Email Address</label>
+    <input type="email" id="agentEmail" name="agentEmail" placeholder="example@mail.com" required>
+
+    <label for="agentCategory">Industry Category</label>
+    <select id="agentCategory" name="agentCategory" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="Real Estate">Real Estate</option>
+        <option value="Banking">Banking</option>
+        <option value="Technology">Technology</option>
+    </select>
+
+    <label for="profilePhoto">Profile Photo (Passport size)</label>
+    <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*" required>
+
+    <label for="nationalId">National ID (Front & Back)</label>
+    <input type="file" id="nationalId" name="nationalId" accept="image/*,application/pdf" required>
+
+    <label for="compRate">Expected Commission Rate %</label>
+    <input type="number" id="compRate" name="compRate" placeholder="4.5" step="0.1">
+
+    <button type="submit" class="btn btn-approve" style="width: 100%; margin-top: 15px;">Submit Request</button>
+           
+</form>
+           
+        </div>
+
+        <div class="admin-panel">
+            <h3><i class="fas fa-user-check"></i> Agent Approval Requests</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestTable">
+                    <tr>
+                        <td>Abebe Yosef</td>
+                        <td>+251 911...<br><small>abebe@email.com</small></td>
+                        <td><span class="status-badge pending">PENDING</span></td>
+                        <td>
+                            <button class="btn btn-approve" onclick="approveAgent(this, 'Abebe')">Approve</button>
+                            <button class="btn btn-reject" onclick="rejectAgent(this)">Reject</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // Preview image before saving
+        function updatePreview(url) {
+            document.getElementById('preview').src = url || 'https://via.placeholder.com/100x60?text=Preview';
+        }
+
+        // Logic for Approving Agents
+        function approveAgent(btn, name) {
+            if(confirm(`Approve ${name} as a LinkForce Agent?`)) {
+                const row = btn.closest('tr');
+                row.style.opacity = '0.5';
+                btn.parentElement.innerHTML = '<span style="color: #10b981; font-weight: bold;"><i class="fas fa-check"></i> Approved</span>';
+                // Here you would trigger the email/SMS notification to the user
+                console.log(`Notification sent to ${name}: "You are approved!"`);
+            }
+        }
+
+        function rejectAgent(btn) {
+            if(confirm("Are you sure you want to reject this applicant?")) {
+                btn.closest('tr').remove();
+            }
+        }
+
+        // Add company to site (Simulation)
+        document.getElementById('imageControlForm').onsubmit = function(e) {
+            e.preventDefault();
+            alert("Live Site Updated! The new company and image are now visible to users.");
+            this.reset();
+            updatePreview('');
+        };
+    </script>
+</body>
+</html>

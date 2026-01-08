@@ -33,7 +33,7 @@
           <div class="nav-text">Dashboard</div>
         </div>
         
-        <div class="nav-item" onclick="showSection('all')">
+        <div class="nav-item" onclick="showSection('agent list')">
           <div class="nav-icon"><i class="fas fa-newspaper"></i></div>
           <div class="nav-text">Aagent list
         </div>
@@ -703,11 +703,65 @@
     <img class="modal-content" id="modalImage">
 </div>
     <!-- Section: All News -->
-    <div id="allNews" style="display: none;">
-      <div class="card">
-        <div class="card-header"><h2 class="card-title">All News Articles</h2></div>
-        <div class="card-body"><p class="text-secondary">Content for All News list/table.</p></div>
-      </div>
+    <div id="agent list" style="display: none;">
+      <div class="dashboard-grid">
+        <div class="admin-panel">
+            <h3><i class="fas fa-image"></i> Image & Company Control</h3>
+            <form id="agentRegistrationForm">
+    <label for="agentName">Full Name</label>
+    <input type="text" id="agentName" name="agentName" placeholder="Enter your full name" required>
+
+    <label for="agentEmail">Email Address</label>
+    <input type="email" id="agentEmail" name="agentEmail" placeholder="example@mail.com" required>
+
+    <label for="agentCategory">Industry Category</label>
+    <select id="agentCategory" name="agentCategory" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="Real Estate">Real Estate</option>
+        <option value="Banking">Banking</option>
+        <option value="Technology">Technology</option>
+    </select>
+
+    <label for="profilePhoto">Profile Photo (Passport size)</label>
+    <input type="file" id="profilePhoto" name="profilePhoto" accept="image/*" required>
+
+    <label for="nationalId">National ID (Front & Back)</label>
+    <input type="file" id="nationalId" name="nationalId" accept="image/*,application/pdf" required>
+
+    <label for="compRate">Expected Commission Rate %</label>
+    <input type="number" id="compRate" name="compRate" placeholder="4.5" step="0.1">
+
+    <button type="submit" class="btn btn-approve" style="width: 100%; margin-top: 15px;">Submit Request</button>
+           
+</form>
+           
+        </div>
+
+        <div class="admin-panel">
+            <h3><i class="fas fa-user-check"></i> Agent Approval Requests</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Agent Name</th>
+                        <th>Contact</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestTable">
+                    <tr>
+                        <td>Abebe Yosef</td>
+                        <td>+251 911...<br><small>abebe@email.com</small></td>
+                        <td><span class="status-badge pending">PENDING</span></td>
+                        <td>
+                            <button class="btn btn-approve" onclick="approveAgent(this, 'Abebe')">Approve</button>
+                            <button class="btn btn-reject" onclick="rejectAgent(this)">Reject</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
     </div>
 
     <!-- Section: Alerts -->
@@ -866,27 +920,9 @@
         </div>
     </div>
 
-    <!-- Section: Add Amharic News -->
-    <div id="amharic news" style="display: none;">
-        <div class="card">
-            <div class="card-header"><h2 class="card-title">Add New Amharic Article</h2></div>
-            <div class="card-body">
-                <p class="text-secondary">Form and tools for creating new articles in the Amharic language.</p>
-                <!-- Add Amharic news form content here -->
-            </div>
-        </div>
-    </div>
 
-    <!-- Section: All Amharic News -->
-    <div id="allNews am" style="display: none;">
-        <div class="card">
-            <div class="card-header"><h2 class="card-title">All Amharic Articles</h2></div>
-            <div class="card-body">
-                <p class="text-secondary">List and edit existing Amharic articles.</p>
-                <!-- Add Amharic news list content here -->
-            </div>
-        </div>
-    </div>
+
+ 
 
     <!-- Section: Ad Images -->
     <div id="ads img" style="display: none;">

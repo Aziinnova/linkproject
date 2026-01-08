@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkForce Admin | Approval & Image Control</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #6366f1; --success: #10b981; --danger: #ef4444; --bg: #0f172a; --panel: #1e293b; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: white; padding: 20px; margin: 0; }
+        
+        .admin-header { text-align: center; margin-bottom: 30px; padding: 20px; background: var(--panel); border-radius: 16px; border: 1px solid #334155; }
+        
+        .dashboard-grid { display: grid; grid-template-columns: 400px 1fr; gap: 20px; max-width: 1400px; margin: auto; }
+        
+        .admin-panel { background: var(--panel); padding: 25px; border-radius: 16px; border: 1px solid #334155; height: fit-content; }
+        
+        /* Table Styling */
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; background: #0f172a; border-radius: 12px; overflow: hidden; }
+        th { text-align: left; padding: 15px; border-bottom: 2px solid #334155; color: #94a3b8; font-size: 13px; text-transform: uppercase; }
+        td { padding: 15px; border-bottom: 1px solid #334155; font-size: 14px; }
+        
+        .status-badge { padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        .pending { background: #f59e0b22; color: #f59e0b; border: 1px solid #f59e0b; }
+        
+        .btn { padding: 8px 16px; border: none; border-radius: 8px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .btn-approve { background: var(--success); color: white; margin-right: 5px; }
+        .btn-approve:hover { background: #059669; }
+        .btn-reject { background: var(--danger); color: white; }
+        
+        .img-preview { width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin: 15px 0; border: 2px dashed #334155; }
+        
+        label { display: block; font-size: 13px; color: #94a3b8; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 12px; margin-bottom: 15px; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; box-sizing: border-box; }
+        
+        .btn-add { background: var(--primary); color: white; border: none; padding: 15px; border-radius: 8px; cursor: pointer; font-weight: 700; width: 100%; font-size: 16px; }
+        
+        @media (max-width: 1000px) { .dashboard-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+
+    <div class="admin-header">
+        <h1><i class="fas fa-user-shield"></i> LINKFORCE CONTROL CENTER</h1>
+        <p>Manage Partner Companies & Approve Agent Requests</p>
+    </div>
+
+    <div class="dashboard-grid">
+        <div class="admin-panel">
+            <h3><i class="fas fa-plus-circle"></i> Add New Partner</h3>
+            <form id="addCompanyForm">
+                <label>Company Name</label>
+                <input type="text" id="compName" placeholder="e.g. OVID Properties" required>
+                
+                <label>Industry</label>
+                <select id="compCategory">
+                    <option>Real Estate</option>
+                    <option>Banking</option>
+                    <option>Technology</option>
+                    <option>Healthcare</option>
+                </select>
+
+                <label>Image URL</label>
+                <input type="url" id="compImg" placeholder="https://..." oninput="updatePreview(this.value)">
+                <img id="preview" class="img-preview" src="https://via.placeholder.com/400x150?text=Logo+Preview">
+                
+                <label>Commission Rate (%)</label>
+                <input type="number" id="compRateVal" step="0.1" placeholder="4.5" required>
+                
+                <label>Description</label>
+                <textarea id="compDesc" rows="3" placeholder="Company details..."></textarea>
+                
+                <button type="submit" class="btn-add">Publish to Live Site</button>
+            </form>
+        </div>
+
+        <div class="admin-panel">
+            <h3><i class="fas fa-user-check"></i> list companies</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>company Name</th>
+                        <th>Phone & Email</th>
+                        <th>Experience</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="requestTable">
+                    <tr id="empty-row">
+                        <td colspan="5" style="text-align: center; color: #94a3b8; padding: 40px;">No new requests found.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // 1. IMAGE PREVIEW
+        function updatePreview(url) {
+            const img = document.getElementById('preview');
+            img.src = url || 'https://via.placeholder.com/400x150?text=Logo+Preview';
+        }
+
+        // 2. LOAD REQUESTS FROM REGISTRATION PAGE
+        function loadRequests() {
+            const tableBody = document.getElementById('requestTable');
+            const savedData = JSON.parse(localStorage.getItem('agentRequests') || '[]');
+            
+            if (savedData.length > 0) {
+                tableBody.innerHTML = ''; // Clear empty message
+                savedData.forEach((req, index) => {
+                    const row = `
+                        <tr>
+                            <td><strong>${req.name}</strong></td>
+                            <td>${req.phone}<br><small>${req.email}</small></td>
+                            <td>${req.exp}</td>
+                            <td><span class="status-badge pending">PENDING</span></td>
+                            <td>
+                                <button class="btn btn-approve" onclick="approveAgent(${index})">Approve</button>
+                                <button class="btn btn-reject" onclick="deleteRequest(${index})">Reject</button>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+            }
+        }
+
+        // 3. APPROVE & NOTIFY
+        function approveAgent(index) {
+            const savedData = JSON.parse(localStorage.getItem('agentRequests'));
+            const agent = savedData[index];
+            
+            if(confirm(`Approve ${agent.name}? This will send them a verification email.`)) {
+                alert(`SUCCESS: ${agent.name} is now an active LinkForce Agent. \n\nSending notification to ${agent.email}...`);
+                deleteRequest(index); // Remove from pending after approval
+            }
+        }
+
+        function deleteRequest(index) {
+            let savedData = JSON.parse(localStorage.getItem('agentRequests'));
+            savedData.splice(index, 1);
+            localStorage.setItem('agentRequests', JSON.stringify(savedData));
+            loadRequests();
+            if(savedData.length === 0) location.reload();
+        }
+
+        // 4. ADD COMPANY FORM
+        document.getElementById('addCompanyForm').onsubmit = function(e) {
+            e.preventDefault();
+            alert("LIVE UPDATE: " + document.getElementById('compName').value + " has been added to the main website!");
+            this.reset();
+            updatePreview('');
+        };
+
+        // Initialize
+        window.onload = loadRequests;
+    </script>
+</body>
+</html>
