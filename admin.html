@@ -20,8 +20,10 @@
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-header">
       <div class="sidebar-logo">
-        <div class="sidebar-logo-img">HM</div>
-        <div class="sidebar-logo-text">AZI admin</div>
+        <div class="logo-icon-box">
+        <i class="fas fa-link"></i>
+    </div>
+        <div class="sidebar-logo-text">link force admin</div>
       </div>
     </div>
 
@@ -46,11 +48,7 @@
           <div class="nav-text">Alerts</div>
         </div>
 
-        <!-- SETTINGS ITEM -->
-        <div class="nav-item" onclick="showSection('settings')">
-          <div class="nav-icon"><i class="fas fa-tools"></i></div>
-          <div class="nav-text">Settings</div>
-        </div>
+     
 
         <div class="nav-item" onclick="showSection('add tit')">
           <div class="nav-icon"><i class="fas fa-heading"></i></div>
@@ -77,21 +75,11 @@
       </div>
     </nav>
     <!-- Add this nav-section to your sidebar-nav -->
-<div class="nav-section">
-    <div class="nav-section-title">Product Management</div>
-    <div class="nav-item" onclick="showSection('productInsertion')">
-        <div class="nav-icon"><i class="fas fa-box-open"></i></div>
-        <div class="nav-text">Add Product</div>
-    </div>
-    <div class="nav-item" onclick="showSection('productList')">
-        <div class="nav-icon"><i class="fas fa-boxes"></i></div>
-        <div class="nav-text">All Probacts</div>
-    </div>
-    <div class="nav-section-title">User Registered</div>
-    <div class="nav-item" onclick="showSection('user reg')">
-        <div class="nav-icon"><i class="fas fa-box-open"></i></div>
-        <div class="nav-text">Add users</div>
-    </div>
+   <!-- SETTINGS ITEM -->
+        <div class="nav-item" onclick="showSection('settings')">
+          <div class="nav-icon"><i class="fas fa-tools"></i></div>
+          <div class="nav-text">Settings</div>
+        </div>
 
 </div>
     <div class="sidebar-footer">
@@ -121,9 +109,10 @@
       </div>
 
       <div class="header-right">
-        <div class="header-icon">
-          <i class="fas fa-bell"></i>
-        </div>
+       <div class="header-icon notification-wrapper">
+    <i class="fas fa-bell"></i>
+    <span class="notification-badge">16</span>
+</div>
         <div class="header-icon" onclick="showSection('settings')">
           <i class="fas fa-cog"></i>
         </div>
@@ -1903,6 +1892,18 @@
         // --- Initialization ---
         updateProductsTable();
         updatePreview();
+function updateNotificationCount(count) {
+    const badge = document.querySelector('.notification-badge');
+    if (count > 0) {
+        badge.textContent = count > 99 ? '99+' : count;
+        badge.style.display = 'flex';
+    } else {
+        badge.style.display = 'none';
+    }
+}
+
+// Example usage:
+// updateNotificationCount(17);
 
   </script>
 </body>
