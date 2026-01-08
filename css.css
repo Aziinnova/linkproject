@@ -1128,3 +1128,37 @@
         input, select { width: 100%; padding: 10px; margin: 8px 0; background: #0f172a; border: 1px solid #334155; color: white; border-radius: 8px; }
     
 
+.notification-wrapper {
+    position: relative;
+    display: inline-flex;
+    cursor: pointer;
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px; /* Adjust based on icon size */
+    right: -5px;
+    background-color: var(--danger-color); /* Uses your #e63946 from css.css */
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px solid var(--header-bg); /* Adds a clean gap between icon and badge */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Optional pulse animation to draw attention */
+.notification-badge {
+    animation: pulse-animation 2s infinite;
+}
+
+@keyframes pulse-animation {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
